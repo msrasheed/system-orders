@@ -14,10 +14,4 @@ public class TestPeopleDB {
 			em.close();
 		}
 	}
-
-	public static TestPeople checkCredentials(String username, String password) {
-		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		TestPeople user = em.find(TestPeople.class, username);
-	}
-	
 }
