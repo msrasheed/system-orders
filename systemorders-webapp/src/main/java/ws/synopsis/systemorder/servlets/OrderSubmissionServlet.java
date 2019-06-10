@@ -15,7 +15,7 @@ import ws.synopsis.systemorder.utils.TestPeopleDB;
 /**
  * Servlet implementation class OrderSubmissionServlet
  */
-@WebServlet("/order")
+//@WebServlet("/order")
 public class OrderSubmissionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
