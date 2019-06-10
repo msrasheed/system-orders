@@ -7,9 +7,18 @@
   <servlet-name>OrderSubmissionServlet</servlet-name>
   <servlet-class>ws.synopsis.systemorder.servlets.OrderSubmissionServlet</servlet-class>
  </servlet>
+ <servlet>
+  <display-name>DashboardServlet</display-name>
+  <servlet-name>DashboardServlet</servlet-name>
+  <servlet-class>ws.synopsis.systemorder.servlets.DashboardServlet</servlet-class>
+ </servlet>
  <servlet-mapping>
   <servlet-name>OrderSubmissionServlet</servlet-name>
   <url-pattern>/OrderSubmissionServlet</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+  <servlet-name>DashboardServlet</servlet-name>
+  <url-pattern>/Dashboard</url-pattern>
  </servlet-mapping>
  <welcome-file-list>
   <welcome-file>index.html</welcome-file>
