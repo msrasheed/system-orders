@@ -21,6 +21,13 @@ public class TestPeople implements Serializable {
 	public TestPeople() {
 		super();
 	}
+	
+	public TestPeople(int personid, String firstname, String lastname) {
+		super();
+		this.personid = personid;
+		this.firstname = firstname;
+		this.lastname = lastname;
+	}
 
 	public int getPersonid() {
 		return personid;
