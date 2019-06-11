@@ -1,0 +1,8 @@
+/*
+!/systemorders-webapp
+/systemorders-webapp/*
+!/systemorders-webapp/src
+
+!/SystemOrdersTest
+/SystemOrdersTest/*
+!/SystemOrdersTest/src
