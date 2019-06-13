@@ -7,11 +7,11 @@ import ws.synopsis.systemorder.model.Employee;
 public class EmployeeDB {
 	public static Employee getEmployeeByID(int id) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString ="SELECT username " +
+		String qString ="SELECT e " +
 						"FROM Employee e " +
 						"WHERE e.userid = :id";
 		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
-		q.setParameter("userid", id);
+		q.setParameter("id", id);
 		try {
 			return q.getSingleResult();
 		} finally {
@@ -21,39 +21,39 @@ public class EmployeeDB {
 	
 	public static String getUsernameByID(int id) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString ="SELECT username " +
+		String qString ="SELECT e.username " +
 						"FROM Employee e " +
 						"WHERE e.userid = :id";
-		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
-		q.setParameter("userid", id);
+		TypedQuery<String> q = em.createQuery(qString, String.class);
+		q.setParameter("id", id);
 		try {
-			return q.getSingleResult().getUsername();
+			return q.getSingleResult();
 		} finally {
 			em.close();
 		}
 	}
 	
-	public static String getPasswordByUsername(String user) {
+	public static String getPasswordByUsername(String username) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString =	"SELECT password" +
-							"FROM Employee as e" +
-							"WHERE e.username = user";
-		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
-		q.setParameter("username", user);
+		String qString =	"SELECT e.password " +
+							"FROM Employee as e " +
+							"WHERE e.username = :user";
+		TypedQuery<String> q = em.createQuery(qString, String.class);
+		q.setParameter("user", username);
 		try {
-			return q.getSingleResult().getPassword();
+			return q.getSingleResult();
 		} finally {
 			em.close();
 		}
 	}
 	
-	public static boolean checkUsernameExists(String user) {
+	public static boolean checkUsernameExists(String username) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString =	"SELECT username" +
-							"FROM Employee as e" +
-							"WHERE e.username = user";
-		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
-		q.setParameter("username", user);
+		String qString =	"SELECT e.username " +
+							"FROM Employee as e " +
+							"WHERE e.username = :user";
+		TypedQuery<String> q = em.createQuery(qString, String.class);
+		q.setParameter("user", username);
 		try {
 			if(q.getSingleResult() != null) return true;
 			return false;
@@ -62,24 +62,24 @@ public class EmployeeDB {
 		}
 	}
 	
-	public static boolean checkPasswordMatches(String user, String pass) {
+	public static boolean checkPasswordMatches(String username, String password) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString =	"SELECT username" +
-							"FROM Employee as e" +
-							"WHERE e.username = user";
+		String qString =	"SELECT e " +
+							"FROM Employee as e " +
+							"WHERE e.username = :user";
 		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
-		q.setParameter("username", user);
+		q.setParameter("user", username);
 		try {
-			if(q.getSingleResult().getPassword() == pass) return true;
+			if(q.getSingleResult().getPassword().equals(password)) return true;
 			return false;
 		} finally {
 			em.close();
 		}
 	}
 	
-	public static boolean checkCredentials(String user, String pass) {
-		if(checkUsernameExists(user) == true) {
-			if(checkPasswordMatches(user, pass) == true) return true;
+	public static boolean checkCredentials(String username, String password) {
+		if(checkUsernameExists(username) == true) {
+			if(checkPasswordMatches(username, password) == true) return true;
 		}
 		return false;
 	}

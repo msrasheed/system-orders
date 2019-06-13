@@ -93,6 +93,7 @@
                     </li>
                 </ul>
             </div>
+            <a href="/systemorders-webapp/app/orders">Click Here</a>
         </div>
         <div class="content-view">
             <img src="background.jpg" class="background-img"/>

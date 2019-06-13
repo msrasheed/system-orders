@@ -27,6 +27,7 @@
          can find it in the source at src/main/webapp/WEB-INF/systemorders-webapp-ds.xml -->
       <jta-data-source>java:/PostgresDS</jta-data-source>
       <class>ws.synopsis.systemorder.model.TestPeople</class>
+      <class>ws.synopsis.systemorder.model.Employee</class>
       <properties>
          <!-- Properties for Hibernate -->
          <property name="hibernate.hbm2ddl.auto" value="update" />

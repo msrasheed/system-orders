@@ -38,9 +38,9 @@ public class OrderSubmissionServlet extends HttpServlet {
 		
 		TestPeople person = TestPeopleDB.getPersonById(1);
 		
-		Employee A = EmployeeDB.getEmployeeByID(1);
+		Employee A = EmployeeDB.getEmployeeByID(100);
 			System.out.println(A.getUsername());
-		String username = EmployeeDB.getUsernameByID(1);
+		String username = EmployeeDB.getUsernameByID(100);
 			System.out.println(username);
 		String password = EmployeeDB.getPasswordByUsername(username);
 			System.out.println(password);
