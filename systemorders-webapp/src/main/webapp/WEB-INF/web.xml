@@ -2,9 +2,9 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>systemorders-webapp</display-name>
   <servlet>
-    <display-name>OrderSubmissionServlet</display-name>
-    <servlet-name>OrderSubmissionServlet</servlet-name>
-    <servlet-class>ws.synopsis.systemorder.servlets.OrderSubmissionServlet</servlet-class>
+    <display-name>OrderServlet</display-name>
+    <servlet-name>OrderServlet</servlet-name>
+    <servlet-class>ws.synopsis.systemorder.servlets.OrderServlet</servlet-class>
   </servlet>
   <servlet>
     <display-name>DashboardServlet</display-name>
@@ -12,7 +12,7 @@
     <servlet-class>ws.synopsis.systemorder.servlets.DashboardServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>OrderSubmissionServlet</servlet-name>
+    <servlet-name>OrderServlet</servlet-name>
     <url-pattern>/app/orders</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
