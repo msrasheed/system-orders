@@ -7,8 +7,8 @@ import ws.synopsis.systemorder.model.Employee;
 public class EmployeeDB {
 	public static Employee getEmployeeByID(int id) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString ="SELECT username" +
-						"FROM Employee e" +
+		String qString ="SELECT username " +
+						"FROM Employee e " +
 						"WHERE e.userid = :id";
 		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
 		q.setParameter("userid", id);
@@ -21,8 +21,8 @@ public class EmployeeDB {
 	
 	public static String getUsernameByID(int id) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString ="SELECT username" +
-						"FROM Employee e" +
+		String qString ="SELECT username " +
+						"FROM Employee e " +
 						"WHERE e.userid = :id";
 		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
 		q.setParameter("userid", id);

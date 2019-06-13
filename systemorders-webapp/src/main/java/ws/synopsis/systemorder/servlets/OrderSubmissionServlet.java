@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ws.synopsis.systemorder.model.TestPeople;
+import ws.synopsis.systemorder.model.Employee;
 import ws.synopsis.systemorder.utils.TestPeopleDB;
+import ws.synopsis.systemorder.utils.EmployeeDB;
 
 /**
  * Servlet implementation class OrderSubmissionServlet
@@ -36,6 +38,19 @@ public class OrderSubmissionServlet extends HttpServlet {
 		
 		TestPeople person = TestPeopleDB.getPersonById(1);
 		
+		Employee A = EmployeeDB.getEmployeeByID(1);
+			System.out.println(A.getUsername());
+		String username = EmployeeDB.getUsernameByID(1);
+			System.out.println(username);
+		String password = EmployeeDB.getPasswordByUsername(username);
+			System.out.println(password);
+		boolean chckuser = EmployeeDB.checkUsernameExists(username);
+			System.out.println(chckuser);
+		boolean chckpass = EmployeeDB.checkPasswordMatches(username, password);
+			System.out.println(chckpass);
+		boolean chckcred = EmployeeDB.checkCredentials(username, password);
+			System.out.println(chckcred);
+		
 		try {
 			out.println("<br><h1>" + person.getFirstname() + person.getLastname() + "</h1>");
 		} finally {
@@ -52,5 +67,4 @@ public class OrderSubmissionServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
