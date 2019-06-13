@@ -18,13 +18,13 @@ import ws.synopsis.systemorder.utils.EmployeeDB;
  * Servlet implementation class OrderSubmissionServlet
  */
 //@WebServlet("/order")
-public class OrderSubmissionServlet extends HttpServlet {
+public class OrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor. 
      */
-    public OrderSubmissionServlet() {
+    public OrderServlet() {
         // TODO Auto-generated constructor stub
     }
 
