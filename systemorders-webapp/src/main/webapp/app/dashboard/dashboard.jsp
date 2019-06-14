@@ -95,7 +95,7 @@
             </div>
             <a href="/systemorders-webapp/app/orders">OrderServlet</a><br/>
             <a href="/systemorders-webapp/app/users">UserServlet</a><br/>
-            <a href="/systemorders-webapp/app/users?action=create&role=user&fname=Moiz&lname=Rasheed&username=mrasheed&password=synopsis&email=moizr95@gmail.com">Create User</a><br/>
+            <a href="createuser.html">Create User</a><br/>
         </div>
         <div class="content-view">
             <img src="background.jpg" class="background-img"/>

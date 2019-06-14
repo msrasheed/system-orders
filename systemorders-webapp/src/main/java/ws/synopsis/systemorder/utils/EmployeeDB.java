@@ -66,7 +66,10 @@ public class EmployeeDB {
 		q.setParameter("user", username);
 		try {
 			return q.getSingleResult();
-		} finally {
+		} catch (Exception e) {
+			// TODO: handle exception
+			return "";
+		}finally {
 			em.close();
 		}
 	}
