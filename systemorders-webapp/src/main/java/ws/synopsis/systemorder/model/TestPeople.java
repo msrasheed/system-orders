@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class TestPeople implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int personid;
 	private String firstname;
 	private String lastname;

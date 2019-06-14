@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class Employee implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userid;
 	private String role;
 	private String fname;
@@ -24,6 +25,17 @@ public class Employee implements Serializable {
 
 	public Employee() {
 		super();
+	}
+	
+	public Employee(String role, String fname, String lname, String username, String password,
+			String email) {
+		super();
+		this.role = role;
+		this.fname = fname;
+		this.lname = lname;
+		this.username = username;
+		this.password = password;
+		this.email = email;
 	}
 
 	public int getUserid() {
