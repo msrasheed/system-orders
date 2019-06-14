@@ -93,7 +93,9 @@
                     </li>
                 </ul>
             </div>
-            <a href="/systemorders-webapp/app/orders">Click Here</a>
+            <a href="/systemorders-webapp/app/orders">OrderServlet</a><br/>
+            <a href="/systemorders-webapp/app/users">UserServlet</a><br/>
+            <a href="/systemorders-webapp/app/users?action=create&role=user&fname=Moiz&lname=Rasheed&username=mrasheed&password=synopsis&email=moizr95@gmail.com">Create User</a><br/>
         </div>
         <div class="content-view">
             <img src="background.jpg" class="background-img"/>
@@ -105,50 +107,50 @@
                         <div class="all-indent">
                             <div class="section">
                                 <h2>General</h2>
-                                <div class="section-body row">
-                                    <div class="left">
+                                <div class="section-body">
+                                    <div class="entry">
                                         <p>Type</p>
-                                        <p>Date Needed</p>
-                                    </div>
-                                    <div class="right">
                                         <select name="type">
                                             <option>Laptop</option>
                                             <option>Desktop</option>
-                                        </select><br/>
+                                        </select>
+                                    </div>
+                                    <div class="entry">
+                                        <p>Date Needed</p>
                                         <input type="date" name="date-needed" ><br/>
                                     </div>
                                 </div>
                             </div>
                             <div class="section">
                                 <h2>Hardware Specs</h2>
-                                <div class="section-body row">
-                                    <div class="left">
+                                <div class="section-body">
+                                    <div class="entry">
                                         <p>Processor</p>
-                                        <p>Memory</p>
-                                        <p>Hard disk</p>
-                                    </div>
-                                    <div class="right">
                                         <select name="processor">
                                             <option>Intel</option>
                                             <option>AMD</option>
-                                        </select><br/>
-                                        <input type="number" name="memory" value="2" min="1"><span>gb</span><br/>
-                                        <input type="number" name="harddisk" value="500" min="150"><span>gb</span><br/>
+                                        </select>
+                                    </div>
+                                    <div class="entry">
+                                        <p>Memory</p>
+                                        <input type="number" name="memory" value="2" min="1"><span>gb</span>
+                                    </div>
+                                    <div class="entry">
+                                        <p>Hard disk</p>
+                                        <input type="number" name="harddisk" value="500" min="150"><span>gb</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="section">
                                 <h2>OS</h2>
-                                <div class="section-body row">
-                                    <div class="left">
+                                <div class="section-body">
+                                    <div class="entry">
                                         <p>Operating System</p>
-                                    </div>
-                                    <div class="right">
                                         <select name="processor">
                                             <option>Windows</option>
                                             <option>MacOS</option>
                                             <option>Linux</option>
-                                        </select><br/>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

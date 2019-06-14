@@ -53,7 +53,7 @@ nav .company {
 }
 
 nav .company img {
-    height: 60px;
+    max-height: 40px;
 }
 
 nav .app p {
@@ -279,13 +279,16 @@ nav .user p {
     padding: 10px 0px 0px 40px;
 }
 
-.content .new-order-form-page .section .section-body.row {
+.content .new-order-form-page .section .section-body .entry {
     display: flex;
     flex-flow: row nowrap;
+    align-items: center;
+    margin-top: 10px;
 }
 
-.content .new-order-form-page .section .section-body.row .right {
-    padding-left: 20px;
+.content .new-order-form-page .section .section-body .entry p {
+    box-sizing: border-box;
+    width: 150px;
 }
 
 .content .new-order-form-page .section .section-body p,
