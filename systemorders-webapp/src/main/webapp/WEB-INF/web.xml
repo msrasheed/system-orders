@@ -11,6 +11,12 @@
     <servlet-name>DashboardServlet</servlet-name>
     <servlet-class>ws.synopsis.systemorder.servlets.DashboardServlet</servlet-class>
   </servlet>
+    <servlet>
+    <description></description>
+    <display-name>EmployeeServlet</display-name>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <servlet-class>ws.synopsis.systemorder.servlets.EmployeeServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>OrderServlet</servlet-name>
     <url-pattern>/app/orders</url-pattern>
@@ -18,6 +24,10 @@
   <servlet-mapping>
     <servlet-name>DashboardServlet</servlet-name>
     <url-pattern>/app/dashboard</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <url-pattern>/app/users</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
