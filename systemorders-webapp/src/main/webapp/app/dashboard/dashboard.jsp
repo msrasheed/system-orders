@@ -18,7 +18,7 @@
             <p>Sistema de Solicitudes</p>
         </div>
         <div class="user">
-            <p>${person.firstname}</p>
+            <p>${employee.username}</p>
             <img src="user-icon.png"/>
         </div>
     </nav>

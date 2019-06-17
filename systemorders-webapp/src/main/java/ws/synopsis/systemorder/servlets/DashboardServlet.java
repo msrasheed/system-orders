@@ -11,7 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import ws.synopsis.systemorder.auth.Authentication;
 import ws.synopsis.systemorder.filters.AuthorizationFilter;
-import ws.synopsis.systemorder.model.TestPeople;
+import ws.synopsis.systemorder.model.Employee;
+import ws.synopsis.systemorder.utils.EmployeeDB;
 
 /**
  * Servlet implementation class DashboardServlet
@@ -37,18 +38,28 @@ public class DashboardServlet extends HttpServlet {
 		System.out.println("Entering Dashboard Servlet");
 		System.out.println(context.getContextPath() + " " + context.getRealPath("dashboard.jsp"));
 		
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+		String operation = request.getParameter("operation");
 		
-		if (Authentication.authenticateUser(username, password)) {
-			HttpSession session = request.getSession();
-			TestPeople person = new TestPeople(1, username, password);
-			request.setAttribute("person", person);
-			System.out.println("Dashboard serving dashboard");
-			getServletContext().getRequestDispatcher("/app/dashboard/dashboard.jsp").forward(request, response);
+		if (operation == null || operation.equals("login")) {
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			
+			if (Authentication.authenticateUser(username, password)) {
+				HttpSession session = request.getSession();
+				Employee employee = EmployeeDB.getEmployeeByUsername(username);
+				session.setAttribute("emploee", employee);
+				request.setAttribute("employee", employee);
+				System.out.println("Dashboard serving dashboard");
+				getServletContext().getRequestDispatcher("/app/dashboard/dashboard.jsp").forward(request, response);
+			}
+			else {
+				System.out.println("Dashboard Rediricting to login");
+				response.sendRedirect("/systemorders-webapp/index.html");
+			}
 		}
-		else {
-			System.out.println("Dashboard Rediricting to login");
+		else if (operation.equals("logout")) {
+			HttpSession session = request.getSession();
+			session.invalidate();
 			response.sendRedirect("/systemorders-webapp/index.html");
 		}
 	}

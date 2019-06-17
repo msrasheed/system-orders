@@ -57,6 +57,22 @@ public class EmployeeDB {
 		}
 	}
 	
+	public static Employee getEmployeeByUsername(String username) {
+		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
+		String qString ="SELECT e " +
+						"FROM Employee e " +
+						"WHERE e.username = :username";
+		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
+		q.setParameter("username", username);
+		try {
+			return q.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}finally {
+			em.close();
+		}
+	}
+	
 	public static String getPasswordByUsername(String username) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
 		String qString =	"SELECT e.password " +
