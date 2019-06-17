@@ -31,14 +31,14 @@ public class EmployeeServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		String action = request.getParameter("action");
+		String operation = request.getParameter("operation");
 		
-		if (action != null) action = action.toLowerCase();
+		if (operation != null) operation = operation.toLowerCase();
 		
-		if (action == null) {
+		if (operation == null) {
 			
 		}
-		else if (action.equals("create")) {
+		else if (operation.equals("create")) {
 			String role = request.getParameter("role");
 			String fname = request.getParameter("fname");
 			String lname = request.getParameter("lname");

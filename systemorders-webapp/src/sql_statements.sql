@@ -66,3 +66,26 @@ insert into rolepermissions (role, oprt, resc) values
     ('admin','approve','orders'), ('admin','delivered','orders'), ('admin','create','users');
 
 SELECT role FROM rolepermissions WHERE oprt='operation' AND resc='resource';
+
+create table orders (
+    orderid     int,
+    userid      int             not null,
+    status      varchar(10)     not null,
+    fecha       datetime        not null,
+    processor   varchar(30)     not null,
+    memory      int             not null,
+    harddisk    int             not null,
+    operatingsystem varchar(30) not null,
+    type        varchar(15)     not null,
+    dateneeded  date            not null,
+    provider    varchar(20),
+    price       float,
+    acquisitiontype varchar(20),
+    gmaccepted  boolean,
+    gmdetails   text,
+    finalpersonid int,
+    datearrived date,
+    clientsentto varchar(30),
+    primary key (orderid),
+    foreign key (userid) references employee (userid)
+);

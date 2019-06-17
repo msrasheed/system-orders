@@ -11,7 +11,7 @@
 <body>
     <nav>
         <div class="company">
-            <img src="logo-synopsis-trans.png"/>
+            <img src="photos/logo-synopsis-trans.png"/>
             <p>SYNOPSIS</p>
         </div>
         <div class="app">
@@ -19,7 +19,7 @@
         </div>
         <div class="user">
             <p>${employee.username}</p>
-            <img src="user-icon.png"/>
+            <img src="photos/user-icon.png"/>
         </div>
     </nav>
     <div class="main-container">
@@ -98,11 +98,11 @@
             <a href="createuser.html">Create User</a><br/>
         </div>
         <div class="content-view">
-            <img src="background.jpg" class="background-img"/>
+            <img src="photos/background.jpg" class="background-img"/>
             <div class="content">
                 <div class="new-order-form-page">
-                    <form class="new-request" action="/app/orders" method="post">
-                        <input type="hidden" name="action" value="create">
+                    <form class="new-request" action="/systemorders-webapp/app/orders" method="post">
+                        <input type="hidden" name="operation" value="create">
                         <h1>Nuevo Solicitud</h1>
                         <div class="all-indent">
                             <div class="section">
@@ -117,7 +117,7 @@
                                     </div>
                                     <div class="entry">
                                         <p>Date Needed</p>
-                                        <input type="date" name="date-needed" ><br/>
+                                        <input type="date" name="dateneeded" ><br/>
                                     </div>
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
                                 <div class="section-body">
                                     <div class="entry">
                                         <p>Operating System</p>
-                                        <select name="processor">
+                                        <select name="operatingsystem">
                                             <option>Windows</option>
                                             <option>MacOS</option>
                                             <option>Linux</option>

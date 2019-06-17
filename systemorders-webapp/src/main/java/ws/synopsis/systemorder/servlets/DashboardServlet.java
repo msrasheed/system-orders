@@ -46,8 +46,9 @@ public class DashboardServlet extends HttpServlet {
 			
 			if (Authentication.authenticateUser(username, password)) {
 				HttpSession session = request.getSession();
+				session.setMaxInactiveInterval(30 * 60);
 				Employee employee = EmployeeDB.getEmployeeByUsername(username);
-				session.setAttribute("emploee", employee);
+				session.setAttribute("employee", employee);
 				request.setAttribute("employee", employee);
 				System.out.println("Dashboard serving dashboard");
 				getServletContext().getRequestDispatcher("/app/dashboard/dashboard.jsp").forward(request, response);
