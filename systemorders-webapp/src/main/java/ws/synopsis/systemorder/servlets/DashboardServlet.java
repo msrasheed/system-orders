@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import ws.synopsis.systemorder.auth.UserAuthentication;
+import ws.synopsis.systemorder.auth.Authentication;
 import ws.synopsis.systemorder.filters.AuthorizationFilter;
 import ws.synopsis.systemorder.model.TestPeople;
 
@@ -40,7 +40,7 @@ public class DashboardServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
-		if (UserAuthentication.authenticateUser(username, password)) {
+		if (Authentication.authenticateUser(username, password)) {
 			HttpSession session = request.getSession();
 			TestPeople person = new TestPeople(1, username, password);
 			request.setAttribute("person", person);
