@@ -67,82 +67,50 @@ insert into rolepermissions (role, oprt, resc) values
 
 SELECT role FROM rolepermissions WHERE oprt='operation' AND resc='resource';
 
-CREATE TABLE orders (
+create table orders (
     orderid           int           not null,
     userid            int           not null,
     status            varchar(10)   not null,
-    date_created      date          not null,
+    datecreated       date          not null,
     processor         varchar(30)   not null,
     memory            int           not null,
     harddisk          int           not null,
     os                varchar(30)   not null,
-    device_type       varchar(15)   not null,
-    date_needed       date          not null,
-    client_contact    varchar(30)   not null,
+    devicetype        varchar(15)   not null,
+    dateneeded        date          not null,
+    clientcontact     varchar(30)   not null,
     supplier          varchar(20),
-    final_price       float,
-    acquisition_type  varchar(20),
-    quoted_date       date,
-    gm_accepted       boolean,
-    gm_comments       varchar(100),
+    finalprice        float,
+    acquisitiontype   varchar(20),
+    quoteddate        date,
+    supportapproval   boolean,
+    gmapproval        boolean,
+    gmcomments        varchar(100),
     finalid           int,
-    date_arrived      date,
+    datearrived       date,
     primary key (orderid),
     foreign key (userid) references employee (userid)
 );
 
-CREATE TABLE SOFTWARE (
+create table hardware (
     orderid   int       not null,
     mouse     boolean   not null,
     monitor   boolean   not null,
-    primary key (orderid),
-    foreign key (userid) references orders (userid)
+    primary key (orderid)
 );
 
-CREATE TABLE HARDWARE (
-    orderid           int           not null,
-    userid            int           not null,
-    status            varchar(10)   not null,
-    date_created      date          not null,
-    processor         varchar(30)   not null,
-    memory            int           not null,
-    harddisk          int           not null,
-    os                varchar(30)   not null,
-    device_type       varchar(15)   not null,
-    date_needed       date          not null,
-    client_contact    varchar(30)   not null,
-    supplier          varchar(20),
-    final_price       float,
-    acquisition_type  varchar(20),
-    quoted_date       date,
-    gm_accepted       boolean,
-    gm_comments       varchar(100),
-    finalid           int,
-    date_arrived      date,
-    primary key (orderid),
-    foreign key (userid) references employee (userid)
+create table software (
+    softid    int     not null,
+    orderid   int     not null,
+    software  varchar(30)  not null,
+    primary key (softid),
+    foreign key (orderid) references orders (orderid)
 );
 
-CREATE TABLE OTHERSPECS (
-    orderid           int           not null,
-    userid            int           not null,
-    status            varchar(10)   not null,
-    date_created      date          not null,
-    processor         varchar(30)   not null,
-    memory            int           not null,
-    harddisk          int           not null,
-    os                varchar(30)   not null,
-    device_type       varchar(15)   not null,
-    date_needed       date          not null,
-    client_contact    varchar(30)   not null,
-    supplier          varchar(20),
-    final_price       float,
-    acquisition_type  varchar(20),
-    quoted_date       date,
-    gm_accepted       boolean,
-    gm_comments       varchar(100),
-    finalid           int,
-    date_arrived      date,
-    primary key (orderid),
-    foreign key (userid) references employee (userid)
+create table otherspecs (
+  otherid     int     not null,
+  orderid     int     not null,
+  otherspec   varchar(30)  not null,
+  primary key (otherid),
+  foreign key (orderid) references orders (orderid)
 );
