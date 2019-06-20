@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ws.synopsis.systemorder.model.TestPeople;
+import ws.synopsis.systemorder.factory.OrderFactory;
 import ws.synopsis.systemorder.model.Employee;
 import ws.synopsis.systemorder.utils.TestPeopleDB;
 import ws.synopsis.systemorder.utils.EmployeeDB;
@@ -56,23 +57,11 @@ public class OrderServlet extends HttpServlet {
 			
 		}
 		else if (operation.equals("create")) {
-			long userid = ((Employee) session.getAttribute("employee")).getUserid();
-			String status = request.getParameter("status");
-		    Date date_created = new Date();
-		    String processor = request.getParameter("processor");
-		    int memory = Integer.parseInt(request.getParameter("memory"));
-		    int harddisk = Integer.parseInt(request.getParameter("harddisk"));
-		    String os = request.getParameter("operatingsystem");
-		    String device_type = request.getParameter("type");
-		    String date_needed = request.getParameter("dateneeded");
-		    Date dateneeded = null;
-			try {
-				dateneeded = new SimpleDateFormat("yyyy-MM-dd").parse(dateneededStr);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(OrderFactory.create(request)) {
+				System.out.println("order creation was successful");
 			}
-		    System.out.println(dateneeded + " " + type);
+		    //System.out.println(dateneeded + " : " + device_type + " : " + status + " : " + memory);
 		}
+		else if (operation.equals("drown")) System.out.println("I'm drowning");
 	}
 }

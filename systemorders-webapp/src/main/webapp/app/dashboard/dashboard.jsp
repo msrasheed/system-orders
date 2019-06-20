@@ -171,7 +171,7 @@
                                 <h2>Other</h2>
                                 <div class="section-body">
                                     <div class="variable-input">
-                                        <input type="text" name="other1" value="Desktop image is an Asshole">
+                                        <input type="text" name="other1" value="Desktop image is my family">
                                         <i class="material-icons delete">delete</i>
                                     </div>
                                     <div class="variable-input">

@@ -2,6 +2,7 @@ package ws.synopsis.systemorder.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -12,7 +13,65 @@ import javax.persistence.*;
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long orderid;
+	private long userid;
+	private String status;
+	
+	@Column(name = "date_created")
+	@Temporal(TemporalType.DATE)
+	private Date dateCreated;
+	private String processor;
+	private int memory;
+	private int harddisk;
+	private String OperatingSystem;
+	
+	@Column(name = "device_type")
+	private String deviceType;
+	
+	@Column(name = "date_needed")
+	@Temporal(TemporalType.DATE)
+	private Date dateNeeded;
+	
+	@Column(name = "client_contact")
+	private String clientContact;
+	
+	@Column(name = "support_approval")
+	private boolean supportApproval;
+	private String supplier;
+	
+	@Column(name = "final_prce")
+	private float finalPrice;
+	
+	@Column(name = "acquisition_type")
+	private String acquisitionType;
+	
+	@Column(name = "quoted_date")
+	@Temporal(TemporalType.DATE)
+	private Date quotedDate;
+	
+	@Column(name = "gm_approval")
+	private boolean gmApproval;
+	
+	@Column(name = "gm_comments")
+	private String gmComments;
+	private long finalid;
+	
+	@Column(name = "date_arrived")
+	@Temporal(TemporalType.DATE)
+	private Date dateArrived;
+	
+	@OneToOne(mappedBy="order", cascade = CascadeType.ALL)
+	HardwareOrderItems hardware;
+	
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private Set<SoftwareOrderItem> softwares;
+	
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private Set<OtherOrderItem> others;
+	
 	public Order() {
 		super();
 	}
@@ -57,51 +116,6 @@ public class Order implements Serializable {
 		this.finalid = finalid;
 		this.dateArrived = date_arrived;
 	}
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long orderid;
-	private long userid;
-	private String status;
-	
-	@Column(name = "date_created")
-	private Date dateCreated;
-	private String processor;
-	private int memory;
-	private int harddisk;
-	private String OperatingSystem;
-	
-	@Column(name = "device_type")
-	private String deviceType;
-	
-	@Column(name = "date_needed")
-	private Date dateNeeded;
-	
-	@Column(name = "client_contact")
-	private String clientContact;
-	
-	@Column(name = "support_approval")
-	private boolean supportApproval;
-	private String supplier;
-	
-	@Column(name = "final_prce")
-	private float finalPrice;
-	
-	@Column(name = "acquisition_type")
-	private String acquisitionType;
-	
-	@Column(name = "quoted_date")
-	private Date quotedDate;
-	
-	@Column(name = "gm_approval")
-	private boolean gmApproval;
-	
-	@Column(name = "gm_comments")
-	private String gmComments;
-	private long finalid;
-	
-	@Column(name = "date_arrived")
-	private Date dateArrived;
 
 	public long getOrderid() {
 		return orderid;
@@ -261,6 +275,40 @@ public class Order implements Serializable {
 
 	public void setSupportApproval(boolean supportApproval) {
 		this.supportApproval = supportApproval;
+	}
+
+	public HardwareOrderItems getHardware() {
+		return hardware;
+	}
+
+	public void setHardware(HardwareOrderItems hardware) {
+		this.hardware = hardware;
+	}
+
+	public Set<SoftwareOrderItem> getSoftwares() {
+		return softwares;
+	}
+
+	public void setSoftwares(Set<SoftwareOrderItem> softwares) {
+		this.softwares = softwares;
+	}
+
+	public Set<OtherOrderItem> getOthers() {
+		return others;
+	}
+
+	public void setOthers(Set<OtherOrderItem> others) {
+		this.others = others;
+	}
+	
+	public void addSoftwareItem(SoftwareOrderItem soft) {
+		soft.setOrder(this);
+		softwares.add(soft);
+	}
+	
+	public void addOtherItem(OtherOrderItem item) {
+		item.setOrder(this);
+		others.add(item);
 	}
    
 }

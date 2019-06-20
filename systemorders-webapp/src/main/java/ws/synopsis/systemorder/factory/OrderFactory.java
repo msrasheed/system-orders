@@ -10,10 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import ws.synopsis.systemorder.model.Employee;
 import ws.synopsis.systemorder.model.Order;
+import ws.synopsis.systemorder.model.OtherOrderItem;
+import ws.synopsis.systemorder.model.SoftwareOrderItem;
 
 public class OrderFactory {
 	public static boolean create(HttpServletRequest req) {
 		Order order = new Order();
+		return create(order, req);
+	}
+	
+	public static boolean create(Order order, HttpServletRequest req) {
 		OrderFactoryPermissions perm = new OrderFactoryPermissions("create");
 		return update(order, req, perm);
 	}
@@ -111,6 +117,28 @@ public class OrderFactory {
 		order.setMemory(memory);
 		order.setHarddisk(harddisk);
 		order.setOperatingSystem(os);
+		
+		String[] hardwares;
+		if ((hardwares = req.getParameterValues("hardware")) != null) {
+			
+		}
+		
+		String[] softwares;
+		if ((softwares = req.getParameterValues("software")) != null)
+		{
+			for (String soft : softwares) {
+				SoftwareOrderItem software = new SoftwareOrderItem(soft);
+				order.addSoftwareItem(software);
+			}
+		}
+		
+		String[] others;
+		if ((others = req.getParameterValues("other")) != null) {
+			for (String oth : others) {
+				OtherOrderItem other = new OtherOrderItem(oth);
+				order.addOtherItem(other);
+			}
+		}
 		
 		return true;
 	}
