@@ -56,15 +56,15 @@ public class OrderServlet extends HttpServlet {
 			
 		}
 		else if (operation.equals("create")) {
-			int userid = ((Employee) session.getAttribute("employee")).getUserid();
-		    String status = request.getParameter("status");
-		    Date today = new Date();
+			long userid = ((Employee) session.getAttribute("employee")).getUserid();
+			String status = request.getParameter("status");
+		    Date date_created = new Date();
 		    String processor = request.getParameter("processor");
-		    String memory = request.getParameter("memory");
-		    String harddisk = request.getParameter("harddisk");
-		    String operatingsystem = request.getParameter("operatingsystem");
-		    String type = request.getParameter("type");
-		    String dateneededStr = request.getParameter("dateneeded");
+		    int memory = Integer.parseInt(request.getParameter("memory"));
+		    int harddisk = Integer.parseInt(request.getParameter("harddisk"));
+		    String os = request.getParameter("operatingsystem");
+		    String device_type = request.getParameter("type");
+		    String date_needed = request.getParameter("dateneeded");
 		    Date dateneeded = null;
 			try {
 				dateneeded = new SimpleDateFormat("yyyy-MM-dd").parse(dateneededStr);

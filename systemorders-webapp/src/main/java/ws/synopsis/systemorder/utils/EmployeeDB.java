@@ -1,40 +1,59 @@
 package ws.synopsis.systemorder.utils;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import ws.synopsis.systemorder.model.Employee;
 
 public class EmployeeDB {
-	public static boolean checkCredentials(String username, String password) {
-		if(checkUsernameExists(username) == true) {
-			if(checkPasswordMatches(username, password) == true) return true;
-		}
-		return false;
-	}
-	
-	public static boolean checkPasswordMatches(String username, String password) {
+	public static Employee getEmployeeByID(int id) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString =	"SELECT e " +
-							"FROM Employee as e " +
-							"WHERE e.username = :user";
+		String qString ="SELECT username " +
+						"FROM Employee e " +
+						"WHERE e.userid = :id";
 		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
-		q.setParameter("user", username);
+		q.setParameter("userid", id);
 		try {
-			if(q.getSingleResult().getPassword().equals(password)) return true;
-			return false;
+			return q.getSingleResult();
 		} finally {
 			em.close();
 		}
 	}
 	
-	public static boolean checkUsernameExists(String username) {
+	public static String getUsernameByID(int id) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString =	"SELECT e.username " +
-							"FROM Employee as e " +
-							"WHERE e.username = :user";
-		TypedQuery<String> q = em.createQuery(qString, String.class);
-		q.setParameter("user", username);
+		String qString ="SELECT username " +
+						"FROM Employee e " +
+						"WHERE e.userid = :id";
+		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
+		q.setParameter("userid", id);
+		try {
+			return q.getSingleResult().getUsername();
+		} finally {
+			em.close();
+		}
+	}
+	
+	public static String getPasswordByUsername(String user) {
+		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
+		String qString =	"SELECT password" +
+							"FROM Employee as e" +
+							"WHERE e.username = user";
+		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
+		q.setParameter("username", user);
+		try {
+			return q.getSingleResult().getPassword();
+		} finally {
+			em.close();
+		}
+	}
+	
+	public static boolean checkUsernameExists(String user) {
+		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
+		String qString =	"SELECT username" +
+							"FROM Employee as e" +
+							"WHERE e.username = user";
+		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
+		q.setParameter("username", user);
 		try {
 			if(q.getSingleResult() != null) return true;
 			return false;
@@ -43,104 +62,25 @@ public class EmployeeDB {
 		}
 	}
 	
-	public static Employee getEmployeeByID(int id) {
+	public static boolean checkPasswordMatches(String user, String pass) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString ="SELECT e " +
-						"FROM Employee e " +
-						"WHERE e.userid = :id";
+		String qString =	"SELECT username" +
+							"FROM Employee as e" +
+							"WHERE e.username = user";
 		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
-		q.setParameter("id", id);
+		q.setParameter("username", user);
 		try {
-			return q.getSingleResult();
+			if(q.getSingleResult().getPassword() == pass) return true;
+			return false;
 		} finally {
 			em.close();
 		}
 	}
 	
-	public static Employee getEmployeeByUsername(String username) {
-		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString ="SELECT e " +
-						"FROM Employee e " +
-						"WHERE e.username = :username";
-		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
-		q.setParameter("username", username);
-		try {
-			return q.getSingleResult();
-		} catch (Exception e) {
-			return null;
-		}finally {
-			em.close();
+	public static boolean checkCredentials(String user, String pass) {
+		if(checkUsernameExists(user) == true) {
+			if(checkPasswordMatches(user, pass) == true) return true;
 		}
-	}
-	
-	public static String getPasswordByUsername(String username) {
-		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString =	"SELECT e.password " +
-							"FROM Employee as e " +
-							"WHERE e.username = :user";
-		TypedQuery<String> q = em.createQuery(qString, String.class);
-		q.setParameter("user", username);
-		try {
-			return q.getSingleResult();
-		} catch (Exception e) {
-			// TODO: handle exception
-			return "";
-		}finally {
-			em.close();
-		}
-	}
-	
-	public static String getUsernameByID(int id) {
-		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString ="SELECT e.username " +
-						"FROM Employee e " +
-						"WHERE e.userid = :id";
-		TypedQuery<String> q = em.createQuery(qString, String.class);
-		q.setParameter("id", id);
-		try {
-			return q.getSingleResult();
-		} finally {
-			em.close();
-		}
-	}
-	
-	public static boolean insertEmployee(Employee employee) {
-		boolean isSuccessful = false;
-		
-		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		EntityTransaction trans = em.getTransaction();
-		try {
-			trans.begin();
-			em.persist(employee);
-			trans.commit();
-			isSuccessful = true;
-		} catch (Exception e) {
-			trans.rollback();
-			isSuccessful = false;
-		}finally {
-			em.close();
-		}
-		
-		return isSuccessful;
-	}
-	
-	public static boolean mergeEmployee(Employee employee) {
-		boolean isSuccessful = false;
-
-		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		EntityTransaction trans = em.getTransaction();
-		try {
-			trans.begin();
-			em.merge(employee);
-			trans.commit();
-			isSuccessful = true;
-		} catch (Exception e) {
-			trans.rollback();
-			isSuccessful = false;
-		}finally {
-			em.close();
-		}
-		
-		return isSuccessful;
+		return false;
 	}
 }
