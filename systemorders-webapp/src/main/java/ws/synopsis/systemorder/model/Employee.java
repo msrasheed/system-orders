@@ -11,18 +11,6 @@ import javax.persistence.*;
 @Table(name = "employee")
 public class Employee implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int userid;
-	private String role;
-	private String fname;
-	private String lname;
-	private String username;
-	private String password;
-	private String email;
-	
-	//private static final long serialVersionUID = 1L;
-
 	public Employee() {
 		super();
 	}
@@ -37,6 +25,16 @@ public class Employee implements Serializable {
 		this.password = password;
 		this.email = email;
 	}
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int userid;
+	private String role;
+	private String fname;
+	private String lname;
+	private String username;
+	private String password;
+	private String email;
 
 	public int getUserid() {
 		return userid;
