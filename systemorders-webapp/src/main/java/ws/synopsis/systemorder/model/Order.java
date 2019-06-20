@@ -22,14 +22,14 @@ public class Order implements Serializable {
 		this.orderid = orderid;
 		this.userid = userid;
 		this.status = status;
-		this.date_created = date_created;
+		this.dateCreated = date_created;
 		this.processor = processor;
 		this.memory = memory;
 		this.harddisk = harddisk;
 		this.os = os;
-		this.device_type = device_type;
-		this.date_needed = date_needed;
-		this.client_contact = client_contact;
+		this.deviceType = device_type;
+		this.dateNeeded = date_needed;
+		this.clientContact = client_contact;
 	}
 	
 	public Order(int orderid, int userid, String status, Date date_created, String processor, int memory, int harddisk,
@@ -40,59 +40,79 @@ public class Order implements Serializable {
 		this.orderid = orderid;
 		this.userid = userid;
 		this.status = status;
-		this.date_created = date_created;
+		this.dateCreated = date_created;
 		this.processor = processor;
 		this.memory = memory;
 		this.harddisk = harddisk;
 		this.os = os;
-		this.device_type = device_type;
-		this.date_needed = date_needed;
-		this.client_contact = client_contact;
+		this.deviceType = device_type;
+		this.dateNeeded = date_needed;
+		this.clientContact = client_contact;
 		this.supplier = supplier;
-		this.final_price = final_price;
-		this.acquisition_type = acquisition_type;
-		this.quoted_date = quoted_date;
-		this.gm_accepted = gm_accepted;
-		this.gm_comments = gm_comments;
+		this.finalPrice = final_price;
+		this.acquisitionType = acquisition_type;
+		this.quotedDate = quoted_date;
+		this.gmAccepted = gm_accepted;
+		this.gmComments = gm_comments;
 		this.finalid = finalid;
-		this.date_arrived = date_arrived;
+		this.dateArrived = date_arrived;
 	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int orderid;
-	private int userid;
+	private long orderid;
+	private long userid;
 	private String status;
-	private Date date_created;
+	
+	@Column(name = "date_created")
+	private Date dateCreated;
 	private String processor;
 	private int memory;
 	private int harddisk;
 	private String os;
-	private String device_type;
-	private Date date_needed;
-	private String client_contact;
+	
+	@Column(name = "device_type")
+	private String deviceType;
+	
+	@Column(name = "date_needed")
+	private Date dateNeeded;
+	
+	@Column(name = "client_contact")
+	private String clientContact;
 	private String supplier;
-	private float final_price;
-	private String acquisition_type;
-	private Date quoted_date;
-	private boolean gm_accepted;
-	private String gm_comments;
+	
+	@Column(name = "final_prce")
+	private float finalPrice;
+	
+	@Column(name = "acquisition_type")
+	private String acquisitionType;
+	
+	@Column(name = "quoted_date")
+	private Date quotedDate;
+	
+	@Column(name = "gm_accepted")
+	private boolean gmAccepted;
+	
+	@Column(name = "gm_comments")
+	private String gmComments;
 	private int finalid;
-	private Date date_arrived;
+	
+	@Column(name = "date_arrived")
+	private Date dateArrived;
 
-	public int getOrderid() {
+	public long getOrderid() {
 		return orderid;
 	}
 
-	public void setOrderid(int orderid) {
+	public void setOrderid(long orderid) {
 		this.orderid = orderid;
 	}
 
-	public int getUserid() {
+	public long getUserid() {
 		return userid;
 	}
 
-	public void setUserid(int userid) {
+	public void setUserid(long userid) {
 		this.userid = userid;
 	}
 
@@ -104,12 +124,12 @@ public class Order implements Serializable {
 		this.status = status;
 	}
 
-	public Date getDate_created() {
-		return date_created;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
-	public void setDate_created(Date date_created) {
-		this.date_created = date_created;
+	public void setDateCreated(Date date_created) {
+		this.dateCreated = date_created;
 	}
 
 	public String getProcessor() {
@@ -136,36 +156,36 @@ public class Order implements Serializable {
 		this.harddisk = harddisk;
 	}
 
-	public String getOs() {
+	public String getOperatingSystem() {
 		return os;
 	}
 
-	public void setOs(String os) {
+	public void setOperatingSystem(String os) {
 		this.os = os;
 	}
 
-	public String getDevice_type() {
-		return device_type;
+	public String getDeviceType() {
+		return deviceType;
 	}
 
-	public void setDevice_type(String device_type) {
-		this.device_type = device_type;
+	public void setDeviceType(String device_type) {
+		this.deviceType = device_type;
 	}
 
-	public Date getDate_needed() {
-		return date_needed;
+	public Date getDateNeeded() {
+		return dateNeeded;
 	}
 
-	public void setDate_needed(Date date_needed) {
-		this.date_needed = date_needed;
+	public void setDateNeeded(Date date_needed) {
+		this.dateNeeded = date_needed;
 	}
 
-	public String getClient_contact() {
-		return client_contact;
+	public String getClientContact() {
+		return clientContact;
 	}
 
-	public void setClient_contact(String client_contact) {
-		this.client_contact = client_contact;
+	public void setClientContact(String client_contact) {
+		this.clientContact = client_contact;
 	}
 
 	public String getSupplier() {
@@ -176,44 +196,44 @@ public class Order implements Serializable {
 		this.supplier = supplier;
 	}
 
-	public float getFinal_price() {
-		return final_price;
+	public float getFinalPrice() {
+		return finalPrice;
 	}
 
-	public void setFinal_price(float final_price) {
-		this.final_price = final_price;
+	public void setFinalPrice(float final_price) {
+		this.finalPrice = final_price;
 	}
 
-	public String getAcquisition_type() {
-		return acquisition_type;
+	public String getAcquisitionType() {
+		return acquisitionType;
 	}
 
-	public void setAcquisition_type(String acquisition_type) {
-		this.acquisition_type = acquisition_type;
+	public void setAcquisitionType(String acquisition_type) {
+		this.acquisitionType = acquisition_type;
 	}
 
-	public Date getQuoted_date() {
-		return quoted_date;
+	public Date getQuotedDate() {
+		return quotedDate;
 	}
 
-	public void setQuoted_date(Date quoted_date) {
-		this.quoted_date = quoted_date;
+	public void setQuotedDate(Date quoted_date) {
+		this.quotedDate = quoted_date;
 	}
 
-	public boolean isGm_accepted() {
-		return gm_accepted;
+	public boolean isGmAccepted() {
+		return gmAccepted;
 	}
 
-	public void setGm_accepted(boolean gm_accepted) {
-		this.gm_accepted = gm_accepted;
+	public void setGmAccepted(boolean gm_accepted) {
+		this.gmAccepted = gm_accepted;
 	}
 
-	public String getGm_comments() {
-		return gm_comments;
+	public String getGmComments() {
+		return gmComments;
 	}
 
-	public void setGm_comments(String gm_comments) {
-		this.gm_comments = gm_comments;
+	public void setGmComments(String gm_comments) {
+		this.gmComments = gm_comments;
 	}
 
 	public int getFinalid() {
@@ -224,12 +244,12 @@ public class Order implements Serializable {
 		this.finalid = finalid;
 	}
 
-	public Date getDate_arrived() {
-		return date_arrived;
+	public Date getDateArrived() {
+		return dateArrived;
 	}
 
-	public void setDate_arrived(Date date_arrived) {
-		this.date_arrived = date_arrived;
+	public void setDateArrived(Date date_arrived) {
+		this.dateArrived = date_arrived;
 	}
    
 }
