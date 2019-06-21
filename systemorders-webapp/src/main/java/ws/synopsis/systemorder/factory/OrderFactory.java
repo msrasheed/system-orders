@@ -1,22 +1,33 @@
 package ws.synopsis.systemorder.factory;
 
-
-import java.text.ParseException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import ws.synopsis.systemorder.Gson.JsonBuilder;
 import ws.synopsis.systemorder.model.Employee;
+import ws.synopsis.systemorder.model.HardwareOrderItems;
 import ws.synopsis.systemorder.model.Order;
 import ws.synopsis.systemorder.model.OtherOrderItem;
 import ws.synopsis.systemorder.model.SoftwareOrderItem;
+import ws.synopsis.systemorder.utils.OrderDB;
 
 public class OrderFactory {
-	public static boolean create(HttpServletRequest req) {
-		Order order = new Order();
-		return create(order, req);
+	public static Order createNew(HttpServletRequest req) {
+		Order order = new Order(true);
+		if (create(order, req)) {
+			System.out.println("attempting to persist");
+			OrderDB.insertOrder(order);
+			return order;
+		}
+		return null;
 	}
 	
 	public static boolean create(Order order, HttpServletRequest req) {
@@ -51,34 +62,37 @@ public class OrderFactory {
 	
 	public static boolean update(Order order, HttpServletRequest req, OrderFactoryPermissions perm) {
 		if (perm.canCreate()) {
-			if (editCreateForm(order, req)) return false;
+			if (!editCreateForm(order, req)) return false;
 		}
 		
 		if (perm.canVerfiy()) {
-			if (editVerifyForm(order, req)) return false;
+			if (!editVerifyForm(order, req)) return false;
 		}
 		
 		if (perm.canQuote()) {
-			if (editQuoteForm(order, req)) return false;
+			if (!editQuoteForm(order, req)) return false;
 		}
 		
 		if (perm.canApprove()) {
-			if (editApprovalForm(order, req)) return false;
+			if (!editApprovalForm(order, req)) return false;
 		}
 		
 		if (perm.canDeliver()) {
-			
+			if (!editDeliverForm(order, req)) return false;
 		}
 		
-		return false;
+		return true;
 	}
 	
 	private static boolean editCreateForm(Order order, HttpServletRequest req) {
+		System.out.println("Editing Create Form");
+		
 		long userid = ((Employee) req.getSession().getAttribute("employee")).getUserid();
 		String status = "new";
 	    Date dateCreated = new Date();
 	    String teststr;
 	    
+	    String clientContact;
 	    String deviceType;
 	    Date dateNeeded = null;
 	    String processor;
@@ -86,6 +100,8 @@ public class OrderFactory {
 	    int harddisk;
 	    String os;
 		
+	    if ((clientContact = req.getParameter("clientcontact")) == null) return false;
+	    
 		if ((deviceType = req.getParameter("type")) == null) return false;
 		
 		if ((teststr = req.getParameter("dateneeded")) == null) return false;
@@ -111,6 +127,8 @@ public class OrderFactory {
 		order.setUserid(userid);
 		order.setStatus(status);
 		order.setDateCreated(dateCreated);
+		
+		order.setClientContact(clientContact);
 		order.setDeviceType(deviceType);
 		order.setDateNeeded(dateNeeded);
 		order.setProcessor(processor);
@@ -120,7 +138,11 @@ public class OrderFactory {
 		
 		String[] hardwares;
 		if ((hardwares = req.getParameterValues("hardware")) != null) {
-			
+			HardwareOrderItems hardware = new HardwareOrderItems();
+			for (String hard : hardwares) {
+				hardware.set(hard);
+			}
+			order.setHardware(hardware);
 		}
 		
 		String[] softwares;
@@ -140,10 +162,12 @@ public class OrderFactory {
 			}
 		}
 		
+		System.out.println("done editing form");
 		return true;
 	}
 	
 	private static boolean editVerifyForm(Order order, HttpServletRequest req) {
+		System.out.println("Editing Verify Form");
 		
 		String approval;
 		
@@ -163,6 +187,7 @@ public class OrderFactory {
 	}
 	
 	private static boolean editQuoteForm(Order order, HttpServletRequest req) {
+		System.out.println("Editing Quote Form");
 		
 		String supplier;
 		float finalPrice;
@@ -179,13 +204,16 @@ public class OrderFactory {
 		
 		order.setSupplier(supplier);
 		order.setFinalPrice(finalPrice);
+		order.setAcquisitionType(acquisitionType);
+		order.setQuotedDate(quotedDate);
 		
 		return true;
 	}
 	
 	private static boolean editApprovalForm(Order order, HttpServletRequest req) {
+		System.out.println("Editing Approval Form");
 		
-		boolean gmApproval;
+		//boolean gmApproval;
 		String gmComments;
 		String teststr;
 		
@@ -209,6 +237,7 @@ public class OrderFactory {
 	}
 	
 	private static boolean editDeliverForm(Order order, HttpServletRequest req) {
+		System.out.println("Editing Deliver Form");
 		
 		long finalid;
 		Date dateArrived;
@@ -231,5 +260,27 @@ public class OrderFactory {
 		order.setDateArrived(dateArrived);
 		
 		return true;
+	}
+	
+	public static Order getOrderById(long id) {
+		return OrderDB.getOrderById(id);
+	}
+	
+	public static String getOrderJson(long orderid, HttpServletResponse res) {
+		Order order = getOrderById(orderid);
+		String orderString = JsonBuilder.getGson().toJson(order);
+		return orderString;
+	}
+	
+	public static String getOrdersWithStatJson(String stat, HttpServletResponse res) {
+		List<Order> orders = (List<Order>) OrderDB.getOrdersByStatus(stat);
+		String orderString = JsonBuilder.getGson().toJson(orders);
+		return orderString;
+	}
+	
+	public static String getOrdersOfUser(long id) {
+		List<Order> orders = (List<Order>) OrderDB.getOrdersByUser(id);
+		String orderString = JsonBuilder.getGson().toJson(orders);
+		return orderString;
 	}
 }

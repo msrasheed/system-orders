@@ -3,6 +3,7 @@ package ws.synopsis.systemorder.auth;
 import java.util.List;
 
 import ws.synopsis.systemorder.model.Employee;
+import ws.synopsis.systemorder.utils.OrderDB;
 import ws.synopsis.systemorder.utils.PostgresDBUtil;
 
 public class Authorization {
@@ -13,6 +14,15 @@ public class Authorization {
 			return true;
 		} else {
 			return authRoles.contains(emp.getRole());
+		}
+	}
+	
+	public static boolean authorizeViewOrder(Employee emp, long orderid) {
+		long userOfOrder = OrderDB.getUserOfOrder(orderid);
+		if (userOfOrder == emp.getUserid() || !emp.getRole().equals("user")) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 	

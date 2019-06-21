@@ -43,7 +43,7 @@ public class EmployeeDB {
 		}
 	}
 	
-	public static Employee getEmployeeByID(int id) {
+	public static Employee getEmployeeById(long id) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
 		String qString ="SELECT e " +
 						"FROM Employee e " +
@@ -90,7 +90,7 @@ public class EmployeeDB {
 		}
 	}
 	
-	public static String getUsernameByID(int id) {
+	public static String getUsernameById(long id) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
 		String qString ="SELECT e.username " +
 						"FROM Employee e " +

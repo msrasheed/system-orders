@@ -29,6 +29,9 @@
       <class>ws.synopsis.systemorder.model.TestPeople</class>
       <class>ws.synopsis.systemorder.model.Employee</class>
       <class>ws.synopsis.systemorder.model.Order</class>
+      <class>ws.synopsis.systemorder.model.SoftwareOrderItem</class>
+      <class>ws.synopsis.systemorder.model.HardwareOrderItems</class>
+      <class>ws.synopsis.systemorder.model.OtherOrderItem</class>
       <properties>
          <!-- Properties for Hibernate -->
          <property name="hibernate.hbm2ddl.auto" value="update" />

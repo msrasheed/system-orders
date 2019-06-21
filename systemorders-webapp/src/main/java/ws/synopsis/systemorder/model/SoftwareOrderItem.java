@@ -3,6 +3,8 @@ package ws.synopsis.systemorder.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import ws.synopsis.systemorder.Gson.GsonExclude;
+
 /**
  * Entity implementation class for Entity: SoftwareOrderItem
  *
@@ -15,8 +17,9 @@ public class SoftwareOrderItem implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long softid;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderid")
+	@GsonExclude
 	private Order order;
 	
 	private String software;

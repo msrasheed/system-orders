@@ -109,6 +109,10 @@
                                 <h2>General</h2>
                                 <div class="section-body">
                                     <div class="entry">
+                                        <p>Client</p>
+                                        <input type="text" name="clientcontact" value="Synopsis">
+                                    </div>
+                                    <div class="entry">
                                         <p>Type</p>
                                         <select name="type">
                                             <option>Laptop</option>
@@ -158,7 +162,7 @@
                                 <h2>Software</h2>
                                 <div class="section-body">
                                     <div class="variable-input">
-                                        <input type="text" name="software1" value="Microsoft Office 2017">
+                                        <input type="text" name="software" value="Microsoft Office 2017">
                                         <i class="material-icons delete">delete</i>
                                     </div>
                                     <div class="variable-input">
@@ -171,7 +175,7 @@
                                 <h2>Other</h2>
                                 <div class="section-body">
                                     <div class="variable-input">
-                                        <input type="text" name="other1" value="Desktop image is my family">
+                                        <input type="text" name="other" value="Desktop image is my family">
                                         <i class="material-icons delete">delete</i>
                                     </div>
                                     <div class="variable-input">
@@ -193,7 +197,7 @@
                             </div>
                             <div class="section">
                                 <h2></h2>
-                                <input type="submit" value="Eviar"/>
+                                <input type="submit" value="Enviar"/>
                             </div>
                         </div>
                     </form>

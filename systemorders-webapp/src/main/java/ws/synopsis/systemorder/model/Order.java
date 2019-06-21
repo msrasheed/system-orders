@@ -2,6 +2,7 @@ package ws.synopsis.systemorder.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -26,6 +27,8 @@ public class Order implements Serializable {
 	private String processor;
 	private int memory;
 	private int harddisk;
+	
+	@Column(name = "os")
 	private String OperatingSystem;
 	
 	@Column(name = "device_type")
@@ -63,17 +66,25 @@ public class Order implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dateArrived;
 	
-	@OneToOne(mappedBy="order", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	HardwareOrderItems hardware;
 	
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<SoftwareOrderItem> softwares;
 	
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<OtherOrderItem> others;
 	
 	public Order() {
 		super();
+	}
+	
+	public Order(boolean programCreated) {
+		super();
+		if (programCreated) {
+			softwares = new HashSet<SoftwareOrderItem>();
+			others = new HashSet<OtherOrderItem>();
+		}
 	}
 	
 	public Order(int orderid, int userid, String status, Date date_created, String processor, int memory, int harddisk, String os, String device_type, Date date_needed, String client_contact) {
@@ -282,6 +293,7 @@ public class Order implements Serializable {
 	}
 
 	public void setHardware(HardwareOrderItems hardware) {
+		hardware.setOrder(this);
 		this.hardware = hardware;
 	}
 

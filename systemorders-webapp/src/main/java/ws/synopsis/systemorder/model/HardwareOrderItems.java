@@ -3,6 +3,8 @@ package ws.synopsis.systemorder.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import ws.synopsis.systemorder.Gson.GsonExclude;
+
 /**
  * Entity implementation class for Entity: HardwareOrderItems
  *
@@ -15,8 +17,9 @@ public class HardwareOrderItems implements Serializable {
 	@Column(name = "orderid")
 	private long primKey;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderid")
+	@GsonExclude
 	private Order order;
 	
 	private boolean mouse;
@@ -32,6 +35,17 @@ public class HardwareOrderItems implements Serializable {
 		super();
 		this.primKey = primKey;
 		this.order = order;
+	}
+	
+	public void set(String key) {
+		switch (key) {
+			case "mouse":
+				setMouse(true);
+				break;
+			case "monitor":
+				setMonitor(true);
+				break;
+		}
 	}
 
 	public long getPrimKey() {
