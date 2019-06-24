@@ -18,14 +18,19 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long orderid;
+	
 	private long userid;
+	
 	private String status;
 	
 	@Column(name = "date_created")
 	@Temporal(TemporalType.DATE)
 	private Date dateCreated;
+	
 	private String processor;
+	
 	private int memory;
+	
 	private int harddisk;
 	
 	@Column(name = "os")
@@ -43,6 +48,7 @@ public class Order implements Serializable {
 	
 	@Column(name = "support_approval")
 	private boolean supportApproval;
+	
 	private String supplier;
 	
 	@Column(name = "final_prce")
@@ -60,6 +66,7 @@ public class Order implements Serializable {
 	
 	@Column(name = "gm_comments")
 	private String gmComments;
+	
 	private long finalid;
 	
 	@Column(name = "date_arrived")

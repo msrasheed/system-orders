@@ -18,7 +18,7 @@ public class Authorization {
 	}
 	
 	public static boolean authorizeViewOrder(Employee emp, long orderid) {
-		long userOfOrder = OrderDB.getUserOfOrder(orderid);
+		long userOfOrder = OrderDB.getUserByID(orderid);
 		if (userOfOrder == emp.getUserid() || !emp.getRole().equals("user")) {
 			return true;
 		} else {
