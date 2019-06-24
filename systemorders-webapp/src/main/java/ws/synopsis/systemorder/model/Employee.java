@@ -28,7 +28,7 @@ public class Employee implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int userid;
+	private long userid;
 	private String role;
 	private String fname;
 	private String lname;
@@ -36,11 +36,11 @@ public class Employee implements Serializable {
 	private String password;
 	private String email;
 
-	public int getUserid() {
+	public long getUserid() {
 		return userid;
 	}
 
-	public void setUserid(int userid) {
+	public void setUserid(long userid) {
 		this.userid = userid;
 	}
 

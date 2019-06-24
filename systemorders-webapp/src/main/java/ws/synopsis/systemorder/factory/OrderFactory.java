@@ -266,13 +266,13 @@ public class OrderFactory {
 		return OrderDB.getOrderById(id);
 	}
 	
-	public static String getOrderJson(long orderid, HttpServletResponse res) {
+	public static String getOrderJson(long orderid) {
 		Order order = getOrderById(orderid);
 		String orderString = JsonBuilder.getGson().toJson(order);
 		return orderString;
 	}
 	
-	public static String getOrdersWithStatJson(String stat, HttpServletResponse res) {
+	public static String getOrdersWithStatJson(String stat) {
 		List<Order> orders = (List<Order>) OrderDB.getOrdersByStatus(stat);
 		String orderString = JsonBuilder.getGson().toJson(orders);
 		return orderString;

@@ -17,7 +17,6 @@ import ws.synopsis.systemorder.model.TestPeople;
 import ws.synopsis.systemorder.factory.OrderFactory;
 import ws.synopsis.systemorder.model.Employee;
 import ws.synopsis.systemorder.model.Order;
-import ws.synopsis.systemorder.utils.TestPeopleDB;
 import ws.synopsis.systemorder.utils.EmployeeDB;
 import ws.synopsis.systemorder.utils.OrderDB;
 
@@ -47,10 +46,10 @@ public class OrderServlet extends HttpServlet {
 		String json = null;
 		
 		if ((paramstr = request.getParameter("orderid")) != null) {
-			json = OrderFactory.getOrderJson(Long.parseLong(paramstr), response);
+			json = OrderFactory.getOrderJson(Long.parseLong(paramstr));
 		}
 		else if((paramstr = request.getParameter("status")) != null) {
-			json = OrderFactory.getOrdersWithStatJson(paramstr, response);
+			json = OrderFactory.getOrdersWithStatJson(paramstr);
 		}
 		else {
 			json = OrderFactory.getOrdersOfUser(employee.getUserid());

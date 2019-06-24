@@ -143,4 +143,24 @@ public class EmployeeDB {
 		
 		return isSuccessful;
 	}
+	
+	public static boolean deleteEmployee(Employee employee) {
+		boolean isSuccessful = false;
+
+		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();
+		try {
+			trans.begin();
+			em.remove(employee);
+			trans.commit();
+			isSuccessful = true;
+		} catch (Exception e) {
+			trans.rollback();
+			isSuccessful = false;
+		}finally {
+			em.close();
+		}
+		
+		return isSuccessful;
+	}
 }
