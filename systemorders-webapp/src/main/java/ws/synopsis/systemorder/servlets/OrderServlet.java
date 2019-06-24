@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import ws.synopsis.systemorder.utils.OrderDB;
  * Servlet implementation class OrderSubmissionServlet
  */
 //@WebServlet("/order")
+@MultipartConfig
 public class OrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -86,6 +88,20 @@ public class OrderServlet extends HttpServlet {
 		}
 		else {
 			return;
+		}
+		
+		if (operation.equals("create")) {
+			boolean isSuccessful = false;
+			OrderFactory.saveCreateSpreadsheet(order, request.getPart("cost-sheet"));
+			if (!exists) {
+				order = OrderFactory.createNew(request);
+				if (order != null) isSuccessful = true;
+			}
+			else {
+				isSuccessful = OrderFactory.create(order, request);
+			}
+			
+			//if (isSuccessful) OrderFactory.saveCreateSpreadsheet(order, request.getPart("cost-sheet"));
 		}
 		
 		if (operation.equals("create") && !exists){

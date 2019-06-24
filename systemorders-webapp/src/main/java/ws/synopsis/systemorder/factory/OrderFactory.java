@@ -1,13 +1,18 @@
 package ws.synopsis.systemorder.factory;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
@@ -258,6 +263,25 @@ public class OrderFactory {
 		
 		order.setFinalid(finalid);
 		order.setDateArrived(dateArrived);
+		
+		return true;
+	}
+	
+	public static boolean saveCreateSpreadsheet(Order order, Part filePart) {
+		String filename = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+		String[] fileSegs = filename.split(".");
+		String fileExt = fileSegs[fileSegs.length - 1];
+		String orderid = Long.toString(order.getOrderid());
+		File uploads = new File("$HOME/systemorders_uploads" + orderid);
+		uploads.mkdirs();
+		File file = new File(uploads, "cost_sheet" + fileExt);
+		
+		try {
+			InputStream input = filePart.getInputStream();
+			Files.copy(input, file.toPath());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		return true;
 	}

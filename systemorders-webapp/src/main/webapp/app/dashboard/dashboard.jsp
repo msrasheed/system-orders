@@ -101,7 +101,7 @@
             <img src="photos/background.jpg" class="background-img"/>
             <div class="content">
                 <div class="new-order-form-page">
-                    <form class="new-request" action="/systemorders-webapp/app/orders" method="post">
+                    <form class="new-request" action="/systemorders-webapp/app/orders" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="operation" value="create">
                         <h1>Nuevo Solicitud</h1>
                         <div class="all-indent">
