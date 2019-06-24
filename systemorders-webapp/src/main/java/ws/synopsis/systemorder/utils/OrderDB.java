@@ -9,6 +9,21 @@ import javax.persistence.TypedQuery;
 import ws.synopsis.systemorder.model.Order;
 
 public class OrderDB {
+	public static List<Order> getAllOrders() {
+		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
+		String qString =	"SELECT * " +
+							"FROM Order";
+		TypedQuery<Order> q = em.createQuery(qString, Order.class);
+		List<Order> orders;
+		try {
+			orders = q.getResultList();
+			if (orders == null) orders = null;
+		} finally {
+			em.close();
+		}
+		return orders;
+	}
+
 	public static List<Order> getOrdersByStatus(String status) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
 		String qString =	"SELECT o " +
@@ -57,7 +72,7 @@ public class OrderDB {
 		}
 	}
 	
-	public static long getUserOfOrder(long orderid) {
+	public static long getUserByID(long orderid) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
 		String qString = "SELECT o.userid " +
 						 "FROM Order as o " +
@@ -73,7 +88,6 @@ public class OrderDB {
 	
 	public static boolean insertOrder(Order order) {
 		boolean isSuccessful = false;
-		
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
 		try {
@@ -87,13 +101,11 @@ public class OrderDB {
 		}finally {
 			em.close();
 		}
-		
 		return isSuccessful;
 	}
 	
 	public static boolean mergeOrder(Order order) {
 		boolean isSuccessful = false;
-
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
 		EntityTransaction trans = em.getTransaction();
 		try {
@@ -107,16 +119,25 @@ public class OrderDB {
 		}finally {
 			em.close();
 		}
-		
+		return isSuccessful;
+	}
+	
+	public static boolean dropOrder(Order order) {
+		boolean isSuccessful = false;
+		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();
+		try {
+			trans.begin();
+			em.remove(order);
+			trans.commit();
+			isSuccessful = true;
+		} catch (Exception e) {
+			trans.rollback();
+			isSuccessful = false;
+		}finally {
+			em.close();
+		}
 		return isSuccessful;
 	}
 }
-
-// get all orders with specific status
-// get all orders from specific user
-// get all orders
-// persist function (save)
-// merge function (update)
-// drop function (delete)
-// get order by id
 
