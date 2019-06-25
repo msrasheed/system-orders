@@ -1,0 +1,7 @@
+:host {
+    /* height: 88vh; */
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
