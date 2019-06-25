@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -269,12 +270,14 @@ public class OrderFactory {
 	
 	public static boolean saveCreateSpreadsheet(Order order, Part filePart) {
 		String filename = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-		String[] fileSegs = filename.split(".");
+		System.out.println(filename);
+		String[] fileSegs = filename.split(Pattern.quote("."));
+		System.out.println(fileSegs.length);
 		String fileExt = fileSegs[fileSegs.length - 1];
-		String orderid = Long.toString(order.getOrderid());
-		File uploads = new File("$HOME/systemorders_uploads" + orderid);
+		String orderid = Long.toString(20);//order.getOrderid());
+		File uploads = new File("/home/synopsis/systemorders_uploads/" + orderid);
 		uploads.mkdirs();
-		File file = new File(uploads, "cost_sheet" + fileExt);
+		File file = new File(uploads, "cost_sheet." + fileExt);
 		
 		try {
 			InputStream input = filePart.getInputStream();
@@ -282,7 +285,7 @@ public class OrderFactory {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+		System.out.println("successfuly saved file");
 		return true;
 	}
 	

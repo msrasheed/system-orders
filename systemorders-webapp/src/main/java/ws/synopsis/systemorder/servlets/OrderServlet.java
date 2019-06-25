@@ -1,7 +1,10 @@
 package ws.synopsis.systemorder.servlets;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import ws.synopsis.systemorder.model.TestPeople;
 import ws.synopsis.systemorder.factory.OrderFactory;
@@ -46,8 +50,15 @@ public class OrderServlet extends HttpServlet {
 		
 		String paramstr;
 		String json = null;
+		File file = null;
 		
-		if ((paramstr = request.getParameter("orderid")) != null) {
+		if ((paramstr = request.getParameter("file")) != null) {
+			String orderid = request.getParameter("orderid");
+			if (orderid != null) {
+				file = new File("/home/synopsis/systemorders_uploads/" + orderid, paramstr);
+			}
+		}
+		else if ((paramstr = request.getParameter("orderid")) != null) {
 			json = OrderFactory.getOrderJson(Long.parseLong(paramstr));
 		}
 		else if((paramstr = request.getParameter("status")) != null) {
@@ -57,15 +68,29 @@ public class OrderServlet extends HttpServlet {
 			json = OrderFactory.getOrdersOfUser(employee.getUserid());
 		}
 		
-		try {
-			PrintWriter out = response.getWriter();
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			out.print(json);
-			out.flush();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+		if (file != null) {
+			try {
+				response.setHeader("content-disposition", "attachment; filename=" + file.getName());
+				response.setHeader("cache-control", "no-cache");
+				OutputStream out = response.getOutputStream();
+				Files.copy(file.toPath(), out);
+				out.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		}
+		else if (json != null) {
+			try {
+				PrintWriter out = response.getWriter();
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				out.print(json);
+				out.flush();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -92,29 +117,20 @@ public class OrderServlet extends HttpServlet {
 		
 		if (operation.equals("create")) {
 			boolean isSuccessful = false;
-			OrderFactory.saveCreateSpreadsheet(order, request.getPart("cost-sheet"));
-			if (!exists) {
-				order = OrderFactory.createNew(request);
-				if (order != null) isSuccessful = true;
-			}
-			else {
-				isSuccessful = OrderFactory.create(order, request);
-			}
-			
-			//if (isSuccessful) OrderFactory.saveCreateSpreadsheet(order, request.getPart("cost-sheet"));
-		}
-		
-		if (operation.equals("create") && !exists){
-			if ((order = OrderFactory.createNew(request)) != null) {
-				System.out.println("New order creation was successful");
+			Part filepart = null;
+			if ((filepart = request.getPart("cost-sheet")) != null) {
+				if (!exists) {
+					System.out.println("new order");
+					//order = OrderFactory.createNew(request);
+					if (order != null) isSuccessful = true;
+				}
+				else {
+					System.out.println("existing order");
+					isSuccessful = OrderFactory.create(order, request);
+				}
+				
+				if (isSuccessful) OrderFactory.saveCreateSpreadsheet(order, filepart);
 			}
 		}
-		else if (operation.equals("create")) {
-			if(OrderFactory.create(order, request)) {
-				System.out.println("order creation was successful");
-			}
-		    //System.out.println(dateneeded + " : " + device_type + " : " + status + " : " + memory);
-		}
-		else if (operation.equals("drown")) System.out.println("I'm drowning");
 	}
 }
