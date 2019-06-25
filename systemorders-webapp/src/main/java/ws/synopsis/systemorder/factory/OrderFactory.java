@@ -56,6 +56,11 @@ public class OrderFactory {
 		return update(order, req, perm);
 	}
 	
+	public static boolean purchase(Order order, HttpServletRequest req) {
+		OrderFactoryPermissions perm = new OrderFactoryPermissions("purchase");
+		return update(order, req, perm);
+	}
+	
 	public static boolean deliver(Order order, HttpServletRequest req) {
 		OrderFactoryPermissions perm = new OrderFactoryPermissions("deliver");
 		return update(order, req, perm);

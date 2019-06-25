@@ -106,19 +106,23 @@ public class OrderServlet extends HttpServlet {
 		Order order = null;
 		String orderid;
 		
+		//if operation exists, make lowercase, otherwise exit function
 		if (operation != null) {
 			operation = operation.toLowerCase();
+			//if orderid does not exist, change exists to false, otherwise get order
 			if ((orderid = request.getParameter("orderid")) == null) exists = false;
 			else order = OrderFactory.getOrderById(Long.parseLong(orderid));
 		}
-		else {
-			return;
-		}
+		else return;
 		
+		//
 		if (operation.equals("create")) {
 			boolean isSuccessful = false;
 			Part filepart = null;
+			
+			//enter if cost sheet does not exist
 			if ((filepart = request.getPart("cost-sheet")) != null) {
+				//both paths create order and change isSuccessful to true
 				if (!exists) {
 					System.out.println("new order");
 					order = OrderFactory.createNew(request);
@@ -131,6 +135,31 @@ public class OrderServlet extends HttpServlet {
 				
 				if (isSuccessful) OrderFactory.saveCreateSpreadsheet(order, filepart);
 			}
+		}
+		
+		else if (operation.equals("verify")) {
+			//if order exists verify cost sheet
+			if (exists) OrderFactory.verify(order, request);
+		}
+		
+		else if (operation.equals("quote")) {
+			//if order exists verify cost sheet
+			if (exists) OrderFactory.quote(order, request);
+		}
+		
+		else if (operation.equals("approve")) {
+			//if order exists verify cost sheet
+			if (exists) OrderFactory.approve(order, request);
+		}
+		
+		else if (operation.equals("purchase")) {
+			//if order exists verify cost sheet
+			if (exists) OrderFactory.purchase(order, request);
+		}
+		
+		else if (operation.equals("deliver")) {
+			//if order exists verify cost sheet
+			if (exists) OrderFactory.deliver(order, request);
 		}
 	}
 }
