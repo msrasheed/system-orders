@@ -7,6 +7,6 @@
 /SystemOrdersTest/*
 !/SystemOrdersTest/src
 
-!/orderdash
-/orderdash/*
-!/orderdash/src
+!/ordersdash
+/ordesrdash/*
+!/ordersdash/src
