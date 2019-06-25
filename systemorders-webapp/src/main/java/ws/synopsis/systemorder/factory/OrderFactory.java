@@ -270,11 +270,11 @@ public class OrderFactory {
 	
 	public static boolean saveCreateSpreadsheet(Order order, Part filePart) {
 		String filename = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-		System.out.println(filename);
+		//System.out.println(filename);
 		String[] fileSegs = filename.split(Pattern.quote("."));
-		System.out.println(fileSegs.length);
+		//System.out.println(fileSegs.length);
 		String fileExt = fileSegs[fileSegs.length - 1];
-		String orderid = Long.toString(20);//order.getOrderid());
+		String orderid = Long.toString(order.getOrderid());
 		File uploads = new File("/home/synopsis/systemorders_uploads/" + orderid);
 		uploads.mkdirs();
 		File file = new File(uploads, "cost_sheet." + fileExt);
@@ -283,7 +283,7 @@ public class OrderFactory {
 			InputStream input = filePart.getInputStream();
 			Files.copy(input, file.toPath());
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		System.out.println("successfuly saved file");
 		return true;

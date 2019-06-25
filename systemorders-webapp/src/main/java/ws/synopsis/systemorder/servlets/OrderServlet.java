@@ -121,7 +121,7 @@ public class OrderServlet extends HttpServlet {
 			if ((filepart = request.getPart("cost-sheet")) != null) {
 				if (!exists) {
 					System.out.println("new order");
-					//order = OrderFactory.createNew(request);
+					order = OrderFactory.createNew(request);
 					if (order != null) isSuccessful = true;
 				}
 				else {
