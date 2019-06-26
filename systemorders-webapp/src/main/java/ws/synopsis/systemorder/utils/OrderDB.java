@@ -67,7 +67,10 @@ public class OrderDB {
 		q.setParameter("id", id);
 		try {
 			return q.getSingleResult();
-		} finally {
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}finally {
 			em.close();
 		}
 	}

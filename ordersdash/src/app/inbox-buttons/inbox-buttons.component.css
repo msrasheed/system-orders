@@ -1,0 +1,30 @@
+:host {
+    width: 200px;
+    flex: 0 0 auto;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.button a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+}
+
+.button a {
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 10px;
+}
+
+.button a:hover {
+    background-color: #eeeeee;
+}
+
+.button a i {
+    padding-right: 15px;
+    user-select: none;
+}

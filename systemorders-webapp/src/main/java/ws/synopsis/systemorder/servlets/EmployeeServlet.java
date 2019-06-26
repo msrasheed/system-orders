@@ -45,6 +45,9 @@ public class EmployeeServlet extends HttpServlet {
 		if ((paramstr = request.getParameter("userid")) != null) {
 			json = EmployeeFactory.getEmployeeJson(Long.parseLong(paramstr));
 		}
+		else if ((paramstr = request.getParameter("allusers")) != null) {
+			json = EmployeeFactory.getAllEmployeeDataJson();
+		}
 
 		try {
 			PrintWriter out = response.getWriter();

@@ -1,5 +1,7 @@
 package ws.synopsis.systemorder.utils;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -38,6 +40,18 @@ public class EmployeeDB {
 		try {
 			if(q.getSingleResult() != null) return true;
 			return false;
+		} finally {
+			em.close();
+		}
+	}
+	
+	public static List<Employee> getAllEmployees() {
+		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
+		String qString = "Select e " +
+						  "From Employee as e";
+		TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
+		try {
+			return q.getResultList();
 		} finally {
 			em.close();
 		}

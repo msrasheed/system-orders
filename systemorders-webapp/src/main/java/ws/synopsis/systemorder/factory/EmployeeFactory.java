@@ -55,4 +55,10 @@ public class EmployeeFactory {
 		String empString = JsonBuilder.getGson().toJson(emp);
 		return empString;
 	}
+	
+	public static String getAllEmployeeDataJson() {
+		List<Employee> emps = EmployeeDB.getAllEmployees();
+		String empsString = JsonBuilder.getGson().toJson(emps);
+		return empsString;
+	}
 }
