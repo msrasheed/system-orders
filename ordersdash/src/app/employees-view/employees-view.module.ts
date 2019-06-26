@@ -17,4 +17,4 @@ import { EmployeeListComponent } from './employee-list/employee-list.component';
   providers: [EmployeesRESTfulService],
   exports: [EmployeesModuleViewComponent]
 })
-export class UsersViewModule { }
+export class EmployeesViewModule { }
