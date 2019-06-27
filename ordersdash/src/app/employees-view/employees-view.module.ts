@@ -8,6 +8,8 @@ import { routing } from './employees-view.routing'
 
 import { EmployeesRESTfulService } from './employees-restful.service';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { GenericComponent } from './generic/generic.component';
+import { EmployeeInfoComponent } from './employee-info/employee-info.component';
 
 @NgModule({
   imports: [
@@ -15,7 +17,7 @@ import { EmployeeListComponent } from './employee-list/employee-list.component';
     HttpModule,
     routing
   ],
-  declarations: [UsersTrayComponent, EmployeesModuleViewComponent, EmployeeTrayItemComponent, EmployeeListComponent],
+  declarations: [UsersTrayComponent, EmployeesModuleViewComponent, EmployeeTrayItemComponent, EmployeeListComponent, GenericComponent, EmployeeInfoComponent],
   providers: [EmployeesRESTfulService],
   exports: [EmployeesModuleViewComponent]
 })

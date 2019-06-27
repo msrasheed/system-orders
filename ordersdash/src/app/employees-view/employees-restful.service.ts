@@ -35,4 +35,13 @@ export class EmployeesRESTfulService {
         );
   }
 
+  getEmployeeFromId(id: string): Employee {
+    for (let emp of this.employees) {
+      if (emp.id == id) {
+        return emp;
+      }
+    }
+    return undefined;
+  }
+
 }

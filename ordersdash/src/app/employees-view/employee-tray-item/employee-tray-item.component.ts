@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { Employee } from '../employee';
 
 @Component({
@@ -9,9 +10,12 @@ import { Employee } from '../employee';
 export class EmployeeTrayItemComponent implements OnInit {
   @Input() emp: Employee;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
+  @HostListener("click") onClick() {
+    this.router.navigate(['/employees', this.emp.id]);
+  }
 }
