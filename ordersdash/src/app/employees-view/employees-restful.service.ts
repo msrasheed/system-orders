@@ -45,4 +45,33 @@ export class EmployeesRESTfulService {
     return undefined;
   }
 
+  createEmployee(emp: JSON) {
+    let apiURL = 'http://localhost:8080/systemorders-webapp/app/users?operation=create';
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    let opts = new RequestOptions();
+    opts.headers = headers;
+
+    let formdata = new FormData();
+
+    console.log(emp);
+    for (var key in emp) {
+      console.log(key + " " + emp[key]);
+      //console.log(emp[key]);
+      formdata.append(key, emp[key]);
+    }
+
+    console.log(formdata);
+    this.http.post(apiURL, formdata, opts)
+        .toPromise()
+        .then(
+          res => {
+            console.log(res);
+          },
+          msg => {
+            console.log(msg);
+          }
+        );
+  }
+
 }

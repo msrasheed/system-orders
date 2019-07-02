@@ -19,7 +19,10 @@
   </div>
   <div class="form-controlgroup">
     <label>Role</label>
-    <input type="text" name="role" ngModel #role="ngModel" required>
+    <select name="role" ngModel>
+      <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+    </select>
+    <!-- <input type="text" name="role" ngModel #role="ngModel" required> -->
     <div class="form-controlgroup-feedback">
     </div>
   </div>
@@ -31,13 +34,13 @@
   </div>
   <div class="form-controlgroup">
     <label>Password</label>
-    <input type="text" name="password" ngModel #password="ngModel" required>
+    <input type="text" name="password" ngModel #password="ngModel" required [appPasswordMatch]="password2.value">
     <div class="form-controlgroup-feedback">
     </div>
   </div>
   <div class="form-controlgroup">
     <label>Repeat Password</label>
-    <input type="text" name="password2" ngModel #password2="ngModel" required>
+    <input type="text" name="password2" ngModel #password2="ngModel" required [appPasswordMatch]="password.value">
     <div class="form-controlgroup-feedback">
     </div>
   </div>

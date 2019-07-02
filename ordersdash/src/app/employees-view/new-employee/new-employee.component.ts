@@ -11,6 +11,7 @@ import { Employee } from '../employee';
 export class NewEmployeeComponent implements OnInit {
 
   @ViewChild('f') form: any;
+  private roles: string[] = ['user', 'support', 'helpdesk', 'admin'];
 
   constructor(private emphttp: EmployeesRESTfulService) { }
 
@@ -19,6 +20,9 @@ export class NewEmployeeComponent implements OnInit {
 
   newEmployee() {
     console.log("no creation code yet");
+    let formJSON = Object.assign({}, this.form.value);
+    delete formJSON.password2;
+    this.emphttp.createEmployee(formJSON);
   }
 
 }

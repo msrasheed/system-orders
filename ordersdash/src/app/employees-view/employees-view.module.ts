@@ -15,6 +15,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { NewButtonComponent } from './new-button/new-button.component';
 import { NewEmployeeComponent } from './new-employee/new-employee.component';
 import { EmployeeSearchPipe } from './employee-search.pipe';
+import { PasswordMatchDirective } from './password-match.directive';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { EmployeeSearchPipe } from './employee-search.pipe';
     ReactiveFormsModule,
     routing
   ],
-  declarations: [UsersTrayComponent, EmployeesModuleViewComponent, EmployeeTrayItemComponent, EmployeeListComponent, GenericComponent, EmployeeInfoComponent, SearchBoxComponent, NewButtonComponent, NewEmployeeComponent, EmployeeSearchPipe],
+  declarations: [UsersTrayComponent, EmployeesModuleViewComponent, EmployeeTrayItemComponent, EmployeeListComponent, GenericComponent, EmployeeInfoComponent, SearchBoxComponent, NewButtonComponent, NewEmployeeComponent, EmployeeSearchPipe, PasswordMatchDirective],
   providers: [EmployeesRESTfulService],
   exports: [EmployeesModuleViewComponent]
 })
