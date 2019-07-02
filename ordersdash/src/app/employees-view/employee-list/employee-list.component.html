@@ -1,2 +1,2 @@
-<app-employee-tray-item *ngFor="let emp of emphttp.employees" [emp]="emp"></app-employee-tray-item>
+<app-employee-tray-item *ngFor="let emp of emphttp.employees | employeeSearch:emphttp.searchTerm" [emp]="emp"></app-employee-tray-item>
 <!-- <app-employee-tray-item [emp]="emphttp.employees[0]"></app-employee-tray-item> -->

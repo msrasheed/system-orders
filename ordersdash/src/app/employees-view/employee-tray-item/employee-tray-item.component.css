@@ -8,6 +8,10 @@
     border-top: solid black 1px;
 }
 
+:host:first-child {
+    border-top: none;
+}
+
 :host:last-child {
     border-bottom: solid black 1px;
 }

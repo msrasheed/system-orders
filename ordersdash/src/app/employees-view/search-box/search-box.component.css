@@ -1,0 +1,45 @@
+ :host {
+    padding: 15px 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+ i {
+    font-size: 35px;
+    user-select: none;
+}
+
+ i:hover {
+    background-color: #dddddd;
+    cursor: pointer;
+}
+
+ i:active {
+    background-color: #cccccc;
+}
+
+ i.filter {
+    margin-left: 10px;
+}
+
+ input[type=text] {
+    width: 50px;
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    border: solid #eee 1px;
+    border-radius: 4px;
+    font-size: 25px;
+    background-color: #eeeeee;
+    background-image: url('photos/baseline_search_black_36dp.png');
+    background-position: 3px 3px;
+    background-repeat: no-repeat;
+    /* padding: 12px 20px 12px 40px; */
+    padding: 5px 0px 5px 40px;
+    outline: none;
+}
+
+ input[type=text]:focus {
+    background-color: white;
+    border: solid #ccc 1px;
+}

@@ -16,6 +16,6 @@ export class EmployeeTrayItemComponent implements OnInit {
   }
 
   @HostListener("click") onClick() {
-    this.router.navigate(['/employees', this.emp.id]);
+    this.router.navigate(['/employees', this.emp.userid]);
   }
 }

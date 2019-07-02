@@ -17,7 +17,7 @@ export class EmployeeInfoComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private emphttp: EmployeesRESTfulService) {;
     this.route.params.subscribe(params => {
-      this.emp = this.emphttp.getEmployeeFromId(params['id']);
+      this.emp = Object.assign({}, this.emphttp.getEmployeeFromId(params['id']));
       this.showChangePass = false;
       //console.log(this.emp);
     });

@@ -6,6 +6,7 @@ import { Employee } from './employee';
 export class EmployeesRESTfulService {
 
   employees: Employee[];
+  public searchTerm: string;
 
   constructor(private http: Http) {
     this.refreshEmployeeList();
@@ -37,7 +38,7 @@ export class EmployeesRESTfulService {
 
   getEmployeeFromId(id: string): Employee {
     for (let emp of this.employees) {
-      if (emp.id == id) {
+      if (emp.userid == id) {
         return emp;
       }
     }

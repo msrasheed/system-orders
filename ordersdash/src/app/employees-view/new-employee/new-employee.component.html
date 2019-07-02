@@ -1,0 +1,46 @@
+<form (ngSubmit)="newEmployee()" #f="ngForm">
+  <div class="form-controlgroup">
+    <label>First Name</label>
+    <input type="text" name="fname" ngModel #fname="ngModel" required>
+    <div class="form-controlgroup-feedback">
+    </div>
+  </div>
+  <div class="form-controlgroup">
+    <label>Last Name</label>
+    <input type="text" name="lname" ngModel #lname="ngModel" required>
+    <div class="form-controlgroup-feedback">
+    </div>
+  </div>
+  <div class="form-controlgroup">
+    <label>Username</label>
+    <input type="text" name="username" ngModel #username="ngModel" required>
+    <div class="form-controlgroup-feedback">
+    </div>
+  </div>
+  <div class="form-controlgroup">
+    <label>Role</label>
+    <input type="text" name="role" ngModel #role="ngModel" required>
+    <div class="form-controlgroup-feedback">
+    </div>
+  </div>
+  <div class="form-controlgroup">
+    <label>Email</label>
+    <input type="text" name="email" ngModel #email="ngModel" required>
+    <div class="form-controlgroup-feedback">
+    </div>
+  </div>
+  <div class="form-controlgroup">
+    <label>Password</label>
+    <input type="text" name="password" ngModel #password="ngModel" required>
+    <div class="form-controlgroup-feedback">
+    </div>
+  </div>
+  <div class="form-controlgroup">
+    <label>Repeat Password</label>
+    <input type="text" name="password2" ngModel #password2="ngModel" required>
+    <div class="form-controlgroup-feedback">
+    </div>
+  </div>
+  <button type="submit" [disabled]="f.invalid">Create</button>
+</form>
+<pre>{{f.value | json}}</pre>
