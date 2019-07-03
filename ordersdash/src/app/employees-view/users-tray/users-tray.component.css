@@ -3,4 +3,6 @@
     flex: 0 0 auto;
     background-color: #eeeeee;
     overflow: hidden;
+    display: flex;
+    flex-flow: column nowrap;
 }

@@ -15,7 +15,7 @@ public class EmployeeProperties extends Properties {
 		Class empCls = Employee.class;
 		while(params.hasMoreElements()) {
 			String param = params.nextElement();
-			System.out.println(param);
+			//System.out.println(param + " " + req.getParameter(param));
 			try {
 				Field field = empCls.getDeclaredField(param);
 				if (!field.getName().equals("userid")) put(param, req.getParameter(param));

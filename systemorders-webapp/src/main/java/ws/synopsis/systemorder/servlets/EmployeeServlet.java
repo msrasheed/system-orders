@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import ws.synopsis.systemorder.utils.HashingUtil;
 /**
  * Servlet implementation class UserServlet
  */
+@MultipartConfig
 public class EmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -70,7 +72,7 @@ public class EmployeeServlet extends HttpServlet {
 		
 		Employee employee = null;
 		boolean exists = true;
-		String userid;
+		String userid = null;
 		
 		if (operation != null) {
 			operation = operation.toLowerCase();
@@ -95,10 +97,12 @@ public class EmployeeServlet extends HttpServlet {
 			EmployeeFactory.createNew(empProp);
 		}
 		else if (operation.equals("update") && employee != null) {
+			System.out.println("Updating employee with id: " + userid);
 			EmployeeProperties empProp = new EmployeeProperties(request);
 			EmployeeFactory.update(employee, empProp);
 		}
 		else if (operation.equals("delete")) {
+			System.out.println("Deleting employee with id: " + userid);
 			EmployeeDB.deleteEmployee(employee);
 		}
 	}

@@ -33,6 +33,7 @@ public class EmployeeFactory {
 //		for (Method m : cls.getDeclaredMethods()) {
 //			System.out.println(m.getName());
 //		}
+		//System.out.println("\nActually calling");
 		while (enums.hasMoreElements()) {
 			String key = enums.nextElement();
 			//System.out.println(key);
@@ -42,6 +43,7 @@ public class EmployeeFactory {
 				String value = props.getProperty(key);
 				if (key.equals("password")) value = HashingUtil.shaw256(value);
 				meth.invoke(emp, value);
+				//System.out.println("set" + key + " " + value);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -21,6 +21,6 @@ public class HashingUtil {
 		
 		retmsg = new String(digMsg);
 		
-		return retmsg;
+		return retmsg.replace('\0', ' ');
 	}
 }

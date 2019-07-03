@@ -37,6 +37,8 @@ export class EmployeesRESTfulService {
   }
 
   getEmployeeFromId(id: string): Employee {
+    //if (!this.employees) refreshEmployeeList();
+
     for (let emp of this.employees) {
       if (emp.userid == id) {
         return emp;
@@ -54,22 +56,66 @@ export class EmployeesRESTfulService {
 
     console.log(emp);
     for (var key in emp) {
-      console.log(key + " " + emp[key]);
+      //console.log(key + " " + emp[key]);
       //console.log(emp[key]);
       formdata.append(key, emp[key]);
     }
 
-    console.log(formdata);
-    this.http.post(apiURL, formdata, {headers: headers})
+    //console.log(formdata);
+    this.http.post(apiURL, formdata)
         .toPromise()
         .then(
           res => {
+            console.log("success");
             console.log(res);
+            this.refreshEmployeeList();
           },
           msg => {
+            console.log("error");
             console.log(msg);
           }
         );
   }
 
+  updateEmployee(emp: JSON) {
+    let apiURL = 'http://localhost:8080/systemorders-webapp/app/users?operation=update';
+    let formData = new FormData();
+
+    for (var key in emp) {
+      formData.append(key, emp[key]);
+    }
+
+    this.http.post(apiURL, formData)
+        .toPromise()
+        .then(
+          res => {
+            console.log("success");
+            this.refreshEmployeeList();
+          },
+          msg => {
+            console.log("error");
+          }
+        );
+  }
+
+  changeEmployeePassword(emp: JSON) {
+    this.updateEmployee(emp);
+  }
+
+  deleteEmployee(empid: string) {
+    let apiURL = 'http://localhost:8080/systemorders-webapp/app/users?operation=delete';
+    let formData = new FormData();
+    formData.append("userid", empid);
+
+    this.http.post(apiURL, formData)
+        .toPromise()
+        .then(
+          res => {
+            console.log("success");
+          },
+          msg => {
+            console.log("error");
+          }
+        );
+  }
 }

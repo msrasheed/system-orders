@@ -13,6 +13,7 @@ export class EmployeeInfoComponent implements OnInit {
 
   private emp: Employee;
   @ViewChild('f', {static: false}) form: any;
+  @ViewChild('passf', {static: false}) passForm: any;
   private showChangePass: boolean = false;
 
   constructor(private route: ActivatedRoute, private emphttp: EmployeesRESTfulService) {;
@@ -27,7 +28,8 @@ export class EmployeeInfoComponent implements OnInit {
   }
 
   updateEmployee() {
-    console.log("no update code yet");
+    //console.log("no update code yet");
+    this.emphttp.updateEmployee(this.form.value);
   }
 
   showPasswordDiag() {
@@ -35,6 +37,14 @@ export class EmployeeInfoComponent implements OnInit {
   }
 
   changePassword() {
-    console.log("no change password code yet");
+    //console.log("no change password code yet");
+    let formJSON = Object.assign({}, this.passForm.value);
+    delete formJSON.password2;
+    this.emphttp.changeEmployeePassword(formJSON);
+  }
+
+  deleteEmployee() {
+    confirm("Are you sure you want to delete this Employee?")
+    this.emphttp.deleteEmployee(this.emp.userid);
   }
 }

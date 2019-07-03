@@ -165,10 +165,11 @@ public class EmployeeDB {
 		EntityTransaction trans = em.getTransaction();
 		try {
 			trans.begin();
-			em.remove(employee);
+			em.remove(em.merge(employee));
 			trans.commit();
 			isSuccessful = true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			trans.rollback();
 			isSuccessful = false;
 		}finally {
