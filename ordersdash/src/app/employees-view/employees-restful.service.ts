@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Employee } from './employee';
 
 @Injectable()
@@ -8,17 +8,18 @@ export class EmployeesRESTfulService {
   employees: Employee[];
   public searchTerm: string;
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     this.refreshEmployeeList();
   }
 
   refreshEmployeeList() {
     let apiURL = 'http://localhost:8080/systemorders-webapp/app/users?allusers'
-    this.http.get(apiURL)
+    this.http.get<Employee[]>(apiURL)
         .toPromise()
         .then(
           res => {
-            this.employees = res.json().map(item => {
+            console.log(res);
+            this.employees = res.map(item => {
               return new Employee(
                 item.userid,
                 item.fname,
@@ -28,7 +29,6 @@ export class EmployeesRESTfulService {
                 item.email
               );
             });
-            console.log(this.employees);
           },
           msg => {
             console.log('nope');
@@ -47,10 +47,8 @@ export class EmployeesRESTfulService {
 
   createEmployee(emp: JSON) {
     let apiURL = 'http://localhost:8080/systemorders-webapp/app/users?operation=create';
-    let headers = new Headers();
+    let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    let opts = new RequestOptions();
-    opts.headers = headers;
 
     let formdata = new FormData();
 
@@ -62,7 +60,7 @@ export class EmployeesRESTfulService {
     }
 
     console.log(formdata);
-    this.http.post(apiURL, formdata, opts)
+    this.http.post(apiURL, formdata, {headers: headers})
         .toPromise()
         .then(
           res => {

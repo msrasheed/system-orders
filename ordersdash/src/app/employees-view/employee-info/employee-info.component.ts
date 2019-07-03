@@ -12,7 +12,7 @@ import { Employee } from '../employee';
 export class EmployeeInfoComponent implements OnInit {
 
   private emp: Employee;
-  @ViewChild('f') form: any;
+  @ViewChild('f', {static: false}) form: any;
   private showChangePass: boolean = false;
 
   constructor(private route: ActivatedRoute, private emphttp: EmployeesRESTfulService) {;

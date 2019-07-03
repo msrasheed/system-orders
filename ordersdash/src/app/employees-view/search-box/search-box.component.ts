@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { EmployeesRESTfulService } from '../employees-restful.service';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+// import 'rxjs/add/operator/debounceTime';
+// import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
   selector: 'app-search-box',
@@ -17,9 +18,9 @@ export class SearchBoxComponent implements OnInit {
 
   ngOnInit() {
     this.searchField = new FormControl();
-    this.searchField.valueChanges
-        .debounceTime(400)
-        .distinctUntilChanged()
+    this.searchField.valueChanges.pipe(
+        debounceTime(400),
+        distinctUntilChanged())
         .subscribe(value => this.emphttp.searchTerm = value);
   }
 

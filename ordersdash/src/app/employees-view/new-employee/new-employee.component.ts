@@ -10,7 +10,7 @@ import { Employee } from '../employee';
 })
 export class NewEmployeeComponent implements OnInit {
 
-  @ViewChild('f') form: any;
+  @ViewChild('f', {static: false}) form: any;
   private roles: string[] = ['user', 'support', 'helpdesk', 'admin'];
 
   constructor(private emphttp: EmployeesRESTfulService) { }

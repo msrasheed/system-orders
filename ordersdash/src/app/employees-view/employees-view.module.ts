@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersTrayComponent } from './users-tray/users-tray.component';
 import { EmployeesModuleViewComponent } from './employees-module-view/employees-module-view.component';
@@ -20,7 +20,7 @@ import { PasswordMatchDirective } from './password-match.directive';
 @NgModule({
   imports: [
     CommonModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     routing
