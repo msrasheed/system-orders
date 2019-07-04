@@ -22,14 +22,14 @@
     padding: 10px 0px 0px 40px;
 }
 
-.section .section-body .entry {
+.section .section-body .form-controlgroup {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     margin-top: 10px;
 }
 
-.section .section-body .entry p {
+.section .section-body .form-controlgroup p {
     box-sizing: border-box;
     width: 150px;
 }

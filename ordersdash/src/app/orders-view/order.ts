@@ -1,4 +1,22 @@
+export class SoftwareItem {
+  constructor(
+    public softid: string,
+    public software: string
+  ) {}
+}
+
+export class OtherItem {
+  constructor(
+    public otherid: string,
+    public otherspec: string
+  ) {}
+}
+
 export class Order {
+
+  //public softwaresText: string[] = [];
+  public othersText: string[] = [];
+
   constructor(
   	public orderid: string,
   	public userid: string,
@@ -21,7 +39,9 @@ export class Order {
   	public finalid: string,
   	public arrived: boolean,
   	public hardwares: string[],
-  	public softwares: string[],
-  	public others: string[]
-  ) {}
+  	public softwares: SoftwareItem[],
+  	public others: OtherItem[],
+    public softwaresText: string[]
+  ) {
+  }
 }
