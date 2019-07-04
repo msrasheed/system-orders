@@ -293,6 +293,12 @@ public class OrderFactory {
 		return OrderDB.getOrderById(id);
 	}
 	
+	public static String getAllOrdersJson() {
+		List<Order> orders = (List<Order>) OrderDB.getAllOrders();
+		String orderString = JsonBuilder.getGson().toJson(orders);
+		return orderString;
+	}
+	
 	public static String getOrderJson(long orderid) {
 		Order order = getOrderById(orderid);
 		String orderString = JsonBuilder.getGson().toJson(order);

@@ -1,0 +1,95 @@
+:host{
+    flex: 1 1 auto;
+    padding: 25px 50px;
+    background-color: white;
+    overflow-y: auto;
+    max-height: 100%
+}
+
+.all-indent {
+    padding: 20px 40px;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    border-bottom: solid #cccccc 1px;
+}
+
+.section .section-body {
+    padding: 10px 0px 0px 40px;
+}
+
+.section .section-body .entry {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.section .section-body .entry p {
+    box-sizing: border-box;
+    width: 150px;
+}
+
+.section .section-body p,
+.section .section-body select,
+.section .section-body input {
+}
+
+.section .section-body .variable-input {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    border: solid #ccc 2px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    margin-right: 40px;
+}
+
+.section-body .variable-input input[type=text] {
+    width: 50px;
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+}
+
+.section-body .variable-input i {
+    cursor: pointer;
+}
+
+.section-body .variable-input i.delete {
+    background-color: #f78174;
+}
+
+.section-body .variable-input i.delete:hover {
+    background-color: #f44f3d;
+}
+
+.section-body .variable-input i.add {
+    background-color: #75f493;
+}
+
+.section-body .variable-input i.add:hover {
+    background-color: #37f263;
+}
+
+.section input[type=submit] {
+    display: block;
+    width: 80%;
+    height: 30px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    background-color: #f7af19;
+    cursor: pointer;
+}
+
+.section input[type=submit]:hover {
+    background-color: #F79212;
+}

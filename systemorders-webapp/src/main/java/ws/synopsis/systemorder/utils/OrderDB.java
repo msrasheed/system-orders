@@ -11,8 +11,8 @@ import ws.synopsis.systemorder.model.Order;
 public class OrderDB {
 	public static List<Order> getAllOrders() {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
-		String qString =	"SELECT * " +
-							"FROM Order";
+		String qString =	"SELECT o " +
+							"FROM Order as o";
 		TypedQuery<Order> q = em.createQuery(qString, Order.class);
 		List<Order> orders;
 		try {

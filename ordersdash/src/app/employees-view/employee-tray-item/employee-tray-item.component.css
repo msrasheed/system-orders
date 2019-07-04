@@ -8,6 +8,10 @@
     border-top: solid black 1px;
 }
 
+:host:focus {
+  outline: none;
+}
+
 :host:first-child {
     border-top: none;
 }

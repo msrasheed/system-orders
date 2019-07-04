@@ -64,6 +64,9 @@ public class OrderServlet extends HttpServlet {
 		else if((paramstr = request.getParameter("status")) != null) {
 			json = OrderFactory.getOrdersWithStatJson(paramstr);
 		}
+		else if((paramstr = request.getParameter("allOrders")) != null) {
+			json = OrderFactory.getAllOrdersJson();
+		}
 		else {
 			json = OrderFactory.getOrdersOfUser(employee.getUserid());
 		}

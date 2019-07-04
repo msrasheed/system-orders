@@ -1,0 +1,102 @@
+<form class="new-request" (ngSubmit)="submitOrderChange()" enctype="multipart/form-data" #f="ngForm">
+    <input type="hidden" name="operation" value="create">
+    <h1>Nuevo Solicitud</h1>
+    <div class="all-indent">
+        <div class="section">
+            <h2>General</h2>
+            <div class="section-body">
+                <div class="entry">
+                    <p>Client</p>
+                    <input type="text" name="clientcontact" value="Synopsis">
+                </div>
+                <div class="entry">
+                    <p>Type</p>
+                    <select name="type">
+                        <option>Laptop</option>
+                        <option>Desktop</option>
+                    </select>
+                </div>
+                <div class="entry">
+                    <p>Date Needed</p>
+                    <input type="date" name="dateneeded" ><br/>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Hardware Specs</h2>
+            <div class="section-body">
+                <div class="entry">
+                    <p>Processor</p>
+                    <select name="processor">
+                        <option>Intel</option>
+                        <option>AMD</option>
+                    </select>
+                </div>
+                <div class="entry">
+                    <p>Memory</p>
+                    <input type="number" name="memory" value="2" min="1"><span>gb</span>
+                </div>
+                <div class="entry">
+                    <p>Hard disk</p>
+                    <input type="number" name="harddisk" value="500" min="150"><span>gb</span>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>OS</h2>
+            <div class="section-body">
+                <div class="entry">
+                    <p>Operating System</p>
+                    <select name="operatingsystem">
+                        <option>Windows</option>
+                        <option>MacOS</option>
+                        <option>Linux</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Software</h2>
+            <div class="section-body">
+                <div class="variable-input">
+                    <input type="text" name="software" value="Microsoft Office 2017">
+                    <i class="material-icons delete">delete</i>
+                </div>
+                <div class="variable-input">
+                    <input type="text" name="software2" placeholder="Additional software">
+                    <i class="material-icons add">add</i>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Other</h2>
+            <div class="section-body">
+                <div class="variable-input">
+                    <input type="text" name="other" value="Desktop image is my family">
+                    <i class="material-icons delete">delete</i>
+                </div>
+                <div class="variable-input">
+                    <input type="text" name="other2" placeholder="Other...">
+                    <i class="material-icons add">add</i>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Cost Sheet</h2>
+            <div class="section-body row">
+                <div class="left">
+                    <p>Excel Sheet</p>
+                </div>
+                <div class="right">
+                    <input type="file" name="cost-sheet"/>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2></h2>
+            <input type="submit" value="Enviar"/>
+        </div>
+    </div>
+</form>
+
+<pre>{{f.value | json}}</pre>
