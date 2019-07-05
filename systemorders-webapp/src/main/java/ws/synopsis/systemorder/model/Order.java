@@ -34,7 +34,7 @@ public class Order implements Serializable {
 	private int harddisk;
 	
 	@Column(name = "os")
-	private String OperatingSystem;
+	private String operatingSystem;
 	
 	@Column(name = "device_type")
 	private String deviceType;
@@ -47,12 +47,12 @@ public class Order implements Serializable {
 	private String clientContact;
 	
 	@Column(name = "support_approval")
-	private boolean supportApproval;
+	private boolean supportApproved;
 	
 	private String supplier;
 	
-	@Column(name = "final_prce")
-	private float finalPrice;
+	@Column(name = "final_price")
+	private Float finalPrice;
 	
 	@Column(name = "acquisition_type")
 	private String acquisitionType;
@@ -62,7 +62,7 @@ public class Order implements Serializable {
 	private Date quotedDate;
 	
 	@Column(name = "gm_approval")
-	private boolean gmApproval;
+	private boolean gmApproved;
 	
 	@Column(name = "gm_comments")
 	private String gmComments;
@@ -103,7 +103,7 @@ public class Order implements Serializable {
 		this.processor = processor;
 		this.memory = memory;
 		this.harddisk = harddisk;
-		this.OperatingSystem = os;
+		this.operatingSystem = os;
 		this.deviceType = device_type;
 		this.dateNeeded = date_needed;
 		this.clientContact = client_contact;
@@ -121,7 +121,7 @@ public class Order implements Serializable {
 		this.processor = processor;
 		this.memory = memory;
 		this.harddisk = harddisk;
-		this.OperatingSystem = os;
+		this.operatingSystem = os;
 		this.deviceType = device_type;
 		this.dateNeeded = date_needed;
 		this.clientContact = client_contact;
@@ -129,7 +129,7 @@ public class Order implements Serializable {
 		this.finalPrice = final_price;
 		this.acquisitionType = acquisition_type;
 		this.quotedDate = quoted_date;
-		this.gmApproval = gm_accepted;
+		this.gmApproved = gm_accepted;
 		this.gmComments = gm_comments;
 		this.finalid = finalid;
 		this.dateArrived = date_arrived;
@@ -192,11 +192,11 @@ public class Order implements Serializable {
 	}
 
 	public String getOperatingSystem() {
-		return OperatingSystem;
+		return operatingSystem;
 	}
 
 	public void setOperatingSystem(String os) {
-		this.OperatingSystem = os;
+		this.operatingSystem = os;
 	}
 
 	public String getDeviceType() {
@@ -235,7 +235,7 @@ public class Order implements Serializable {
 		return finalPrice;
 	}
 
-	public void setFinalPrice(float finalPrice) {
+	public void setFinalPrice(Float finalPrice) {
 		this.finalPrice = finalPrice;
 	}
 
@@ -256,11 +256,11 @@ public class Order implements Serializable {
 	}
 
 	public boolean isGmApproval() {
-		return gmApproval;
+		return gmApproved;
 	}
 
 	public void setGmApproval(boolean gmAccepted) {
-		this.gmApproval = gmAccepted;
+		this.gmApproved = gmAccepted;
 	}
 
 	public String getGmComments() {
@@ -287,12 +287,12 @@ public class Order implements Serializable {
 		this.dateArrived = date_arrived;
 	}
 
-	public boolean isSupportApproval() {
-		return supportApproval;
+	public boolean isSupportApproved() {
+		return supportApproved;
 	}
 
-	public void setSupportApproval(boolean supportApproval) {
-		this.supportApproval = supportApproval;
+	public void setSupportApproved(boolean supportApproval) {
+		this.supportApproved = supportApproval;
 	}
 
 	public HardwareOrderItems getHardware() {

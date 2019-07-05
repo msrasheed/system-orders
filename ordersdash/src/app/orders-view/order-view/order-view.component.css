@@ -1,45 +1,65 @@
 :host{
     flex: 1 1 auto;
     padding: 25px 50px;
-    background-color: white;
+    background-color: #d1cbbe;
     overflow-y: auto;
     max-height: 100%
 }
 
 .all-indent {
-    padding: 20px 40px;
+    padding: 20px 20px;
 }
 
-.section {
-    margin-bottom: 20px;
+fieldset {
+  background-color: white;
+  border-radius: 50px;
+  border: none;
+  margin-bottom: 15px;
+  padding-bottom: 50px;
 }
 
-.section h2 {
-    border-bottom: solid #cccccc 1px;
+h1 {
+  padding-top: 20px;
 }
 
-.section .section-body {
-    padding: 10px 0px 0px 40px;
+h2 {
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  border-bottom: solid #cccccc 1px;
 }
 
-.section .section-body .form-controlgroup {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    margin-top: 10px;
+.form-controlgroup {
+  padding-left: 40px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-top: 10px;
 }
 
-.section .section-body .form-controlgroup p {
+.form-controlgroup.no-align-center {
+  align-items: flex-start;
+}
+
+.form-controlgroup.approval {
+  margin-bottom: 20px;
+}
+
+.form-controlgroup label {
     box-sizing: border-box;
     width: 150px;
 }
 
-.section .section-body p,
-.section .section-body select,
-.section .section-body input {
+.form-controlgroup textarea {
+  resize: vertical;
 }
 
-.section .section-body .variable-input {
+.form-controlgroup.variable-input {
+  padding-left: 0;
+  margin-left: 40px;
+}
+
+.variable-input {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -49,7 +69,7 @@
     margin-right: 40px;
 }
 
-.section-body .variable-input input[type=text] {
+.variable-input input[type=text] {
     width: 50px;
     flex: 1 1 auto;
     box-sizing: border-box;
@@ -57,27 +77,31 @@
     outline: none;
 }
 
-.section-body .variable-input i {
+.variable-input i {
     cursor: pointer;
 }
 
-.section-body .variable-input i.delete {
+.variable-input i.delete {
     background-color: #f78174;
 }
 
-.section-body .variable-input i.delete:hover {
+.variable-input i.delete:hover {
     background-color: #f44f3d;
 }
 
-.section-body .variable-input i.add {
+.variable-input i.add {
     background-color: #75f493;
 }
 
-.section-body .variable-input i.add:hover {
+.variable-input i.add:hover {
     background-color: #37f263;
 }
 
-.section input[type=submit] {
+.inline-spacer {
+  width:15px;
+}
+
+input.submit-button {
     display: block;
     width: 80%;
     height: 30px;
@@ -90,6 +114,6 @@
     cursor: pointer;
 }
 
-.section input[type=submit]:hover {
+input.submit-button:hover {
     background-color: #F79212;
 }

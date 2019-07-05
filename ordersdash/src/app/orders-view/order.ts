@@ -14,14 +14,14 @@ export class OtherItem {
 
 export class Order {
 
-  //public softwaresText: string[] = [];
-  public othersText: string[] = [];
+  public supportApproval: string;
+  public gmApproval: string;
 
   constructor(
   	public orderid: string,
   	public userid: string,
   	public status: string,
-  	public created: boolean,
+  	public dateCreated: string,
   	public processor: string,
   	public memory: string,
   	public harddisk: string,
@@ -29,15 +29,16 @@ export class Order {
   	public deviceType: string,
   	public dateNeeded: string,
   	public clientContact: string,
-  	public supportApproval: boolean,
+  	public supportApproved: boolean,
+    public supportComments: string,
   	public supplier: string,
   	public finalPrice: string,
   	public acquisitionType: string,
-  	public quoted: string,
-  	public gmApproval: string,
+  	public quotedDate: string,
+  	public gmApproved: boolean,
   	public gmComments: string,
   	public finalid: string,
-  	public arrived: boolean,
+  	public dateArrived: string,
   	public hardwares: string[],
   	public softwares: SoftwareItem[],
   	public others: OtherItem[],

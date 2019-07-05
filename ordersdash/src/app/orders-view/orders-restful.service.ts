@@ -44,4 +44,18 @@ export class OrdersRestfulService {
     return this.http.get<Order>(apiURl).toPromise();
   }
 
+  downloadFile(orderid: string, filename: string) {
+    let apiURL = 'http://localhost:8080/systemorders-webapp/app/orders?orderid=' + orderid + '&file=' + filename;
+    this.http.get(apiURL)
+        .toPromise()
+        .then(
+          res => {
+            console.log('hello');
+          },
+          msg => {
+            console.log('fuck you');
+          }
+        );
+  }
+
 }

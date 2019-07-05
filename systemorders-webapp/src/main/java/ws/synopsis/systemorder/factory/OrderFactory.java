@@ -177,14 +177,14 @@ public class OrderFactory {
 		
 		String approval;
 		
-		if ((approval = req.getParameter("approval")) == null) return false;
+		if ((approval = req.getParameter("soporteApproval")) == null) return false;
 		else {
 			if(approval.equals("approved")) {
-				order.setSupportApproval(true);
+				order.setSupportApproved(true);
 				order.setStatus("CSVF");
 			}
 			else {
-				order.setSupportApproval(false);
+				order.setSupportApproved(false);
 				order.setStatus("DENY");
 			}
 		}
