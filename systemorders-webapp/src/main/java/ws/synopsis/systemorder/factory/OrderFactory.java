@@ -226,11 +226,11 @@ public class OrderFactory {
 		if ((teststr = req.getParameter("approval")) == null) return false;
 		else {
 			if (teststr.equals("approved")) {
-				order.setGmApproval(true);
+				order.setGmApproved(true);
 				order.setStatus("APRV");
 			}
 			else {
-				order.setGmApproval(false);
+				order.setGmApproved(false);
 				order.setStatus("DENY");
 			}
 		}

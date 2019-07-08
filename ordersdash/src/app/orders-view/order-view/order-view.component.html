@@ -1,138 +1,86 @@
-<form class="new-request" (ngSubmit)="submitOrderChange()" enctype="multipart/form-data" #f="ngForm">
-  <input type="hidden" name="operation" value="create">
-  <fieldset ngModelGroup="creation">
-    <h1>Original Solicitud</h1>
-    <h2>General</h2>
-    <div class="form-controlgroup">
-        <label>Client</label>
-        <input type="text" name="clientcontact" [(ngModel)]="order.clientContact" #clientContact="ngModel">
-    </div>
-    <div class="form-controlgroup">
-        <label>Type</label>
-        <select name="type" [(ngModel)]="order.deviceType" #type="ngModel">
-            <option>Laptop</option>
-            <option>Desktop</option>
-        </select>
-    </div>
-    <div class="form-controlgroup">
-        <label>Date Needed</label>
-        <input type="date" name="dateneeded" [(ngModel)]="order.dateNeeded" #dateNeeded="ngModel"><br/>
-    </div>
-    <h2>Hardware Specs</h2>
-    <div class="form-controlgroup">
-        <label>Processor</label>
-        <select name="processor" [(ngModel)]="order.processor" #processor="ngModel">
-            <option>Intel</option>
-            <option>AMD</option>
-        </select>
-    </div>
-    <div class="form-controlgroup">
-        <label>Memory</label>
-        <input type="number" name="memory" [(ngModel)]="order.memory" #memory="ngModel"><span>gb</span>
-    </div>
-    <div class="form-controlgroup">
-        <label>Hard disk</label>
-        <input type="number" name="harddisk" [(ngModel)]="order.harddisk" #harddisk="ngModel"><span>gb</span>
-    </div>
-    <h2>OS</h2>
-    <div class="form-controlgroup">
-        <label>Operating System</label>
-        <select name="operatingsystem" [(ngModel)]="order.operatingSystem" #operatingSystem="ngModel">
-            <option>Windows</option>
-            <option>MacOS</option>
-            <option>Linux</option>
-        </select>
-    </div>
-    <h2>Software</h2>
-    <div class="form-controlgroup variable-input" *ngFor="let soft of order.softwares; let i = index">
-        <input type="text" [name]="'software' + soft.softid" [(ngModel)]="soft.software">
-        <i class="material-icons delete" (click)="removeSoft(i)">delete</i>
-    </div>
-    <div class="form-controlgroup variable-input">
-        <input type="text" placeholder="Other..." #softAdd (keyup.enter)="addSoft()">
-        <i class="material-icons add" (click)="addSoft()">add</i>
-    </div>
-    <h2>Other</h2>
-    <div class="form-controlgroup variable-input" *ngFor="let oth of order.others; let i = index">
-        <input type="text" [name]="'other' + oth.otherid" [(ngModel)]="oth.otherspec">
-        <i class="material-icons delete" (click)="removeOther(i)">delete</i>
-    </div>
-    <div class="form-controlgroup variable-input">
-        <input type="text" name="other2" placeholder="Other..." #otherAdd (keyup.enter)="addOther()">
-        <i class="material-icons add" (click)="addOther()">add</i>
-    </div>
-    <h2>Cost Sheet</h2>
-    <div class="form-controlgroup">
-      <label>Excel Sheet</label>
-      <button type="button" (click)="downloadCostSheet()">Download Cost Sheet</button>
-      <input type="file" name="cost-sheet"/>
-    </div>
-  </fieldset>
-  <fieldset ngModelGroup="soporte">
-    <h1>Soporte</h1>
-    <div class="form-controlgroup approval">
-      <label>Approved</label>
-      <input type="radio" name="supportApproval" value="approve" [(ngModel)]="order.supportApproval"><span> Sí</span>
-      <span class="inline-spacer"></span>
-      <input type="radio" name="supportApproval" value="deny" [(ngModel)]="order.supportApproval"><span>No</span>
-    </div>
-    <div class="form-controlgroup no-align-center">
-      <label>Comentarios</label>
-      <textarea name="supportComments" rows="8" cols="80" [(ngModel)]="order.supportComments"></textarea>
-    </div>
-  </fieldset>
-  <fieldset ngModelGroup="helpdesk">
-    <h1>HelpDesk</h1>
-    <div class="form-controlgroup">
-      <label>Provider</label>
-      <input type="text" name="supplier" [(ngModel)]="order.supplier">
-    </div>
-    <div class="form-controlgroup">
-      <label>Final Price</label>
-      <input type="number" name="finalPrice" [(ngModel)]="order.finalPrice">
-    </div>
-    <div class="form-controlgroup">
-      <label>Aqcuisition Method</label>
-      <select name="acquisitionType" [(ngModel)]="order.acquisitionType">
-        <option>online</option>
-        <option>vendor</option>
-        <option>telephone</option>
-        <option>other</option>
-      </select>
-    </div>
-    <div class="form-controlgroup">
-      <label>Quote Date</label>
-      <input type="date" name="quotedDate" [(ngModel)]="order.quotedDate">
-    </div>
-  </fieldset>
-  <fieldset ngModelGroup="gmApproval">
-    <h1>GM Approval</h1>
-    <div class="form-controlgroup approval">
-      <label>Approved</label>
-      <input type="radio" name="gmApproval" value="approve" [(ngModel)]="order.gmApproval"><span> Sí</span>
-      <span class="inline-spacer"></span>
-      <input type="radio" name="gmApproval" value="deny" [(ngModel)]="order.gmApproval"><span>No</span>
-    </div>
-    <div class="form-controlgroup no-align-center">
-      <label>Comentarios</label>
-      <textarea name="gmComments" rows="8" cols="80" [(ngModel)]="order.gmComments"></textarea>
-    </div>
-  </fieldset>
-  <fieldset ngModelGroup="purchase">
-    <h1>Puchase</h1>
-    <div class="form-controlgroup">
-      <label>Purchase Receipt</label>
-      <input type="file" name="receipt">
-    </div>
-  </fieldset>
-  <fieldset ngModelGroup="delivered">
-    <h1>Delivered</h1>
-    <div class="form-controlgroup">
-      <label>Date arrived</label>
-      <input type="date" name="dateArrived" [(ngModel)]="order.dateArrived">
-    </div>
-  </fieldset>
+<app-create-form [order]="order"></app-create-form>
+<form (ngSubmit)="updateSupport()" enctype="multipart/form-data" #supportForm="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'verify'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>Soporte</h1>
+  <div class="form-controlgroup approval">
+    <label>Approved</label>
+    <input type="radio" name="supportApproval" value="approve" [(ngModel)]="order.supportApproval"><span> Sí</span>
+    <span class="inline-spacer"></span>
+    <input type="radio" name="supportApproval" value="deny" [(ngModel)]="order.supportApproval"><span>No</span>
+  </div>
+  <div class="form-controlgroup no-align-center">
+    <label>Comentarios</label>
+    <textarea name="supportComments" rows="8" cols="80" [(ngModel)]="order.supportComments"></textarea>
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitOrderChange()"/>
+</form>
+<form (ngSubmit)="updateHelpdesk()" enctype="multipart/form-data" #helpdeskForm="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'quote'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>HelpDesk</h1>
+  <div class="form-controlgroup">
+    <label>Provider</label>
+    <input type="text" name="supplier" [(ngModel)]="order.supplier">
+  </div>
+  <div class="form-controlgroup">
+    <label>Final Price</label>
+    <input type="number" name="finalPrice" [(ngModel)]="order.finalPrice">
+  </div>
+  <div class="form-controlgroup">
+    <label>Aqcuisition Method</label>
+    <select name="acquisitionType" [(ngModel)]="order.acquisitionType">
+      <option>online</option>
+      <option>vendor</option>
+      <option>telephone</option>
+      <option>other</option>
+    </select>
+  </div>
+  <div class="form-controlgroup">
+    <label>Quote Date</label>
+    <input type="date" name="quotedDate" [(ngModel)]="order.quotedDate">
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitOrderChange()"/>
+</form>
+<form (ngSubmit)="updateGM()" enctype="multipart/form-data" #gmForm="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'approve'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>GM Approval</h1>
+  <div class="form-controlgroup approval">
+    <label>Approved</label>
+    <input type="radio" name="gmApproval" value="approve" [(ngModel)]="order.gmApproval"><span> Sí</span>
+    <span class="inline-spacer"></span>
+    <input type="radio" name="gmApproval" value="deny" [(ngModel)]="order.gmApproval"><span>No</span>
+  </div>
+  <div class="form-controlgroup no-align-center">
+    <label>Comentarios</label>
+    <textarea name="gmComments" rows="8" cols="80" [(ngModel)]="order.gmComments"></textarea>
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitOrderChange()"/>
+</form>
+<form (ngSubmit)="updatePurchase()" enctype="multipart/form-data" #purchaseForm="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'purchase'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>Puchase</h1>
+  <div class="form-controlgroup">
+    <label>Purchase Receipt</label>
+    <input type="file" name="receipt">
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitOrderChange()"/>
+</form>
+<form (ngSubmit)="updateDelivered()" enctype="multipart/form-data" #deliveredForm="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'deliver'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>Delivered</h1>
+  <div class="form-controlgroup">
+    <label>Date arrived</label>
+    <input type="date" name="dateArrived" [(ngModel)]="order.dateArrived">
+  </div>
   <input class="submit-button" type="button" value="Enviar" (click)="submitOrderChange()"/>
 </form>
 
-<pre>{{f.value | json}}</pre>
+<pre>support {{supportForm.value | json}}</pre>
+<pre>helpdesk {{helpdeskForm.value | json}}</pre>
+<pre>gm {{gmForm.value | json}}</pre>
+<pre>purchase {{purchaseForm.value | json}}</pre>
+<pre>delivered {{deliveredForm.value | json}}</pre>

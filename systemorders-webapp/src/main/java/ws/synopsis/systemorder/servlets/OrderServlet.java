@@ -75,6 +75,7 @@ public class OrderServlet extends HttpServlet {
 			try {
 				response.setHeader("content-disposition", "attachment; filename=" + file.getName());
 				response.setHeader("cache-control", "no-cache");
+				response.setHeader("Content-Type", "application/vnd.ms-excel");
 				OutputStream out = response.getOutputStream();
 				Files.copy(file.toPath(), out);
 				out.close();
@@ -120,19 +121,21 @@ public class OrderServlet extends HttpServlet {
 		
 		if (operation.equals("create")) {
 			boolean isSuccessful = false;
-			Part filepart = null;
-			if ((filepart = request.getPart("cost-sheet")) != null) {
-				if (!exists) {
+			Part filepart = request.getPart("cost-sheet");
+			if(!exists) {
+				if(filepart != null) {
 					System.out.println("new order");
 					order = OrderFactory.createNew(request);
 					if (order != null) isSuccessful = true;
 				}
-				else {
-					System.out.println("existing order");
-					isSuccessful = OrderFactory.create(order, request);
-				}
-				
-				if (isSuccessful) OrderFactory.saveCreateSpreadsheet(order, filepart);
+			} 
+			else {
+				System.out.println("existing order");
+				isSuccessful = OrderFactory.create(order, request);
+			}
+			
+			if ((!exists && isSuccessful) || (exists && filepart != null)) {
+				OrderFactory.saveCreateSpreadsheet(order, filepart);
 			}
 		}
 	}

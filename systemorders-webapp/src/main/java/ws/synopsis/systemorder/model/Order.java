@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import ws.synopsis.systemorder.factory.Operation;
+
 /**
  * Entity implementation class for Entity: Order
  *
@@ -23,62 +25,67 @@ public class Order implements Serializable {
 	
 	private String status;
 	
-	@Column(name = "date_created")
 	@Temporal(TemporalType.DATE)
 	private Date dateCreated;
 	
+	@Operation("create")
 	private String processor;
 	
+	@Operation("create")
 	private int memory;
 	
+	@Operation("create")
 	private int harddisk;
 	
-	@Column(name = "os")
+	@Operation("create")
 	private String operatingSystem;
 	
-	@Column(name = "device_type")
+	@Operation("create")
 	private String deviceType;
 	
-	@Column(name = "date_needed")
+	@Operation("create")
 	@Temporal(TemporalType.DATE)
 	private Date dateNeeded;
 	
-	@Column(name = "client_contact")
+	@Operation("create")
 	private String clientContact;
 	
-	@Column(name = "support_approval")
-	private boolean supportApproved;
+	@Operation("verify")
+	private Boolean supportApproved;
 	
+	@Operation("quote")
 	private String supplier;
 	
-	@Column(name = "final_price")
+	@Operation("quote")
 	private Float finalPrice;
 	
-	@Column(name = "acquisition_type")
+	@Operation("quote")
 	private String acquisitionType;
 	
-	@Column(name = "quoted_date")
 	@Temporal(TemporalType.DATE)
 	private Date quotedDate;
 	
-	@Column(name = "gm_approval")
+	@Operation("approve")
 	private boolean gmApproved;
 	
-	@Column(name = "gm_comments")
+	@Operation("approve")
 	private String gmComments;
 	
 	private long finalid;
 	
-	@Column(name = "date_arrived")
+	@Operation("deliver")
 	@Temporal(TemporalType.DATE)
 	private Date dateArrived;
 	
+	@Operation("create")
 	@OneToOne(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	HardwareOrderItems hardware;
 	
+	@Operation("create")
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<SoftwareOrderItem> softwares;
 	
+	@Operation("create")
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<OtherOrderItem> others;
 	
@@ -255,11 +262,11 @@ public class Order implements Serializable {
 		this.quotedDate = quotedDate;
 	}
 
-	public boolean isGmApproval() {
+	public boolean isGmApproved() {
 		return gmApproved;
 	}
 
-	public void setGmApproval(boolean gmAccepted) {
+	public void setGmApproved(boolean gmAccepted) {
 		this.gmApproved = gmAccepted;
 	}
 
@@ -291,7 +298,7 @@ public class Order implements Serializable {
 		return supportApproved;
 	}
 
-	public void setSupportApproved(boolean supportApproval) {
+	public void setSupportApproved(Boolean supportApproval) {
 		this.supportApproved = supportApproval;
 	}
 

@@ -14,11 +14,13 @@ import { OrdersTraySearchComponent } from './orders-tray-search/orders-tray-sear
 import { PlaceholderComponent } from './placeholder/placeholder.component';
 import { OrderViewComponent } from './order-view/order-view.component';
 import { NewOrderComponent } from './new-order/new-order.component';
+import { CreateFormComponent } from './create-form/create-form.component';
+import { BaseFormComponent } from './base-form/base-form.component';
 
 
 
 @NgModule({
-  declarations: [OrdersModuleViewComponent, OrdersTrayComponent, OrdersTrayListComponent, OrdersTrayListItemComponent, OrdersTraySearchComponent, PlaceholderComponent, OrderViewComponent, NewOrderComponent],
+  declarations: [OrdersModuleViewComponent, OrdersTrayComponent, OrdersTrayListComponent, OrdersTrayListItemComponent, OrdersTraySearchComponent, PlaceholderComponent, OrderViewComponent, NewOrderComponent, CreateFormComponent, BaseFormComponent],
   providers: [OrdersRestfulService],
   imports: [
     CommonModule,
