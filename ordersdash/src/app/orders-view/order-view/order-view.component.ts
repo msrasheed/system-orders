@@ -14,10 +14,6 @@ import { Order, SoftwareItem, OtherItem } from '../order';
 export class OrderViewComponent implements OnInit {
 
   private order: Order;
-  private maxSoftNum: number;
-  private maxOthNum: number;
-  @ViewChild('softAdd', {static: false}) softAddF;
-  @ViewChild('otherAdd', {static: false}) otherAddF;
 
   constructor(public route: ActivatedRoute, public orderhttp: OrdersRestfulService, public datepipe: DatePipe) {
   }
@@ -29,17 +25,6 @@ export class OrderViewComponent implements OnInit {
             res => {
               //let order: Order = new Order();
               this.order = Object.assign({}, res);
-              this.maxSoftNum = 0;
-              for (let soft of this.order.softwares) {
-                let num: number = parseInt(soft.softid);
-                if (this.maxSoftNum < num) this.maxSoftNum = num;
-              }
-
-              this.maxOthNum = 0;
-              for (let oth of this.order.others) {
-                let num: number = parseInt(oth.otherid);
-                if (this.maxOthNum < num) this.maxOthNum = num;
-              }
 
               this.order.dateNeeded = this.convertDateFormat(this.order.dateNeeded);
               this.order.dateCreated = this.convertDateFormat(this.order.dateCreated);
@@ -73,36 +58,6 @@ export class OrderViewComponent implements OnInit {
 
   downloadCostSheet() {
     this.orderhttp.downloadFile(this.order.orderid, 'cost_sheet.xlsx');
-  }
-
-  addSoft() {
-    //console.log(this.softAddF.nativeElement.value);
-    if (this.softAddF.nativeElement.value) {
-      //console.log(this.order.softwaresText);
-      this.maxSoftNum = this.maxSoftNum + 1;
-      this.order.softwares.push(new SoftwareItem(this.maxSoftNum.toString(), this.softAddF.nativeElement.value));
-      this.softAddF.nativeElement.value = "";
-    }
-  }
-
-  removeSoft(idx) {
-    //console.log(this.order.softwares[idx]);
-    this.order.softwares.splice(idx, 1);
-  }
-
-  addOther() {
-    //console.log(this.softAddF.nativeElement.value);
-    if (this.otherAddF.nativeElement.value) {
-      //console.log(this.order.softwaresText);
-      this.maxOthNum = this.maxOthNum + 1;
-      this.order.others.push(new OtherItem(this.maxOthNum.toString(), this.otherAddF.nativeElement.value));
-      this.otherAddF.nativeElement.value = "";
-    }
-  }
-
-  removeOther(idx) {
-    //console.log(this.order.softwares[idx]);
-    this.order.others.splice(idx, 1);
   }
 
   submitOrderChange() {

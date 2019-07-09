@@ -1,0 +1,7 @@
+:host{
+    flex: 1 1 auto;
+    padding: 25px 50px;
+    background-color: #d1cbbe;
+    overflow-y: auto;
+    max-height: 100%
+}

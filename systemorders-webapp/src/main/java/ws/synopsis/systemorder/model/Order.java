@@ -19,7 +19,7 @@ public class Order implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long orderid;
+	private Long orderid;
 	
 	private Long userid;
 	
@@ -32,10 +32,10 @@ public class Order implements Serializable {
 	private String processor;
 	
 	@Operation("create")
-	private int memory;
+	private Integer memory;
 	
 	@Operation("create")
-	private int harddisk;
+	private Integer harddisk;
 	
 	@Operation("create")
 	private String operatingSystem;
@@ -66,12 +66,12 @@ public class Order implements Serializable {
 	private Date quotedDate;
 	
 	@Operation("approve")
-	private boolean gmApproved;
+	private Boolean gmApproved;
 	
 	@Operation("approve")
 	private String gmComments;
 	
-	private long finalid;
+	private Long finalid;
 	
 	@Operation("deliver")
 	@Temporal(TemporalType.DATE)
@@ -82,11 +82,11 @@ public class Order implements Serializable {
 	HardwareOrderItems hardware;
 	
 	@Operation("create")
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<SoftwareOrderItem> softwares;
 	
 	@Operation("create")
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<OtherOrderItem> others;
 	
 	public Order() {
@@ -101,7 +101,7 @@ public class Order implements Serializable {
 		}
 	}
 	
-	public Order(int orderid, Long userid, String status, Date date_created, String processor, int memory, int harddisk, String os, String device_type, Date date_needed, String client_contact) {
+	public Order(Long orderid, Long userid, String status, Date date_created, String processor, Integer memory, Integer harddisk, String os, String device_type, Date date_needed, String client_contact) {
 		super();
 		this.orderid = orderid;
 		this.userid = userid;
@@ -116,9 +116,9 @@ public class Order implements Serializable {
 		this.clientContact = client_contact;
 	}
 	
-	public Order(int orderid, Long userid, String status, Date date_created, String processor, int memory, int harddisk,
-			String os, String device_type, Date date_needed, String client_contact, String supplier, float final_price,
-			String acquisition_type, Date quoted_date, boolean gm_accepted, String gm_comments, int finalid,
+	public Order(Long orderid, Long userid, String status, Date date_created, String processor, Integer memory, Integer harddisk,
+			String os, String device_type, Date date_needed, String client_contact, String supplier, Float final_price,
+			String acquisition_type, Date quoted_date, Boolean gm_accepted, String gm_comments, Long finalid,
 			Date date_arrived) {
 		super();
 		this.orderid = orderid;
@@ -146,7 +146,7 @@ public class Order implements Serializable {
 		return orderid;
 	}
 
-	public void setOrderid(long orderid) {
+	public void setOrderid(Long orderid) {
 		this.orderid = orderid;
 	}
 
@@ -186,7 +186,7 @@ public class Order implements Serializable {
 		return memory;
 	}
 
-	public void setMemory(int memory) {
+	public void setMemory(Integer memory) {
 		this.memory = memory;
 	}
 
@@ -194,7 +194,7 @@ public class Order implements Serializable {
 		return harddisk;
 	}
 
-	public void setHarddisk(int harddisk) {
+	public void setHarddisk(Integer harddisk) {
 		this.harddisk = harddisk;
 	}
 
@@ -266,7 +266,7 @@ public class Order implements Serializable {
 		return gmApproved;
 	}
 
-	public void setGmApproved(boolean gmAccepted) {
+	public void setGmApproved(Boolean gmAccepted) {
 		this.gmApproved = gmAccepted;
 	}
 
@@ -282,7 +282,7 @@ public class Order implements Serializable {
 		return finalid;
 	}
 
-	public void setFinalid(long finalid) {
+	public void setFinalid(Long finalid) {
 		this.finalid = finalid;
 	}
 
@@ -332,9 +332,27 @@ public class Order implements Serializable {
 		softwares.add(soft);
 	}
 	
+	public void removeSoftwareItem(long softid) {
+		for (SoftwareOrderItem soft : softwares) {
+			if (soft.getSoftid() == softid) {
+				softwares.remove(soft);
+				soft.setOrder(null);
+			}
+		}
+	}
+	
 	public void addOtherItem(OtherOrderItem item) {
 		item.setOrder(this);
 		others.add(item);
+	}
+	
+	public void removeOtherItem(long otherid) {
+		for (OtherOrderItem oth : others) {
+			if (oth.getOtherid() == otherid) {
+				others.remove(oth);
+				oth.setOrder(null);
+			}
+		}
 	}
    
 }

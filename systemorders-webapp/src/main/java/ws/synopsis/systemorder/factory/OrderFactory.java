@@ -1,9 +1,7 @@
 package ws.synopsis.systemorder.factory;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,14 +11,9 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.google.gson.Gson;
-
 import ws.synopsis.systemorder.Gson.JsonBuilder;
-import ws.synopsis.systemorder.model.Employee;
 import ws.synopsis.systemorder.model.HardwareOrderItems;
 import ws.synopsis.systemorder.model.Order;
 import ws.synopsis.systemorder.model.OtherOrderItem;
@@ -30,22 +23,19 @@ import ws.synopsis.systemorder.utils.StringUtil;
 
 public class OrderFactory {
 
-	public static boolean purchase(Order order, HttpServletRequest req) {
-		OrderFactoryPermissions perm = new OrderFactoryPermissions("purchase");
-		return update(order, req, perm);
+	public static Order createNew(OrderProperties props) {
+		Order order = new Order();
+		if (create(order, props, false)) return order;
+		else return null;
 	}
-
-	public static boolean deliver(Order order, HttpServletRequest req) {
-		OrderFactoryPermissions perm = new OrderFactoryPermissions("deliver");
-		return update(order, req, perm);
-	}
-
+	
 	public static boolean create(Order order, OrderProperties props) {
 		return create(order, props, true);
 	}
 
 	public static boolean create(Order order, OrderProperties props, boolean exists) {
 		fillOrder(order, props);
+		fillOrderIterables(order, props);
 
 		order.setDateCreated(new Date());
 		order.setStatus("HCP");
@@ -131,6 +121,10 @@ public class OrderFactory {
 				else meth = cs.getDeclaredMethod(methName, String.class);
 				*/
 				String value = props.getProperty(param);
+				
+				/*System.out.print(param + " " + value);
+				System.out.println(paramType);*/
+				
 				if (paramType.equals(Integer.class)) meth.invoke(order, Integer.parseInt(value));
 				else if (paramType.equals(Long.class)) meth.invoke(order, Long.parseLong(value));
 				else if (paramType.equals(Date.class)) {
@@ -143,13 +137,51 @@ public class OrderFactory {
 					else boolVal = false;
 					meth.invoke(order, boolVal);
 				}
-				else meth.invoke(order, value);
+				else if (paramType.equals(String.class)){
+					meth.invoke(order, value);
+				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 		}
+		return order;
+	}
+	
+	public static Order fillOrderIterables(Order order, OrderProperties props) {
+		Enumeration<String> enums = (Enumeration<String>) props.propertyNames();
+		Class cls = Order.class;
+		
+		while (enums.hasMoreElements()) {
+			String param = enums.nextElement();
+			int idx;
+			if ((idx = param.indexOf("Iterable")) != -1) {
+				String[] iterNums = props.getProperty(param).split(",");
+				String base = param.substring(0, idx);
+				for (String num : iterNums) {
+					if (num.charAt(0) != '-') {
+						String value = props.getProperty(base + num);
+						if (base.equals("software")) {
+							order.addSoftwareItem(new SoftwareOrderItem(value));
+						}
+						else if (base.equals("other")) {
+							order.addOtherItem(new OtherOrderItem(value));
+						}
+					}
+					else {
+						String numCorr = num.substring(1);
+						if (base.equals("software")) {
+							order.removeSoftwareItem(Long.parseLong(numCorr));
+						}
+						else if (base.equals("other")) {
+							order.removeOtherItem(Long.parseLong(numCorr));
+						}
+					}
+				}
+			}
+		}
+		
 		return order;
 	}
 

@@ -15,7 +15,8 @@ public class OrderProperties extends Properties {
 		super();
 		
 		if (order == null) {
-			Long userid = ((Employee) req.getSession().getAttribute("employee")).getUserid();
+			//Long userid = ((Employee) req.getSession().getAttribute("employee")).getUserid();
+			Long userid = (long) 1;
 			put("userid", Long.toString(userid));
 		}
 		

@@ -67,7 +67,7 @@
   <div class="form-controlgroup">
     <label>Excel Sheet</label>
     <button type="button" (click)="downloadCostSheet()">Download Cost Sheet</button>
-    <input type="file" name="cost-sheet"/>
+    <input type="file" name="cost-sheet" ngModel (change)="onCostSheetChange($event)" #costSheetInput="ngModel"/>
   </div>
   <input class="submit-button" type="button" value="Enviar" (click)="submitForm('create')"/>
 </form>

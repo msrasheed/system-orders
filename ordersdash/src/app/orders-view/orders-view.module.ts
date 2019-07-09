@@ -16,11 +16,12 @@ import { OrderViewComponent } from './order-view/order-view.component';
 import { NewOrderComponent } from './new-order/new-order.component';
 import { CreateFormComponent } from './create-form/create-form.component';
 import { BaseFormComponent } from './base-form/base-form.component';
+import { NewButtonComponent } from './new-button/new-button.component';
 
 
 
 @NgModule({
-  declarations: [OrdersModuleViewComponent, OrdersTrayComponent, OrdersTrayListComponent, OrdersTrayListItemComponent, OrdersTraySearchComponent, PlaceholderComponent, OrderViewComponent, NewOrderComponent, CreateFormComponent, BaseFormComponent],
+  declarations: [OrdersModuleViewComponent, OrdersTrayComponent, OrdersTrayListComponent, OrdersTrayListItemComponent, OrdersTraySearchComponent, PlaceholderComponent, OrderViewComponent, NewOrderComponent, CreateFormComponent, BaseFormComponent, NewButtonComponent],
   providers: [OrdersRestfulService],
   imports: [
     CommonModule,

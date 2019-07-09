@@ -155,31 +155,27 @@ public class OrderServlet extends HttpServlet {
 		//VERIFY Operation
 		else if (operation.equals("verify")) {
 			//if order exists verify cost sheet
-			if (exists) OrderFactory.verify(order, request);
+			if (exists) OrderFactory.verify(order, orderProps);
 		}
 
 		//QUOTE Operation
 		else if (operation.equals("quote")) {
-			//if order exists verify cost sheet
-			if (exists) OrderFactory.quote(order, request);
+			if (exists) OrderFactory.quote(order, orderProps);
 		}
 
 		//APPROVE Operation
 		else if (operation.equals("approve")) {
-			//if order exists verify cost sheet
-			if (exists) OrderFactory.approve(order, request);
+			if (exists) OrderFactory.approve(order, orderProps);
 		}
 
 		//PURCHASE Operation
 		else if (operation.equals("purchase")) {
-			//if order exists verify cost sheet
-			if (exists) OrderFactory.purchase(order, request);
+			if (exists) OrderFactory.purchase(order, orderProps);
 		}
 
 		//DELIVER Operation
 		else if (operation.equals("deliver")) {
-			//if order exists verify cost sheet
-			if (exists) OrderFactory.deliver(order, request);
+			if (exists) OrderFactory.deliver(order, orderProps);
 		}
 	}
 }

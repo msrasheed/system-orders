@@ -87,4 +87,20 @@ export class OrdersRestfulService {
         );
   }
 
+  dummySubmitForm(form: FormData) {
+    let apiURL = `http://localhost:8080/systemorders-webapp/app/cunt`;
+    console.log('posting: ', form);
+
+    this.http.post(apiURL, form)
+        .toPromise()
+        .then(
+          res => {
+            console.log(res);
+          },
+          msg => {
+            console.log(msg);
+          }
+        );
+  }
+
 }

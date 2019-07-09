@@ -104,6 +104,10 @@ input.submit-button {
     cursor: pointer;
 }
 
-input.submit-button:hover {
+input.submit-button:enabled:hover {
     background-color: #F79212;
+}
+
+input.submit-button:disabled:hover {
+  cursor: not-allowed;
 }
