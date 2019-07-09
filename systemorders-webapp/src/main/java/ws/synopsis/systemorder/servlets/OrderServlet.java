@@ -102,6 +102,7 @@ public class OrderServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String operation = request.getParameter("operation");
 		
+		//declare (and initialize) variables
 		boolean exists = true;
 		Order order = null;
 		String orderid;
@@ -115,7 +116,7 @@ public class OrderServlet extends HttpServlet {
 		}
 		else return;
 		
-		//
+		//CREATE Operation
 		if (operation.equals("create")) {
 			boolean isSuccessful = false;
 			Part filepart = null;
@@ -124,39 +125,48 @@ public class OrderServlet extends HttpServlet {
 			if ((filepart = request.getPart("cost-sheet")) != null) {
 				//both paths create order and change isSuccessful to true
 				if (!exists) {
+					//prints new order and create new order from request
 					System.out.println("new order");
 					order = OrderFactory.createNew(request);
+					//if order is created, change isSuccessful to true
 					if (order != null) isSuccessful = true;
 				}
 				else {
+					//prints existing order create order from request
 					System.out.println("existing order");
+					//if order is created, change isSuccessful to true
 					isSuccessful = OrderFactory.create(order, request);
 				}
-				
+				//if order was created successfully save attached spreadsheet file
 				if (isSuccessful) OrderFactory.saveCreateSpreadsheet(order, filepart);
 			}
 		}
 		
+		//VERIFY Operation
 		else if (operation.equals("verify")) {
 			//if order exists verify cost sheet
 			if (exists) OrderFactory.verify(order, request);
 		}
 		
+		//QUOTE Operation
 		else if (operation.equals("quote")) {
 			//if order exists verify cost sheet
 			if (exists) OrderFactory.quote(order, request);
 		}
 		
+		//APPROVE Operation
 		else if (operation.equals("approve")) {
 			//if order exists verify cost sheet
 			if (exists) OrderFactory.approve(order, request);
 		}
 		
+		//PURCHASE Operation
 		else if (operation.equals("purchase")) {
 			//if order exists verify cost sheet
 			if (exists) OrderFactory.purchase(order, request);
 		}
 		
+		//DELIVER Operation
 		else if (operation.equals("deliver")) {
 			//if order exists verify cost sheet
 			if (exists) OrderFactory.deliver(order, request);
