@@ -29,24 +29,27 @@ import ws.synopsis.systemorder.utils.OrderDB;
 import ws.synopsis.systemorder.utils.StringUtil;
 
 public class OrderFactory {
-	
-	public static Order createNew(OrderProperties props) {
-		Order order = new Order();
-		if(create(order, props, false)) return order;
-		else return null;
-		
+
+	public static boolean purchase(Order order, HttpServletRequest req) {
+		OrderFactoryPermissions perm = new OrderFactoryPermissions("purchase");
+		return update(order, req, perm);
 	}
-	
+
+	public static boolean deliver(Order order, HttpServletRequest req) {
+		OrderFactoryPermissions perm = new OrderFactoryPermissions("deliver");
+		return update(order, req, perm);
+	}
+
 	public static boolean create(Order order, OrderProperties props) {
 		return create(order, props, true);
 	}
-	
+
 	public static boolean create(Order order, OrderProperties props, boolean exists) {
 		fillOrder(order, props);
-		
+
 		order.setDateCreated(new Date());
 		order.setStatus("HCP");
-		
+
 		boolean success = false;
 		if (exists) success = OrderDB.mergeOrder(order);
 		else success = OrderDB.insertOrder(order);
@@ -57,7 +60,7 @@ public class OrderFactory {
 			return false;
 		}
 	}
-	
+
 	public static boolean verify(Order order, OrderProperties props) {
 		boolean boolVal = update(order, props);
 		if (boolVal) {
@@ -69,12 +72,12 @@ public class OrderFactory {
 			return false;
 		}
 	}
-	
+
 	public static boolean quote(Order order, OrderProperties props) {
 		order.setStatus("SOP");
 		return update(order, props);
 	}
-	
+
 	public static boolean approve(Order order, OrderProperties props) {
 		boolean boolVal = update(order, props);
 		if (boolVal) {
@@ -86,17 +89,17 @@ public class OrderFactory {
 			return false;
 		}
 	}
-	
+
 	public static boolean purchase(Order order, OrderProperties props) {
 		order.setStatus("EO");
 		return update(order, props);
 	}
-	
+
 	public static boolean deliver(Order order, OrderProperties props) {
 		order.setStatus("EE");
 		return update(order, props);
 	}
-	
+
 	public static boolean update(Order order, OrderProperties props) {
 		fillOrder(order, props);
 		if (OrderDB.mergeOrder(order)) {
@@ -106,11 +109,11 @@ public class OrderFactory {
 			return false;
 		}
 	}
-	
+
 	public static Order fillOrder(Order order, OrderProperties props) {
 		Enumeration<String> enums = (Enumeration<String>) props.propertyNames();
 		Class cs = Order.class;
-		
+
 		while (enums.hasMoreElements()) {
 			String param = enums.nextElement();
 			Method meth;
@@ -118,10 +121,10 @@ public class OrderFactory {
 				String methName;
 				if (param.contains("Approved")) methName = "is" + StringUtil.capitalizeFirstLetter(param);
 				else methName = "set" + StringUtil.capitalizeFirstLetter(param);
-				
+
 				Class paramType = cs.getDeclaredField(param).getType();
 				meth = cs.getDeclaredMethod(methName, paramType);
-				
+
 				/*
 				if (param.toLowerCase().contains("date")) meth = cs.getDeclaredMethod(methName, Date.class);
 				else if (param.contains("Approved")) meth = cs.getDeclaredMethod(methName, Boolean.class);
@@ -141,15 +144,15 @@ public class OrderFactory {
 					meth.invoke(order, boolVal);
 				}
 				else meth.invoke(order, value);
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 		return order;
 	}
-	
+
 	public static boolean saveCreateSpreadsheet(Order order, Part filePart) {
 		String filename = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 		//System.out.println(filename);
@@ -160,7 +163,7 @@ public class OrderFactory {
 		File uploads = new File("/home/synopsis/systemorders_uploads/" + orderid);
 		uploads.mkdirs();
 		File file = new File(uploads, "cost_sheet." + fileExt);
-		
+
 		try {
 			InputStream input = filePart.getInputStream();
 			Files.copy(input, file.toPath());
@@ -170,29 +173,29 @@ public class OrderFactory {
 		System.out.println("successfuly saved file");
 		return true;
 	}
-	
+
 	public static Order getOrderById(long id) {
 		return OrderDB.getOrderById(id);
 	}
-	
+
 	public static String getAllOrdersJson() {
 		List<Order> orders = (List<Order>) OrderDB.getAllOrders();
 		String orderString = JsonBuilder.getGson().toJson(orders);
 		return orderString;
 	}
-	
+
 	public static String getOrderJson(long orderid) {
 		Order order = getOrderById(orderid);
 		String orderString = JsonBuilder.getGson().toJson(order);
 		return orderString;
 	}
-	
+
 	public static String getOrdersWithStatJson(String stat) {
 		List<Order> orders = (List<Order>) OrderDB.getOrdersByStatus(stat);
 		String orderString = JsonBuilder.getGson().toJson(orders);
 		return orderString;
 	}
-	
+
 	public static String getOrdersOfUser(long id) {
 		List<Order> orders = (List<Order>) OrderDB.getOrdersByUser(id);
 		String orderString = JsonBuilder.getGson().toJson(orders);

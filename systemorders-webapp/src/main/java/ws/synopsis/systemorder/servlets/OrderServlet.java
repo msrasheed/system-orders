@@ -35,7 +35,7 @@ public class OrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
-     * Default constructor. 
+     * Default constructor.
      */
     public OrderServlet() {
         // TODO Auto-generated constructor stub
@@ -45,14 +45,14 @@ public class OrderServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
 		Employee employee = (Employee) session.getAttribute("employee");
-		
+
 		String paramstr;
 		String json = null;
 		File file = null;
-		
+
 		if ((paramstr = request.getParameter("file")) != null) {
 			String orderid = request.getParameter("orderid");
 			if (orderid != null) {
@@ -71,7 +71,7 @@ public class OrderServlet extends HttpServlet {
 		else {
 			json = OrderFactory.getOrdersOfUser(employee.getUserid());
 		}
-		
+
 		if (file != null) {
 			try {
 				response.setHeader("content-disposition", "attachment; filename=" + file.getName());
@@ -103,43 +103,83 @@ public class OrderServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
 		String operation = request.getParameter("operation");
-		
+
+		//declare (and initialize) variables
 		boolean exists = true;
 		Order order = null;
 		String orderid;
-		
+
+		//if operation exists, make lowercase, otherwise exit function
 		if (operation != null) {
 			operation = operation.toLowerCase();
+			//if orderid does not exist, change exists to false, otherwise get order
 			if ((orderid = request.getParameter("orderid")) == null) exists = false;
 			else order = OrderFactory.getOrderById(Long.parseLong(orderid));
 		}
-		else {
-			return;
-		}
-		
+		else return;
+
 		OrderProperties orderProps = new OrderProperties(operation, order, request);
-		
+
+		//CREATE Operation
 		if (operation.equals("create")) {
 			boolean isSuccessful = false;
 			Part filepart = request.getPart("cost-sheet");
+				//enter if order does not exist
 			if(!exists) {
+				//enter if cost sheet does not exist
+				//both paths create order and change isSuccessful to true
 				if(filepart != null) {
+					//prints new order and create new order from request
 					System.out.println("new order");
 					order = OrderFactory.createNew(orderProps);
+					//if order is created, change isSuccessful to true
 					if (order != null) isSuccessful = true;
 				}
-			} 
+			}
 			else {
+				//prints existing order create order from request
 				System.out.println("existing order");
+				//if order is created, change isSuccessful to true
 				isSuccessful = OrderFactory.create(order, orderProps);
 			}
-			
+
+			//if order was created successfully save attached spreadsheet file
 			if ((!exists && isSuccessful) || (exists && filepart != null)) {
 				OrderFactory.saveCreateSpreadsheet(order, filepart);
 			}
+		}
+
+		//VERIFY Operation
+		else if (operation.equals("verify")) {
+			//if order exists verify cost sheet
+			if (exists) OrderFactory.verify(order, request);
+		}
+
+		//QUOTE Operation
+		else if (operation.equals("quote")) {
+			//if order exists verify cost sheet
+			if (exists) OrderFactory.quote(order, request);
+		}
+
+		//APPROVE Operation
+		else if (operation.equals("approve")) {
+			//if order exists verify cost sheet
+			if (exists) OrderFactory.approve(order, request);
+		}
+
+		//PURCHASE Operation
+		else if (operation.equals("purchase")) {
+			//if order exists verify cost sheet
+			if (exists) OrderFactory.purchase(order, request);
+		}
+
+		//DELIVER Operation
+		else if (operation.equals("deliver")) {
+			//if order exists verify cost sheet
+			if (exists) OrderFactory.deliver(order, request);
 		}
 	}
 }
