@@ -182,14 +182,14 @@ public class OrderFactory {
 		
 		String approval;
 		
-		if ((approval = req.getParameter("approval")) == null) return false;
+		if ((approval = req.getParameter("soporteApproval")) == null) return false;
 		else {
 			if(approval.equals("approved")) {
-				order.setSupportApproval(true);
+				order.setSupportApproved(true);
 				order.setStatus("CSVF");
 			}
 			else {
-				order.setSupportApproval(false);
+				order.setSupportApproved(false);
 				order.setStatus("DENY");
 			}
 		}
@@ -231,11 +231,11 @@ public class OrderFactory {
 		if ((teststr = req.getParameter("approval")) == null) return false;
 		else {
 			if (teststr.equals("approved")) {
-				order.setGmApproval(true);
+				order.setGmApproved(true);
 				order.setStatus("APRV");
 			}
 			else {
-				order.setGmApproval(false);
+				order.setGmApproved(false);
 				order.setStatus("DENY");
 			}
 		}
@@ -296,6 +296,12 @@ public class OrderFactory {
 	
 	public static Order getOrderById(long id) {
 		return OrderDB.getOrderById(id);
+	}
+	
+	public static String getAllOrdersJson() {
+		List<Order> orders = (List<Order>) OrderDB.getAllOrders();
+		String orderString = JsonBuilder.getGson().toJson(orders);
+		return orderString;
 	}
 	
 	public static String getOrderJson(long orderid) {

@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import ws.synopsis.systemorder.factory.Operation;
+
 /**
  * Entity implementation class for Entity: Order
  *
@@ -23,62 +25,67 @@ public class Order implements Serializable {
 	
 	private String status;
 	
-	@Column(name = "date_created")
 	@Temporal(TemporalType.DATE)
 	private Date dateCreated;
 	
+	@Operation("create")
 	private String processor;
 	
+	@Operation("create")
 	private int memory;
 	
+	@Operation("create")
 	private int harddisk;
 	
-	@Column(name = "os")
-	private String OperatingSystem;
+	@Operation("create")
+	private String operatingSystem;
 	
-	@Column(name = "device_type")
+	@Operation("create")
 	private String deviceType;
 	
-	@Column(name = "date_needed")
+	@Operation("create")
 	@Temporal(TemporalType.DATE)
 	private Date dateNeeded;
 	
-	@Column(name = "client_contact")
+	@Operation("create")
 	private String clientContact;
 	
-	@Column(name = "support_approval")
-	private boolean supportApproval;
+	@Operation("verify")
+	private Boolean supportApproved;
 	
+	@Operation("quote")
 	private String supplier;
 	
-	@Column(name = "final_prce")
-	private float finalPrice;
+	@Operation("quote")
+	private Float finalPrice;
 	
-	@Column(name = "acquisition_type")
+	@Operation("quote")
 	private String acquisitionType;
 	
-	@Column(name = "quoted_date")
 	@Temporal(TemporalType.DATE)
 	private Date quotedDate;
 	
-	@Column(name = "gm_approval")
-	private boolean gmApproval;
+	@Operation("approve")
+	private boolean gmApproved;
 	
-	@Column(name = "gm_comments")
+	@Operation("approve")
 	private String gmComments;
 	
 	private long finalid;
 	
-	@Column(name = "date_arrived")
+	@Operation("deliver")
 	@Temporal(TemporalType.DATE)
 	private Date dateArrived;
 	
+	@Operation("create")
 	@OneToOne(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	HardwareOrderItems hardware;
 	
+	@Operation("create")
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<SoftwareOrderItem> softwares;
 	
+	@Operation("create")
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<OtherOrderItem> others;
 	
@@ -103,7 +110,7 @@ public class Order implements Serializable {
 		this.processor = processor;
 		this.memory = memory;
 		this.harddisk = harddisk;
-		this.OperatingSystem = os;
+		this.operatingSystem = os;
 		this.deviceType = device_type;
 		this.dateNeeded = date_needed;
 		this.clientContact = client_contact;
@@ -121,7 +128,7 @@ public class Order implements Serializable {
 		this.processor = processor;
 		this.memory = memory;
 		this.harddisk = harddisk;
-		this.OperatingSystem = os;
+		this.operatingSystem = os;
 		this.deviceType = device_type;
 		this.dateNeeded = date_needed;
 		this.clientContact = client_contact;
@@ -129,7 +136,7 @@ public class Order implements Serializable {
 		this.finalPrice = final_price;
 		this.acquisitionType = acquisition_type;
 		this.quotedDate = quoted_date;
-		this.gmApproval = gm_accepted;
+		this.gmApproved = gm_accepted;
 		this.gmComments = gm_comments;
 		this.finalid = finalid;
 		this.dateArrived = date_arrived;
@@ -192,11 +199,11 @@ public class Order implements Serializable {
 	}
 
 	public String getOperatingSystem() {
-		return OperatingSystem;
+		return operatingSystem;
 	}
 
 	public void setOperatingSystem(String os) {
-		this.OperatingSystem = os;
+		this.operatingSystem = os;
 	}
 
 	public String getDeviceType() {
@@ -235,7 +242,7 @@ public class Order implements Serializable {
 		return finalPrice;
 	}
 
-	public void setFinalPrice(float finalPrice) {
+	public void setFinalPrice(Float finalPrice) {
 		this.finalPrice = finalPrice;
 	}
 
@@ -255,12 +262,12 @@ public class Order implements Serializable {
 		this.quotedDate = quotedDate;
 	}
 
-	public boolean isGmApproval() {
-		return gmApproval;
+	public boolean isGmApproved() {
+		return gmApproved;
 	}
 
-	public void setGmApproval(boolean gmAccepted) {
-		this.gmApproval = gmAccepted;
+	public void setGmApproved(boolean gmAccepted) {
+		this.gmApproved = gmAccepted;
 	}
 
 	public String getGmComments() {
@@ -287,12 +294,12 @@ public class Order implements Serializable {
 		this.dateArrived = date_arrived;
 	}
 
-	public boolean isSupportApproval() {
-		return supportApproval;
+	public boolean isSupportApproved() {
+		return supportApproved;
 	}
 
-	public void setSupportApproval(boolean supportApproval) {
-		this.supportApproval = supportApproval;
+	public void setSupportApproved(Boolean supportApproval) {
+		this.supportApproved = supportApproval;
 	}
 
 	public HardwareOrderItems getHardware() {

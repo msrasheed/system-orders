@@ -1,0 +1,75 @@
+<form (ngSubmit)="submitForm()" enctype="multipart/form-data" #form="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'create'">
+  <input type="hidden" name="orderid" [ngModel]="order.orderid">
+  <h1>Original Solicitud</h1>
+  <i>Created by {{order.userid}} on {{order.dateCreated}}</i><br>
+  <i>Status: {{order.status}}</i>
+  <h2>General</h2>
+  <div class="form-controlgroup">
+      <label>Client</label>
+      <input type="text" name="clientcontact" [(ngModel)]="order.clientContact" #clientContact="ngModel">
+  </div>
+  <div class="form-controlgroup">
+      <label>Type</label>
+      <select name="type" [(ngModel)]="order.deviceType" #type="ngModel">
+          <option>Laptop</option>
+          <option>Desktop</option>
+      </select>
+  </div>
+  <div class="form-controlgroup">
+      <label>Date Needed</label>
+      <input type="date" name="dateneeded" [(ngModel)]="order.dateNeeded" #dateNeeded="ngModel"><br/>
+  </div>
+  <h2>Hardware Specs</h2>
+  <div class="form-controlgroup">
+      <label>Processor</label>
+      <select name="processor" [(ngModel)]="order.processor" #processor="ngModel">
+          <option>Intel</option>
+          <option>AMD</option>
+      </select>
+  </div>
+  <div class="form-controlgroup">
+      <label>Memory</label>
+      <input type="number" name="memory" [(ngModel)]="order.memory" #memory="ngModel"><span>gb</span>
+  </div>
+  <div class="form-controlgroup">
+      <label>Hard disk</label>
+      <input type="number" name="harddisk" [(ngModel)]="order.harddisk" #harddisk="ngModel"><span>gb</span>
+  </div>
+  <h2>OS</h2>
+  <div class="form-controlgroup">
+      <label>Operating System</label>
+      <select name="operatingsystem" [(ngModel)]="order.operatingSystem" #operatingSystem="ngModel">
+          <option>Windows</option>
+          <option>MacOS</option>
+          <option>Linux</option>
+      </select>
+  </div>
+  <h2>Software</h2>
+  <div class="form-controlgroup variable-input" *ngFor="let soft of order.softwares; let i = index">
+      <input type="text" [name]="'software' + soft.softid" [(ngModel)]="soft.software">
+      <i class="material-icons delete" (click)="removeSoft(i)">delete</i>
+  </div>
+  <div class="form-controlgroup variable-input">
+      <input type="text" placeholder="Other..." #softAdd (keyup.enter)="addSoft()">
+      <i class="material-icons add" (click)="addSoft()">add</i>
+  </div>
+  <h2>Other</h2>
+  <div class="form-controlgroup variable-input" *ngFor="let oth of order.others; let i = index">
+      <input type="text" [name]="'other' + oth.otherid" [(ngModel)]="oth.otherspec">
+      <i class="material-icons delete" (click)="removeOther(i)">delete</i>
+  </div>
+  <div class="form-controlgroup variable-input">
+      <input type="text" name="other2" placeholder="Other..." #otherAdd (keyup.enter)="addOther()">
+      <i class="material-icons add" (click)="addOther()">add</i>
+  </div>
+  <h2>Cost Sheet</h2>
+  <div class="form-controlgroup">
+    <label>Excel Sheet</label>
+    <button type="button" (click)="downloadCostSheet()">Download Cost Sheet</button>
+    <input type="file" name="cost-sheet"/>
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitForm('create')"/>
+</form>
+
+<pre>create {{form.value | json}}</pre>

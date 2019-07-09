@@ -64,6 +64,9 @@ public class OrderServlet extends HttpServlet {
 		else if((paramstr = request.getParameter("status")) != null) {
 			json = OrderFactory.getOrdersWithStatJson(paramstr);
 		}
+		else if((paramstr = request.getParameter("allOrders")) != null) {
+			json = OrderFactory.getAllOrdersJson();
+		}
 		else {
 			json = OrderFactory.getOrdersOfUser(employee.getUserid());
 		}
@@ -72,6 +75,7 @@ public class OrderServlet extends HttpServlet {
 			try {
 				response.setHeader("content-disposition", "attachment; filename=" + file.getName());
 				response.setHeader("cache-control", "no-cache");
+				response.setHeader("Content-Type", "application/vnd.ms-excel");
 				OutputStream out = response.getOutputStream();
 				Files.copy(file.toPath(), out);
 				out.close();
@@ -119,6 +123,7 @@ public class OrderServlet extends HttpServlet {
 		//CREATE Operation
 		if (operation.equals("create")) {
 			boolean isSuccessful = false;
+<<<<<<< HEAD
 			Part filepart = null;
 			
 			//enter if cost sheet does not exist
@@ -126,11 +131,17 @@ public class OrderServlet extends HttpServlet {
 				//both paths create order and change isSuccessful to true
 				if (!exists) {
 					//prints new order and create new order from request
+=======
+			Part filepart = request.getPart("cost-sheet");
+			if(!exists) {
+				if(filepart != null) {
+>>>>>>> bc92a18ff85f29cad7cb2ae507a40a9c24c53bce
 					System.out.println("new order");
 					order = OrderFactory.createNew(request);
 					//if order is created, change isSuccessful to true
 					if (order != null) isSuccessful = true;
 				}
+<<<<<<< HEAD
 				else {
 					//prints existing order create order from request
 					System.out.println("existing order");
@@ -139,6 +150,16 @@ public class OrderServlet extends HttpServlet {
 				}
 				//if order was created successfully save attached spreadsheet file
 				if (isSuccessful) OrderFactory.saveCreateSpreadsheet(order, filepart);
+=======
+			} 
+			else {
+				System.out.println("existing order");
+				isSuccessful = OrderFactory.create(order, request);
+			}
+			
+			if ((!exists && isSuccessful) || (exists && filepart != null)) {
+				OrderFactory.saveCreateSpreadsheet(order, filepart);
+>>>>>>> bc92a18ff85f29cad7cb2ae507a40a9c24c53bce
 			}
 		}
 		

@@ -1,0 +1,86 @@
+<app-create-form [order]="order"></app-create-form>
+<form (ngSubmit)="updateSupport()" enctype="multipart/form-data" #supportForm="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'verify'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>Soporte</h1>
+  <div class="form-controlgroup approval">
+    <label>Approved</label>
+    <input type="radio" name="supportApproval" value="approve" [(ngModel)]="order.supportApproval"><span> Sí</span>
+    <span class="inline-spacer"></span>
+    <input type="radio" name="supportApproval" value="deny" [(ngModel)]="order.supportApproval"><span>No</span>
+  </div>
+  <div class="form-controlgroup no-align-center">
+    <label>Comentarios</label>
+    <textarea name="supportComments" rows="8" cols="80" [(ngModel)]="order.supportComments"></textarea>
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitOrderChange()"/>
+</form>
+<form (ngSubmit)="updateHelpdesk()" enctype="multipart/form-data" #helpdeskForm="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'quote'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>HelpDesk</h1>
+  <div class="form-controlgroup">
+    <label>Provider</label>
+    <input type="text" name="supplier" [(ngModel)]="order.supplier">
+  </div>
+  <div class="form-controlgroup">
+    <label>Final Price</label>
+    <input type="number" name="finalPrice" [(ngModel)]="order.finalPrice">
+  </div>
+  <div class="form-controlgroup">
+    <label>Aqcuisition Method</label>
+    <select name="acquisitionType" [(ngModel)]="order.acquisitionType">
+      <option>online</option>
+      <option>vendor</option>
+      <option>telephone</option>
+      <option>other</option>
+    </select>
+  </div>
+  <div class="form-controlgroup">
+    <label>Quote Date</label>
+    <input type="date" name="quotedDate" [(ngModel)]="order.quotedDate">
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitOrderChange()"/>
+</form>
+<form (ngSubmit)="updateGM()" enctype="multipart/form-data" #gmForm="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'approve'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>GM Approval</h1>
+  <div class="form-controlgroup approval">
+    <label>Approved</label>
+    <input type="radio" name="gmApproval" value="approve" [(ngModel)]="order.gmApproval"><span> Sí</span>
+    <span class="inline-spacer"></span>
+    <input type="radio" name="gmApproval" value="deny" [(ngModel)]="order.gmApproval"><span>No</span>
+  </div>
+  <div class="form-controlgroup no-align-center">
+    <label>Comentarios</label>
+    <textarea name="gmComments" rows="8" cols="80" [(ngModel)]="order.gmComments"></textarea>
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitOrderChange()"/>
+</form>
+<form (ngSubmit)="updatePurchase()" enctype="multipart/form-data" #purchaseForm="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'purchase'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>Puchase</h1>
+  <div class="form-controlgroup">
+    <label>Purchase Receipt</label>
+    <input type="file" name="receipt">
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitOrderChange()"/>
+</form>
+<form (ngSubmit)="updateDelivered()" enctype="multipart/form-data" #deliveredForm="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'deliver'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>Delivered</h1>
+  <div class="form-controlgroup">
+    <label>Date arrived</label>
+    <input type="date" name="dateArrived" [(ngModel)]="order.dateArrived">
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitOrderChange()"/>
+</form>
+
+<pre>support {{supportForm.value | json}}</pre>
+<pre>helpdesk {{helpdeskForm.value | json}}</pre>
+<pre>gm {{gmForm.value | json}}</pre>
+<pre>purchase {{purchaseForm.value | json}}</pre>
+<pre>delivered {{deliveredForm.value | json}}</pre>

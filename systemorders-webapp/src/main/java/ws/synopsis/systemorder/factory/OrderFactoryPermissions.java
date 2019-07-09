@@ -1,5 +1,7 @@
 package ws.synopsis.systemorder.factory;
 
+import java.util.HashMap;
+
 /*Different from Authorization permissions
  * this is authorizing operations to change certain parts of the
  * form. Used within the update function in OrderFactory*/
@@ -9,6 +11,13 @@ public class OrderFactoryPermissions {
 	private boolean quote = false;
 	private boolean approve = false;
 	private boolean deliver = false;
+	
+	private static boolean initialized = false;
+	private static HashMap<String, String> formPartMap = new HashMap<String, String>(); 
+	
+	public void init() {
+
+	}
 
 	public OrderFactoryPermissions(String operation) {
 		switch (operation) {

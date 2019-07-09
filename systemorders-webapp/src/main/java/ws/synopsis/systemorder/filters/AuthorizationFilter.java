@@ -48,7 +48,8 @@ public class AuthorizationFilter implements Filter {
 		System.out.println("Entering Authorization Filter: " + requestURI);
 		
 		HttpSession session = httpRequest.getSession(false);
-		
+		chain.doFilter(httpRequest, httpResponse);
+		/*
 		if (session != null) {
 			System.out.println("Session exists. Forwarding Request.");
 			chain.doFilter(httpRequest, httpResponse);
@@ -62,7 +63,7 @@ public class AuthorizationFilter implements Filter {
 			httpResponse.sendRedirect("/systemorders-webapp/index.html");
 		}
 		
-		System.out.println("Exiting Authorization Filter\n");
+		System.out.println("Exiting Authorization Filter\n");*/
 	}
 
 	/**
