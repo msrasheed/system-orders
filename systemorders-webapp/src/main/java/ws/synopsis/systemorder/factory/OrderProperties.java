@@ -7,10 +7,18 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 
 import ws.synopsis.systemorder.model.Order;
+import ws.synopsis.systemorder.model.Employee;
 
 public class OrderProperties extends Properties {
-	public OrderProperties(String operation, HttpServletRequest req) {
+	
+	public OrderProperties(String operation, Order order, HttpServletRequest req) {
 		super();
+		
+		if (order == null) {
+			Long userid = ((Employee) req.getSession().getAttribute("employee")).getUserid();
+			put("userid", Long.toString(userid));
+		}
+		
 		Enumeration<String> params = req.getParameterNames();
 		Class empCls = Order.class;
 		while(params.hasMoreElements()) {

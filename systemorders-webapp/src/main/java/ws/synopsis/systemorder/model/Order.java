@@ -21,7 +21,7 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long orderid;
 	
-	private long userid;
+	private Long userid;
 	
 	private String status;
 	
@@ -101,7 +101,7 @@ public class Order implements Serializable {
 		}
 	}
 	
-	public Order(int orderid, int userid, String status, Date date_created, String processor, int memory, int harddisk, String os, String device_type, Date date_needed, String client_contact) {
+	public Order(int orderid, Long userid, String status, Date date_created, String processor, int memory, int harddisk, String os, String device_type, Date date_needed, String client_contact) {
 		super();
 		this.orderid = orderid;
 		this.userid = userid;
@@ -116,7 +116,7 @@ public class Order implements Serializable {
 		this.clientContact = client_contact;
 	}
 	
-	public Order(int orderid, int userid, String status, Date date_created, String processor, int memory, int harddisk,
+	public Order(int orderid, Long userid, String status, Date date_created, String processor, int memory, int harddisk,
 			String os, String device_type, Date date_needed, String client_contact, String supplier, float final_price,
 			String acquisition_type, Date quoted_date, boolean gm_accepted, String gm_comments, int finalid,
 			Date date_arrived) {
@@ -154,7 +154,7 @@ public class Order implements Serializable {
 		return userid;
 	}
 
-	public void setUserid(long userid) {
+	public void setUserid(Long userid) {
 		this.userid = userid;
 	}
 

@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -24,248 +26,128 @@ import ws.synopsis.systemorder.model.Order;
 import ws.synopsis.systemorder.model.OtherOrderItem;
 import ws.synopsis.systemorder.model.SoftwareOrderItem;
 import ws.synopsis.systemorder.utils.OrderDB;
+import ws.synopsis.systemorder.utils.StringUtil;
 
 public class OrderFactory {
-	public static Order createNew(HttpServletRequest req) {
-		Order order = new Order(true);
-		if (create(order, req)) {
-			System.out.println("attempting to persist");
-			OrderDB.insertOrder(order);
-			return order;
+	
+	public static Order createNew(OrderProperties props) {
+		Order order = new Order();
+		if(create(order, props, false)) return order;
+		else return null;
+		
+	}
+	
+	public static boolean create(Order order, OrderProperties props) {
+		return create(order, props, true);
+	}
+	
+	public static boolean create(Order order, OrderProperties props, boolean exists) {
+		fillOrder(order, props);
+		
+		order.setDateCreated(new Date());
+		order.setStatus("HCP");
+		
+		boolean success = false;
+		if (exists) success = OrderDB.mergeOrder(order);
+		else success = OrderDB.insertOrder(order);
+		if(success) {
+			return true;
 		}
-		return null;
-	}
-	
-	public static boolean create(Order order, HttpServletRequest req) {
-		OrderFactoryPermissions perm = new OrderFactoryPermissions("create");
-		return update(order, req, perm);
-	}
-	
-	public static boolean verify(Order order, HttpServletRequest req) {
-		OrderFactoryPermissions perm = new OrderFactoryPermissions("verify");
-		return update(order, req, perm);
-	}
-	
-	public static boolean quote(Order order, HttpServletRequest req) {
-		OrderFactoryPermissions perm = new OrderFactoryPermissions("quote");
-		return update(order, req, perm);
-	}
-	
-	public static boolean approve(Order order, HttpServletRequest req) {
-		OrderFactoryPermissions perm = new OrderFactoryPermissions("approve");
-		return update(order, req, perm);
-	}
-	
-	public static boolean deliver(Order order, HttpServletRequest req) {
-		OrderFactoryPermissions perm = new OrderFactoryPermissions("deliver");
-		return update(order, req, perm);
-	}
-	
-	public static boolean update(Order order, HttpServletRequest req) {
-		OrderFactoryPermissions perm = new OrderFactoryPermissions("update");
-		return update(order, req, perm);
-	}
-	
-	public static boolean update(Order order, HttpServletRequest req, OrderFactoryPermissions perm) {
-		if (perm.canCreate()) {
-			if (!editCreateForm(order, req)) return false;
-		}
-		
-		if (perm.canVerfiy()) {
-			if (!editVerifyForm(order, req)) return false;
-		}
-		
-		if (perm.canQuote()) {
-			if (!editQuoteForm(order, req)) return false;
-		}
-		
-		if (perm.canApprove()) {
-			if (!editApprovalForm(order, req)) return false;
-		}
-		
-		if (perm.canDeliver()) {
-			if (!editDeliverForm(order, req)) return false;
-		}
-		
-		return true;
-	}
-	
-	private static boolean editCreateForm(Order order, HttpServletRequest req) {
-		System.out.println("Editing Create Form");
-		
-		long userid = ((Employee) req.getSession().getAttribute("employee")).getUserid();
-		String status = "new";
-	    Date dateCreated = new Date();
-	    String teststr;
-	    
-	    String clientContact;
-	    String deviceType;
-	    Date dateNeeded = null;
-	    String processor;
-	    int memory;
-	    int harddisk;
-	    String os;
-		
-	    if ((clientContact = req.getParameter("clientcontact")) == null) return false;
-	    
-		if ((deviceType = req.getParameter("type")) == null) return false;
-		
-		if ((teststr = req.getParameter("dateneeded")) == null) return false;
 		else {
+			return false;
+		}
+	}
+	
+	public static boolean verify(Order order, OrderProperties props) {
+		boolean boolVal = update(order, props);
+		if (boolVal) {
+			if (order.isSupportApproved()) order.setStatus("HCA");
+			else order.setStatus("DPS");
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public static boolean quote(Order order, OrderProperties props) {
+		order.setStatus("SOP");
+		return update(order, props);
+	}
+	
+	public static boolean approve(Order order, OrderProperties props) {
+		boolean boolVal = update(order, props);
+		if (boolVal) {
+			if (order.isGmApproved()) order.setStatus("SOA");
+			else order.setStatus("DPG");
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public static boolean purchase(Order order, OrderProperties props) {
+		order.setStatus("EO");
+		return update(order, props);
+	}
+	
+	public static boolean deliver(Order order, OrderProperties props) {
+		order.setStatus("EE");
+		return update(order, props);
+	}
+	
+	public static boolean update(Order order, OrderProperties props) {
+		fillOrder(order, props);
+		if (OrderDB.mergeOrder(order)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public static Order fillOrder(Order order, OrderProperties props) {
+		Enumeration<String> enums = (Enumeration<String>) props.propertyNames();
+		Class cs = Order.class;
+		
+		while (enums.hasMoreElements()) {
+			String param = enums.nextElement();
+			Method meth;
 			try {
-				dateNeeded = new SimpleDateFormat("yyyy-MM-dd").parse(teststr);
+				String methName;
+				if (param.contains("Approved")) methName = "is" + StringUtil.capitalizeFirstLetter(param);
+				else methName = "set" + StringUtil.capitalizeFirstLetter(param);
+				
+				Class paramType = cs.getDeclaredField(param).getType();
+				meth = cs.getDeclaredMethod(methName, paramType);
+				
+				/*
+				if (param.toLowerCase().contains("date")) meth = cs.getDeclaredMethod(methName, Date.class);
+				else if (param.contains("Approved")) meth = cs.getDeclaredMethod(methName, Boolean.class);
+				else meth = cs.getDeclaredMethod(methName, String.class);
+				*/
+				String value = props.getProperty(param);
+				if (paramType.equals(Integer.class)) meth.invoke(order, Integer.parseInt(value));
+				else if (paramType.equals(Long.class)) meth.invoke(order, Long.parseLong(value));
+				else if (paramType.equals(Date.class)) {
+					Date date = new SimpleDateFormat("yyyy-MM-dd").parse(value);
+					meth.invoke(order, date);
+				}
+				else if (paramType.equals(Boolean.class)) {
+					boolean boolVal;
+					if (value.equals("approve")) boolVal = true;
+					else boolVal = false;
+					meth.invoke(order, boolVal);
+				}
+				else meth.invoke(order, value);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
-				return false;
 			}
+			
 		}
-		
-		if ((processor = req.getParameter("processor")) == null) return false;
-		
-		if ((teststr = req.getParameter("memory")) == null) return false;
-		else memory = Integer.parseInt(teststr);
-		
-		if ((teststr = req.getParameter("harddisk")) == null) return false;
-		else harddisk = Integer.parseInt(teststr);
-		
-		if ((os = req.getParameter("operatingsystem")) == null) return false;
-		
-		order.setUserid(userid);
-		order.setStatus(status);
-		order.setDateCreated(dateCreated);
-		
-		order.setClientContact(clientContact);
-		order.setDeviceType(deviceType);
-		order.setDateNeeded(dateNeeded);
-		order.setProcessor(processor);
-		order.setMemory(memory);
-		order.setHarddisk(harddisk);
-		order.setOperatingSystem(os);
-		
-		String[] hardwares;
-		if ((hardwares = req.getParameterValues("hardware")) != null) {
-			HardwareOrderItems hardware = new HardwareOrderItems();
-			for (String hard : hardwares) {
-				hardware.set(hard);
-			}
-			order.setHardware(hardware);
-		}
-		
-		String[] softwares;
-		if ((softwares = req.getParameterValues("software")) != null)
-		{
-			for (String soft : softwares) {
-				SoftwareOrderItem software = new SoftwareOrderItem(soft);
-				order.addSoftwareItem(software);
-			}
-		}
-		
-		String[] others;
-		if ((others = req.getParameterValues("other")) != null) {
-			for (String oth : others) {
-				OtherOrderItem other = new OtherOrderItem(oth);
-				order.addOtherItem(other);
-			}
-		}
-		
-		System.out.println("done editing form");
-		return true;
-	}
-	
-	private static boolean editVerifyForm(Order order, HttpServletRequest req) {
-		System.out.println("Editing Verify Form");
-		
-		String approval;
-		
-		if ((approval = req.getParameter("soporteApproval")) == null) return false;
-		else {
-			if(approval.equals("approved")) {
-				order.setSupportApproved(true);
-				order.setStatus("CSVF");
-			}
-			else {
-				order.setSupportApproved(false);
-				order.setStatus("DENY");
-			}
-		}
-		
-		return true;
-	}
-	
-	private static boolean editQuoteForm(Order order, HttpServletRequest req) {
-		System.out.println("Editing Quote Form");
-		
-		String supplier;
-		float finalPrice;
-		String acquisitionType;
-		Date quotedDate = new Date();
-		String teststr;
-		
-		if ((supplier = req.getParameter("supplier")) == null) return false;
-		
-		if ((teststr = req.getParameter("finalprice")) == null) return false;
-		else finalPrice = Float.parseFloat(teststr);
-		
-		if ((acquisitionType = req.getParameter("acquisitiontype")) == null) return false;
-		
-		order.setSupplier(supplier);
-		order.setFinalPrice(finalPrice);
-		order.setAcquisitionType(acquisitionType);
-		order.setQuotedDate(quotedDate);
-		
-		return true;
-	}
-	
-	private static boolean editApprovalForm(Order order, HttpServletRequest req) {
-		System.out.println("Editing Approval Form");
-		
-		//boolean gmApproval;
-		String gmComments;
-		String teststr;
-		
-		if ((teststr = req.getParameter("approval")) == null) return false;
-		else {
-			if (teststr.equals("approved")) {
-				order.setGmApproved(true);
-				order.setStatus("APRV");
-			}
-			else {
-				order.setGmApproved(false);
-				order.setStatus("DENY");
-			}
-		}
-		
-		if ((gmComments = req.getParameter("comments")) == null) return false;
-		
-		order.setGmComments(gmComments);
-		
-		return true;
-	}
-	
-	private static boolean editDeliverForm(Order order, HttpServletRequest req) {
-		System.out.println("Editing Deliver Form");
-		
-		long finalid;
-		Date dateArrived;
-		String teststr;
-		
-		if ((teststr = req.getParameter("finalperson")) == null) return false;
-		else finalid = Long.parseLong(teststr);
-		
-		if ((teststr = req.getParameter("dateneeded")) == null) return false;
-		else {
-			try {
-				dateArrived = new SimpleDateFormat("yyyy-MM-dd").parse(teststr);
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-		
-		order.setFinalid(finalid);
-		order.setDateArrived(dateArrived);
-		
-		return true;
+		return order;
 	}
 	
 	public static boolean saveCreateSpreadsheet(Order order, Part filePart) {

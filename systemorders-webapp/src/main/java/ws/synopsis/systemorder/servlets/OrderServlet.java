@@ -20,6 +20,7 @@ import javax.servlet.http.Part;
 
 import ws.synopsis.systemorder.model.TestPeople;
 import ws.synopsis.systemorder.factory.OrderFactory;
+import ws.synopsis.systemorder.factory.OrderProperties;
 import ws.synopsis.systemorder.model.Employee;
 import ws.synopsis.systemorder.model.Order;
 import ws.synopsis.systemorder.utils.EmployeeDB;
@@ -119,19 +120,21 @@ public class OrderServlet extends HttpServlet {
 			return;
 		}
 		
+		OrderProperties orderProps = new OrderProperties(operation, order, request);
+		
 		if (operation.equals("create")) {
 			boolean isSuccessful = false;
 			Part filepart = request.getPart("cost-sheet");
 			if(!exists) {
 				if(filepart != null) {
 					System.out.println("new order");
-					order = OrderFactory.createNew(request);
+					order = OrderFactory.createNew(orderProps);
 					if (order != null) isSuccessful = true;
 				}
 			} 
 			else {
 				System.out.println("existing order");
-				isSuccessful = OrderFactory.create(order, request);
+				isSuccessful = OrderFactory.create(order, orderProps);
 			}
 			
 			if ((!exists && isSuccessful) || (exists && filepart != null)) {
