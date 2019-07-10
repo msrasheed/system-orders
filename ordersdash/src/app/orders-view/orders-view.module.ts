@@ -17,11 +17,16 @@ import { NewOrderComponent } from './new-order/new-order.component';
 import { CreateFormComponent } from './create-form/create-form.component';
 import { BaseFormComponent } from './base-form/base-form.component';
 import { NewButtonComponent } from './new-button/new-button.component';
+import { VerifyFormComponent } from './verify-form/verify-form.component';
+import { QuoteFormComponent } from './quote-form/quote-form.component';
+import { ApproveFormComponent } from './approve-form/approve-form.component';
+import { PurchaseFormComponent } from './purchase-form/purchase-form.component';
+import { DeliveredFormComponent } from './delivered-form/delivered-form.component';
 
 
 
 @NgModule({
-  declarations: [OrdersModuleViewComponent, OrdersTrayComponent, OrdersTrayListComponent, OrdersTrayListItemComponent, OrdersTraySearchComponent, PlaceholderComponent, OrderViewComponent, NewOrderComponent, CreateFormComponent, BaseFormComponent, NewButtonComponent],
+  declarations: [OrdersModuleViewComponent, OrdersTrayComponent, OrdersTrayListComponent, OrdersTrayListItemComponent, OrdersTraySearchComponent, PlaceholderComponent, OrderViewComponent, NewOrderComponent, CreateFormComponent, BaseFormComponent, NewButtonComponent, VerifyFormComponent, QuoteFormComponent, ApproveFormComponent, PurchaseFormComponent, DeliveredFormComponent],
   providers: [OrdersRestfulService],
   imports: [
     CommonModule,

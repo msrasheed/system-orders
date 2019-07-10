@@ -1,0 +1,29 @@
+<form (ngSubmit)="submitForm()" enctype="multipart/form-data" #form="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'quote'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>HelpDesk</h1>
+  <div class="form-controlgroup">
+    <label>Provider</label>
+    <input type="text" name="supplier" [(ngModel)]="order.supplier">
+  </div>
+  <div class="form-controlgroup">
+    <label>Final Price</label>
+    <input type="number" name="finalPrice" [(ngModel)]="order.finalPrice">
+  </div>
+  <div class="form-controlgroup">
+    <label>Aqcuisition Method</label>
+    <select name="acquisitionType" [(ngModel)]="order.acquisitionType">
+      <option>online</option>
+      <option>vendor</option>
+      <option>telephone</option>
+      <option>other</option>
+    </select>
+  </div>
+  <div class="form-controlgroup">
+    <label>Quote Date</label>
+    <input type="date" name="quotedDate" [(ngModel)]="order.quotedDate">
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()"/>
+</form>
+
+<pre>{{form.value | json}}</pre>

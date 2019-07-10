@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { OrdersRestfulService } from '../orders-restful.service';
 
 @Component({
   selector: 'app-orders-tray-search',
@@ -10,7 +11,7 @@ export class OrdersTraySearchComponent implements OnInit {
 
   private searchField: FormControl;
 
-  constructor() { }
+  constructor(public orderhttp: OrdersRestfulService) { }
 
   ngOnInit() {
     this.searchField = new FormControl();

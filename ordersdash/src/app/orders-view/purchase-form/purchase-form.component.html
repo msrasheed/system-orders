@@ -1,0 +1,12 @@
+<form (ngSubmit)="submitForm()" enctype="multipart/form-data" #form="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'purchase'">
+  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
+  <h1>Puchase</h1>
+  <div class="form-controlgroup">
+    <label>Purchase Receipt</label>
+    <input type="file" name="receipt">
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()"/>
+</form>
+
+<pre>{{form.value | json}}</pre>
