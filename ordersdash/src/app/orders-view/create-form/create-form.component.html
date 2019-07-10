@@ -1,6 +1,5 @@
 <form (ngSubmit)="submitForm()" enctype="multipart/form-data" #form="ngForm">
   <input type="hidden" name="operation" [ngModel]="'create'">
-  <input type="hidden" name="orderid" [ngModel]="order.orderid">
   <h1>Original Solicitud</h1>
   <i>Created by {{order.userid}} on {{order.dateCreated}}</i><br>
   <i>Status: {{order.status}}</i>

@@ -75,7 +75,7 @@ export class OrdersRestfulService {
     let apiURL = `http://localhost:8080/systemorders-webapp/app/orders`;
     console.log('posting: ', form);
 
-    this.http.post(apiURL, form)
+    return this.http.post(apiURL, form)
         .toPromise()
         .then(
           res => {

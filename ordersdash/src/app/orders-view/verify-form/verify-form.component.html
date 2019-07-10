@@ -1,12 +1,11 @@
 <form (ngSubmit)="updateForm()" enctype="multipart/form-data" #form="ngForm">
   <input type="hidden" name="operation" [ngModel]="'verify'">
-  <input type="hidden" name="orderid" [value]="order.orderid" ngModel>
   <h1>Soporte</h1>
   <div class="form-controlgroup approval">
     <label>Approved</label>
-    <input type="radio" name="supportApproval" value="approve" [(ngModel)]="order.supportApproval"><span> Sí</span>
+    <input type="radio" name="supportApproved" value="approve" [(ngModel)]="order.supportApproval"><span> Sí</span>
     <span class="inline-spacer"></span>
-    <input type="radio" name="supportApproval" value="deny" [(ngModel)]="order.supportApproval"><span>No</span>
+    <input type="radio" name="supportApproved" value="deny" [(ngModel)]="order.supportApproval"><span>No</span>
   </div>
   <div class="form-controlgroup no-align-center">
     <label>Comentarios</label>

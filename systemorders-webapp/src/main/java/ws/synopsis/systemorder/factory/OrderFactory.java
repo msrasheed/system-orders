@@ -52,10 +52,10 @@ public class OrderFactory {
 	}
 
 	public static boolean verify(Order order, OrderProperties props) {
+		if (props.get("supportApproved").equals("approve")) order.setStatus("HCA");
+		else order.setStatus("DPS");
 		boolean boolVal = update(order, props);
 		if (boolVal) {
-			if (order.isSupportApproved()) order.setStatus("HCA");
-			else order.setStatus("DPS");
 			return true;
 		}
 		else {
@@ -71,7 +71,7 @@ public class OrderFactory {
 	public static boolean approve(Order order, OrderProperties props) {
 		boolean boolVal = update(order, props);
 		if (boolVal) {
-			if (order.isGmApproved()) order.setStatus("SOA");
+			if (order.getGmApproved()) order.setStatus("SOA");
 			else order.setStatus("DPG");
 			return true;
 		}
@@ -109,8 +109,7 @@ public class OrderFactory {
 			Method meth;
 			try {
 				String methName;
-				if (param.contains("Approved")) methName = "is" + StringUtil.capitalizeFirstLetter(param);
-				else methName = "set" + StringUtil.capitalizeFirstLetter(param);
+				methName = "set" + StringUtil.capitalizeFirstLetter(param);
 
 				Class paramType = cs.getDeclaredField(param).getType();
 				meth = cs.getDeclaredMethod(methName, paramType);

@@ -22,9 +22,18 @@ export class BaseFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  submitForm(append: Object) {
+  submitForm(append?: Object) {
     //console.log(`submitting ${formName}`);
     console.log(this.form);
+    //console.log(this.order);
+
+    if (!append) {
+      append = {};
+    }
+
+    if (this.order.orderid) {
+      append["orderid"] = this.order.orderid;
+    }
 
     let formData = new FormData();
     for (let key in this.form.value) {
@@ -36,6 +45,11 @@ export class BaseFormComponent implements OnInit {
     for(var pair of formData.keys()) {
       console.log(pair+ ', '+ formData.get(pair));
     }
-    this.orderhttp.submitForm(formData);
+    this.orderhttp.submitForm(formData).then(
+      res => {
+        this.orderhttp.refreshOrderList();
+      },
+      msg => { console.log(msg); }
+    );
   }
 }
