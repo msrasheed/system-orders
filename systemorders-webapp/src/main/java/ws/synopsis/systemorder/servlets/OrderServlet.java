@@ -126,7 +126,7 @@ public class OrderServlet extends HttpServlet {
 		//CREATE Operation
 		if (operation.equals("create")) {
 			boolean isSuccessful = false;
-			Part filepart = request.getPart("cost-sheet");
+			Part filepart = request.getPart("costSheet");
 				//enter if order does not exist
 			if(!exists) {
 				//enter if cost sheet does not exist

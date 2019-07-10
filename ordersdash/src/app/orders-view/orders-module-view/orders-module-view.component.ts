@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
+import { OrderModuleInjector } from '../order-module-injector'
 
 @Component({
   selector: 'app-orders-module-view',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrdersModuleViewComponent implements OnInit {
 
-  constructor() { }
+  constructor(private injector:Injector) {
+    OrderModuleInjector.setInjector(this.injector);
+  }
 
   ngOnInit() {
   }

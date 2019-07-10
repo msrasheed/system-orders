@@ -10,8 +10,8 @@ import { Order } from '../order'
 })
 export class NewOrderComponent extends CreateFormComponent implements OnInit {
 
-  constructor(public orderhttp: OrdersRestfulService) {
-    super(orderhttp);
+  constructor() {
+    super();
     this.order = new Order();
     this.order.softwares = [];
     this.order.others = [];

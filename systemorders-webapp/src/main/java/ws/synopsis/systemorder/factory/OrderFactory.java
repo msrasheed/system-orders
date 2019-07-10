@@ -24,7 +24,7 @@ import ws.synopsis.systemorder.utils.StringUtil;
 public class OrderFactory {
 
 	public static Order createNew(OrderProperties props) {
-		Order order = new Order();
+		Order order = new Order(true);
 		if (create(order, props, false)) return order;
 		else return null;
 	}
@@ -155,8 +155,10 @@ public class OrderFactory {
 		
 		while (enums.hasMoreElements()) {
 			String param = enums.nextElement();
+			//System.out.println(param);
 			int idx;
 			if ((idx = param.indexOf("Iterable")) != -1) {
+				//System.out.println("ITERABLE");
 				String[] iterNums = props.getProperty(param).split(",");
 				String base = param.substring(0, idx);
 				for (String num : iterNums) {

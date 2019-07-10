@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { OrdersRestfulService } from '../orders-restful.service';
 import { BaseFormComponent } from '../base-form/base-form.component'
 import { Order, OtherItem, SoftwareItem } from '../order';
 
@@ -15,10 +14,12 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
   private maxOthNum: number;
   @ViewChild('softAdd', {static: false}) softAddF;
   @ViewChild('otherAdd', {static: false}) otherAddF;
+
+  private costSheetFile: File;
   @ViewChild('costSheetInput', {static: false}) costSheetInput: FormControl;
 
-  constructor(public orderhttp: OrdersRestfulService) {
-    super(orderhttp);
+  constructor() {
+    super();
   }
 
   ngOnInit() {
@@ -71,8 +72,8 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
   onCostSheetChange(event) {
     if (event.target.files.length) {
       let file = event.target.files[0];
-      console.log(this.costSheetInput);
-      this.costSheetInput.setValue(file);
+      console.log(file);
+      this.costSheetFile = file;
     }
   }
 
@@ -87,6 +88,9 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
       else if (key.includes("other")) {
         toAppend["otherIterable"] += key.slice(5) + ",";
       }
+    }
+    if (this.costSheetFile) {
+      toAppend["costSheet"] = this.costSheetFile;
     }
     super.submitForm(toAppend);
   }

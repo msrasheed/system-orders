@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { OrdersRestfulService } from '../orders-restful.service';
-import { Order, SoftwareItem, OtherItem } from '../order'
+import { OrderModuleInjector } from '../order-module-injector';
+import { Order, SoftwareItem, OtherItem } from '../order';
 
 @Component({
   selector: 'app-base-form',
@@ -10,10 +11,13 @@ import { Order, SoftwareItem, OtherItem } from '../order'
 })
 export class BaseFormComponent implements OnInit {
 
+  private orderhttp: OrdersRestfulService;
   @Input('order') order: Order;
   @ViewChild('form', {static: false}) form: FormGroup;
 
-  constructor(public orderhttp: OrdersRestfulService) { }
+  constructor() {
+    this.orderhttp = OrderModuleInjector.getInjector().get(OrdersRestfulService);
+  }
 
   ngOnInit() {
   }
@@ -32,6 +36,6 @@ export class BaseFormComponent implements OnInit {
     for(var pair of formData.keys()) {
       console.log(pair+ ', '+ formData.get(pair));
     }
-    //this.orderhttp.dummySubmitForm(formData);
+    this.orderhttp.submitForm(formData);
   }
 }

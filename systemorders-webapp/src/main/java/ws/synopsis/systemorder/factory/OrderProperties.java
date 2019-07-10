@@ -1,6 +1,8 @@
 package ws.synopsis.systemorder.factory;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -21,9 +23,20 @@ public class OrderProperties extends Properties {
 		}
 		
 		Enumeration<String> params = req.getParameterNames();
+		ArrayList<String> paramList = Collections.list(params);
+		ArrayList<String> roots = new ArrayList<String>();
+		int idx;
+		
+		for (String p : paramList) {
+			if ((idx = p.indexOf("Iterable")) != -1) {
+				roots.add(p.substring(0, idx));
+				put(p, req.getParameter(p));
+			}
+		}
+		
 		Class empCls = Order.class;
-		while(params.hasMoreElements()) {
-			String param = params.nextElement();
+		for (String param : paramList) {
+			//String param = params.nextElement();
 			//System.out.println(param + " " + req.getParameter(param));
 			try {
 				Field field = empCls.getDeclaredField(param);
@@ -33,6 +46,11 @@ public class OrderProperties extends Properties {
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
+				for (String r : roots) {
+					if (param.contains(r)) {
+						put(param, req.getParameter(param));
+					}
+				}
 			}
 		}
 	}
