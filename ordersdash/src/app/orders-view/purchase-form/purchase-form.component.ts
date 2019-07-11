@@ -8,6 +8,8 @@ import { BaseFormComponent } from '../base-form/base-form.component'
 })
 export class PurchaseFormComponent extends BaseFormComponent implements OnInit {
 
+  private purchaseFile: File;
+
   constructor() {
     super();
   }
@@ -15,4 +17,19 @@ export class PurchaseFormComponent extends BaseFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  onFileChange(event) {
+    if (event.target.files.length > 0) {
+      this.purchaseFile = event.target.files[0];
+    }
+  }
+
+  submitForm(append?: object) {
+    if (!append) {
+      append = {};
+    }
+    if (this.purchaseFile) {
+      append["purchaseReceipt"] = this.purchaseFile;
+    }
+    super.submitForm(append);
+  }
 }

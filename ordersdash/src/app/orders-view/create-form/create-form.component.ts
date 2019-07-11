@@ -12,6 +12,8 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
 
   private maxSoftNum: number;
   private maxOthNum: number;
+  private removeSoftNums: string;
+  private removeOtherNums: string;
   @ViewChild('softAdd', {static: false}) softAddF;
   @ViewChild('otherAdd', {static: false}) otherAddF;
 
@@ -20,6 +22,10 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
 
   constructor() {
     super();
+    this.removeSoftNums = "";
+    this.removeOtherNums = "";
+    this.order.newSoftwares = [];
+    this.order.newOthers = [];
   }
 
   ngOnInit() {
@@ -37,20 +43,25 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
       let num: number = parseInt(oth.otherid);
       if (this.maxOthNum < num) this.maxOthNum = num;
     }
+
+    this.order.newSoftwares = [];
+    this.order.newOthers = [];
   }
 
   addSoft() {
       //console.log(this.softAddF.nativeElement.value);
       if (this.softAddF.nativeElement.value) {
         //console.log(this.order.softwaresText);
+        if (!Array.isArray(this.order.newSoftwares)) this.order.newSoftwares = [];
         this.maxSoftNum = this.maxSoftNum + 1;
-        this.order.softwares.push(new SoftwareItem(this.maxSoftNum.toString(), this.softAddF.nativeElement.value));
+        this.order.newSoftwares.push(new SoftwareItem(this.maxSoftNum.toString(), this.softAddF.nativeElement.value));
         this.softAddF.nativeElement.value = "";
       }
     }
 
   removeSoft(idx) {
     //console.log(this.order.softwares[idx]);
+    this.removeSoftNums += "-" + this.order.softwares[idx].softid + ",";
     this.order.softwares.splice(idx, 1);
   }
 
@@ -58,14 +69,16 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
     //console.log(this.softAddF.nativeElement.value);
     if (this.otherAddF.nativeElement.value) {
       //console.log(this.order.softwaresText);
+      if (!Array.isArray(this.order.newOthers)) this.order.newOthers = [];
       this.maxOthNum = this.maxOthNum + 1;
-      this.order.others.push(new OtherItem(this.maxOthNum.toString(), this.otherAddF.nativeElement.value));
+      this.order.newOthers.push(new OtherItem(this.maxOthNum.toString(), this.otherAddF.nativeElement.value));
       this.otherAddF.nativeElement.value = "";
     }
   }
 
   removeOther(idx) {
     //console.log(this.order.softwares[idx]);
+    this.removeOtherNums += "-" + this.order.others[idx].otherid + ",";
     this.order.others.splice(idx, 1);
   }
 
@@ -77,8 +90,10 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
     }
   }
 
-  submitForm(append?: Object) {
-    let toAppend = {};
+  submitForm(toAppend?: Object) {
+    if (!toAppend) {
+      toAppend = {};
+    }
     toAppend["softwareIterable"] = "";
     toAppend["otherIterable"] = "";
     for (let key in this.form.value) {
@@ -89,6 +104,9 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
         toAppend["otherIterable"] += key.slice(5) + ",";
       }
     }
+    toAppend["softwareIterable"] += this.removeSoftNums;
+    toAppend["otherIterable"] += this.removeOtherNums;
+
     if (this.costSheetFile) {
       toAppend["costSheet"] = this.costSheetFile;
     }

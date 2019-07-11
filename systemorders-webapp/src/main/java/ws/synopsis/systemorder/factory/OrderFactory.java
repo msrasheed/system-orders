@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
@@ -69,10 +71,10 @@ public class OrderFactory {
 	}
 
 	public static boolean approve(Order order, OrderProperties props) {
+		if (props.get("gmApproved").equals("approve")) order.setStatus("SOA");
+		else order.setStatus("DPG");
 		boolean boolVal = update(order, props);
 		if (boolVal) {
-			if (order.getGmApproved()) order.setStatus("SOA");
-			else order.setStatus("DPG");
 			return true;
 		}
 		else {
@@ -126,6 +128,7 @@ public class OrderFactory {
 				
 				if (paramType.equals(Integer.class)) meth.invoke(order, Integer.parseInt(value));
 				else if (paramType.equals(Long.class)) meth.invoke(order, Long.parseLong(value));
+				else if (paramType.equals(Float.class)) meth.invoke(order, Float.parseFloat(value));
 				else if (paramType.equals(Date.class)) {
 					Date date = new SimpleDateFormat("yyyy-MM-dd").parse(value);
 					meth.invoke(order, date);
@@ -161,6 +164,7 @@ public class OrderFactory {
 				String[] iterNums = props.getProperty(param).split(",");
 				String base = param.substring(0, idx);
 				for (String num : iterNums) {
+					if (num.length() == 0) continue;
 					if (num.charAt(0) != '-') {
 						String value = props.getProperty(base + num);
 						if (base.equals("software")) {
@@ -187,6 +191,14 @@ public class OrderFactory {
 	}
 
 	public static boolean saveCreateSpreadsheet(Order order, Part filePart) {
+		return saveFile(order, filePart, "cost_sheet");
+	}
+	
+	public static boolean savePurchasedReceipt(Order order, Part filePart) {
+		return saveFile(order, filePart, "purchase_receipt");
+	}
+	
+	public static boolean saveFile(Order order, Part filePart, String name) {
 		String filename = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 		//System.out.println(filename);
 		String[] fileSegs = filename.split(Pattern.quote("."));
@@ -195,7 +207,10 @@ public class OrderFactory {
 		String orderid = Long.toString(order.getOrderid());
 		File uploads = new File("/home/synopsis/systemorders_uploads/" + orderid);
 		uploads.mkdirs();
-		File file = new File(uploads, "cost_sheet." + fileExt);
+		
+		deleteExistingFile(uploads, name);
+		
+		File file = new File(uploads, name + "." + fileExt);
 
 		try {
 			InputStream input = filePart.getInputStream();
@@ -206,7 +221,28 @@ public class OrderFactory {
 		System.out.println("successfuly saved file");
 		return true;
 	}
+	
+	public static void deleteExistingFile(File root, String name) {
+		ArrayList<String> listFiles = new ArrayList<String>(Arrays.asList(root.list()));
+		for (String f : listFiles) {
+			if (f.contains(name)) {
+				File file = new File(root, f);
+				file.delete();
+			}
+		}
+	}
 
+	public static File getFile(String orderid, String filename) {
+		File rootDir = new File("/home/synopsis/systemorders_uploads/" + orderid);
+		ArrayList<String> names = new ArrayList<String>(Arrays.asList(rootDir.list()));
+		for (String n : names) {
+			if (n.contains(filename)) {
+				return new File(rootDir, n);
+			}
+		}
+		return null;
+	}
+	
 	public static Order getOrderById(long id) {
 		return OrderDB.getOrderById(id);
 	}

@@ -56,7 +56,8 @@ public class OrderServlet extends HttpServlet {
 		if ((paramstr = request.getParameter("file")) != null) {
 			String orderid = request.getParameter("orderid");
 			if (orderid != null) {
-				file = new File("/home/synopsis/systemorders_uploads/" + orderid, paramstr);
+				//file = new File("/home/synopsis/systemorders_uploads/" + orderid, paramstr);
+				file = OrderFactory.getFile(orderid, paramstr);
 			}
 		}
 		else if ((paramstr = request.getParameter("orderid")) != null) {
@@ -76,7 +77,7 @@ public class OrderServlet extends HttpServlet {
 			try {
 				response.setHeader("content-disposition", "attachment; filename=" + file.getName());
 				response.setHeader("cache-control", "no-cache");
-				response.setHeader("Content-Type", "application/vnd.ms-excel");
+				//response.setHeader("Content-Type", "application/vnd.ms-excel");
 				OutputStream out = response.getOutputStream();
 				Files.copy(file.toPath(), out);
 				out.close();
@@ -170,7 +171,17 @@ public class OrderServlet extends HttpServlet {
 
 		//PURCHASE Operation
 		else if (operation.equals("purchase")) {
-			if (exists) OrderFactory.purchase(order, orderProps);
+			boolean isSuccessful = false;
+			Part filepart = request.getPart("purchaseReceipt");
+			
+			if(exists) {
+				isSuccessful = OrderFactory.purchase(order, orderProps);
+			}
+
+			//if order was created successfully save attached spreadsheet file
+			if (filepart != null) {
+				OrderFactory.savePurchasedReceipt(order, filepart);
+			}
 		}
 
 		//DELIVER Operation

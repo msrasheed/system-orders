@@ -22,6 +22,10 @@
     <label>Quote Date</label>
     <input type="date" name="quotedDate" [(ngModel)]="order.quotedDate">
   </div>
+  <div class="form-controlgroup no-align-center">
+    <label>Comentarios</label>
+    <textarea name="quoteComments" rows="8" cols="80" [(ngModel)]="order.quoteComments"></textarea>
+  </div>
   <input class="submit-button" type="button" value="Enviar" (click)="submitForm()"/>
 </form>
 

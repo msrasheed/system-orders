@@ -23,12 +23,13 @@ export class OrderViewComponent implements OnInit {
       this.orderhttp.getOrder(params['id'])
           .then(
             res => {
-              //let order: Order = new Order();
+              console.log(res);
               this.order = Object.assign({}, res);
 
               this.order.dateNeeded = this.convertDateFormat(this.order.dateNeeded);
               this.order.dateCreated = this.convertDateFormat(this.order.dateCreated);
               if (this.order.quotedDate) this.order.quotedDate = this.convertDateFormat(this.order.quotedDate);
+              if (this.order.dateArrived) this.order.dateArrived = this.convertDateFormat(this.order.dateArrived);
 
               this.order.supportApproval = this.convertApprovals(this.order.supportApproved);
               this.order.gmApproval = this.convertApprovals(this.order.gmApproved);
@@ -54,11 +55,7 @@ export class OrderViewComponent implements OnInit {
 
   convertApprovals(val: boolean) {
     return val ? 'approve' : 'deny';
-  }
-
-  downloadCostSheet() {
-    this.orderhttp.downloadFile(this.order.orderid, 'cost_sheet.xlsx');
-  }
+  }s
 
   submitOrderChange() {
     console.log("no submission code yet");

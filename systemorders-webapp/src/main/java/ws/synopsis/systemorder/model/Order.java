@@ -68,6 +68,7 @@ public class Order implements Serializable {
 	@Operation("quote")
 	private String quoteComments;
 	
+	@Operation("quote")
 	@Temporal(TemporalType.DATE)
 	private Date quotedDate;
 	
@@ -170,10 +171,11 @@ public class Order implements Serializable {
 	}
 	
 	public void removeSoftwareItem(long softid) {
-		for (SoftwareOrderItem soft : softwares) {
-			if (soft.getSoftid() == softid) {
-				softwares.remove(soft);
-				soft.setOrder(null);
+		for (Object soft : softwares.toArray()) {
+			SoftwareOrderItem softO = (SoftwareOrderItem) soft;
+			if (softO.getSoftid() == softid) {
+				softwares.remove(softO);
+				softO.setOrder(null);
 			}
 		}
 	}
@@ -184,10 +186,11 @@ public class Order implements Serializable {
 	}
 	
 	public void removeOtherItem(long otherid) {
-		for (OtherOrderItem oth : others) {
-			if (oth.getOtherid() == otherid) {
-				others.remove(oth);
-				oth.setOrder(null);
+		for (Object oth : others.toArray()) {
+			OtherOrderItem othO = (OtherOrderItem) oth;
+			if (othO.getOtherid() == otherid) {
+				others.remove(othO);
+				othO.setOrder(null);
 			}
 		}
 	}

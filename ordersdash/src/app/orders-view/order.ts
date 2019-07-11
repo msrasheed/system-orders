@@ -31,14 +31,20 @@ export class Order {
   public finalPrice: string;
   public acquisitionType: string;
   public quotedDate: string;
+  public quoteComments: string;
   public gmApproved: boolean;
   public gmComments: string;
+  public purchaseComments: string;
   public finalid: string;
   public dateArrived: string;
+  public deliverComments: string;
   public hardwares: string[];
   public softwares: SoftwareItem[];
   public others: OtherItem[];
   public softwaresText: string[]
+
+  public newSoftwares: SoftwareItem[];
+  public newOthers: OtherItem[];
 
   public supportApproval: string;
   public gmApproval: string;

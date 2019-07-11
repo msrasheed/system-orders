@@ -5,6 +5,10 @@
     <label>Date arrived</label>
     <input type="date" name="dateArrived" [(ngModel)]="order.dateArrived">
   </div>
+  <div class="form-controlgroup no-align-center">
+    <label>Comentarios</label>
+    <textarea name="deliverComments" rows="8" cols="80" [(ngModel)]="order.deliverComments"></textarea>
+  </div>
   <input class="submit-button" type="button" value="Enviar" (click)="submitForm()"/>
 </form>
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Config } from '../config';
 import { Employee } from './employee';
 
 @Injectable()
@@ -13,7 +14,7 @@ export class EmployeesRESTfulService {
   }
 
   refreshEmployeeList() {
-    let apiURL = 'http://localhost:8080/systemorders-webapp/app/users?allusers'
+    let apiURL = Config.baseURL + 'app/users?allusers'
     this.http.get<Employee[]>(apiURL)
         .toPromise()
         .then(
@@ -48,7 +49,7 @@ export class EmployeesRESTfulService {
   }
 
   createEmployee(emp: JSON) {
-    let apiURL = 'http://localhost:8080/systemorders-webapp/app/users?operation=create';
+    let apiURL = Config.baseURL + 'app/users?operation=create';
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -78,7 +79,7 @@ export class EmployeesRESTfulService {
   }
 
   updateEmployee(emp: JSON) {
-    let apiURL = 'http://localhost:8080/systemorders-webapp/app/users?operation=update';
+    let apiURL = Config.baseURL + 'app/users?operation=update';
     let formData = new FormData();
 
     for (var key in emp) {
@@ -103,7 +104,7 @@ export class EmployeesRESTfulService {
   }
 
   deleteEmployee(empid: string) {
-    let apiURL = 'http://localhost:8080/systemorders-webapp/app/users?operation=delete';
+    let apiURL = Config.baseURL + 'app/users?operation=delete';
     let formData = new FormData();
     formData.append("userid", empid);
 

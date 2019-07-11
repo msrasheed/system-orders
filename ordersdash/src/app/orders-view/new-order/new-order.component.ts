@@ -12,9 +12,7 @@ export class NewOrderComponent extends CreateFormComponent implements OnInit {
 
   constructor() {
     super();
-    this.order = new Order();
-    this.order.softwares = [];
-    this.order.others = [];
+    //this.order = new Order();
   }
 
   ngOnInit() {

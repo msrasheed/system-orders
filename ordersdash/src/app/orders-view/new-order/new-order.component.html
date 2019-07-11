@@ -43,7 +43,7 @@
       </select>
   </div>
   <h2>Software</h2>
-  <div class="form-controlgroup variable-input" *ngFor="let soft of order.softwares; let i = index">
+  <div class="form-controlgroup variable-input" *ngFor="let soft of order.newSoftwares; let i = index">
       <input type="text" [name]="'software' + soft.softid" [(ngModel)]="soft.software">
       <i class="material-icons delete" (click)="removeSoft(i)">delete</i>
   </div>
@@ -52,7 +52,7 @@
       <i class="material-icons add" (click)="addSoft()">add</i>
   </div>
   <h2>Other</h2>
-  <div class="form-controlgroup variable-input" *ngFor="let oth of order.others; let i = index">
+  <div class="form-controlgroup variable-input" *ngFor="let oth of order.newOthers; let i = index">
       <input type="text" [name]="'other' + oth.otherid" [(ngModel)]="oth.otherspec">
       <i class="material-icons delete" (click)="removeOther(i)">delete</i>
   </div>
@@ -65,7 +65,7 @@
     <label>Excel Sheet</label>
     <input type="file" name="cost-sheet" ngModel (change)="onCostSheetChange($event)" #costSheetInput="ngModel" required/>
   </div>
-  <input class="submit-button" type="button" value="Enviar" (click)="submitForm('create new')" [disabled]="form.invalid"/>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()" [disabled]="form.invalid"/>
 </form>
 
 <pre>create {{form.value | json}}</pre>

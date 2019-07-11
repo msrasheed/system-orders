@@ -17,9 +17,14 @@ export class BaseFormComponent implements OnInit {
 
   constructor() {
     this.orderhttp = OrderModuleInjector.getInjector().get(OrdersRestfulService);
+    this.order = new Order();
   }
 
   ngOnInit() {
+  }
+
+  downloadFile(filename: string) {
+    this.orderhttp.downloadFile(this.order.orderid, filename);
   }
 
   submitForm(append?: Object) {

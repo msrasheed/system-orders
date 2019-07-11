@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Config } from '../config'
 import { OrderBrief } from './order-brief';
 import { Order } from './order';
 
@@ -17,7 +18,7 @@ export class OrdersRestfulService {
   }
 
   refreshOrderList() {
-    let apiURL = 'http://localhost:8080/systemorders-webapp/app/orders?allOrders';
+    let apiURL = Config.baseURL + 'app/orders?allOrders';
     this.http.get<OrderBrief[]>(apiURL)
         .toPromise()
         .then(
@@ -44,20 +45,22 @@ export class OrdersRestfulService {
   }
 
   getOrder(id: string) {
-    let apiURl = 'http://localhost:8080/systemorders-webapp/app/orders?orderid=' + id;
+    let apiURl = Config.baseURL + 'app/orders?orderid=' + id;
     return this.http.get<Order>(apiURl).toPromise();
   }
 
   downloadFile(orderid: string, filename: string) {
-    let apiURL = `http://localhost:8080/systemorders-webapp/app/orders?orderid=${orderid}&file=${filename}`;
-    let fileNameParts: string[] = filename.split(".");
+    let apiURL = Config.baseURL + `app/orders?orderid=${orderid}&file=${filename}`;
 
-    this.http.get(apiURL, {responseType: 'blob'})
+    this.http.get(apiURL, {responseType: 'blob', observe: "response"})
         .toPromise()
         .then(
           res => {
-            //console.log(res);
-            let bloburl = window.URL.createObjectURL(res);
+            console.log(res);
+            let bloburl = window.URL.createObjectURL(res.body);
+            let contDispParts = res.headers.get("content-disposition").split("filename=")
+            let fileNameParts = contDispParts[1].split(".");
+
             //window.open(window.URL.createObjectURL(res));
             //window.location.href = bloburl;
             this.downloadButt.href = bloburl;
@@ -72,7 +75,7 @@ export class OrdersRestfulService {
   }
 
   submitForm(form: FormData) {
-    let apiURL = `http://localhost:8080/systemorders-webapp/app/orders`;
+    let apiURL = Config.baseURL + `app/orders`;
     console.log('posting: ', form);
 
     return this.http.post(apiURL, form)
@@ -88,7 +91,7 @@ export class OrdersRestfulService {
   }
 
   dummySubmitForm(form: FormData) {
-    let apiURL = `http://localhost:8080/systemorders-webapp/app/cunt`;
+    let apiURL = Config.baseURL + `app/cunt`;
     console.log('posting: ', form);
 
     this.http.post(apiURL, form)

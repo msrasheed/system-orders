@@ -46,7 +46,11 @@
   </div>
   <h2>Software</h2>
   <div class="form-controlgroup variable-input" *ngFor="let soft of order.softwares; let i = index">
-      <input type="text" [name]="'software' + soft.softid" [(ngModel)]="soft.software">
+      <input type="text" [name]="'software' + soft.softid" [value]="soft.software" [disabled]="true">
+      <i class="material-icons delete" (click)="removeSoft(i)">delete</i>
+  </div>
+  <div class="form-controlgroup variable-input" *ngFor="let soft of order.newSoftwares; let i = index">
+      <input type="text" [name]="'software' + soft.softid" [(ngModel)]="soft.software" (keyup.enter)="addSoft()">
       <i class="material-icons delete" (click)="removeSoft(i)">delete</i>
   </div>
   <div class="form-controlgroup variable-input">
@@ -55,7 +59,11 @@
   </div>
   <h2>Other</h2>
   <div class="form-controlgroup variable-input" *ngFor="let oth of order.others; let i = index">
-      <input type="text" [name]="'other' + oth.otherid" [(ngModel)]="oth.otherspec">
+      <input type="text" [name]="'other' + oth.otherid" [value]="oth.otherspec" [disabled]="true">
+      <i class="material-icons delete" (click)="removeOther(i)">delete</i>
+  </div>
+  <div class="form-controlgroup variable-input" *ngFor="let oth of order.newOthers; let i = index">
+      <input type="text" [name]="'other' + oth.otherid" [(ngModel)]="oth.otherspec" (keyup.enter)="addOther()">
       <i class="material-icons delete" (click)="removeOther(i)">delete</i>
   </div>
   <div class="form-controlgroup variable-input">
@@ -65,10 +73,10 @@
   <h2>Cost Sheet</h2>
   <div class="form-controlgroup">
     <label>Excel Sheet</label>
-    <button type="button" (click)="downloadCostSheet()">Download Cost Sheet</button>
+    <button type="button" (click)="downloadFile('cost_sheet')">Download Cost Sheet</button>
     <input type="file" name="cost-sheet" ngModel (change)="onCostSheetChange($event)" #costSheetInput="ngModel"/>
   </div>
-  <input class="submit-button" type="button" value="Enviar" (click)="submitForm('create')"/>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()"/>
 </form>
 
 <pre>create {{form.value | json}}</pre>
