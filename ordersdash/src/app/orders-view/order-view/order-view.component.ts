@@ -23,7 +23,7 @@ export class OrderViewComponent implements OnInit {
       this.orderhttp.getOrder(params['id'])
           .then(
             res => {
-              console.log(res);
+              //console.log(res);
               this.order = Object.assign({}, res);
 
               this.order.dateNeeded = this.convertDateFormat(this.order.dateNeeded);

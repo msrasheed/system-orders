@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { BaseFormComponent } from '../base-form/base-form.component'
 import { Order, OtherItem, SoftwareItem } from '../order';
@@ -8,7 +8,7 @@ import { Order, OtherItem, SoftwareItem } from '../order';
   templateUrl: './create-form.component.html',
   styleUrls: ['./create-form.component.css', '../base-form/base-form.component.css']
 })
-export class CreateFormComponent extends BaseFormComponent implements OnInit, AfterViewInit {
+export class CreateFormComponent extends BaseFormComponent implements OnInit, OnChanges {
 
   private maxSoftNum: number;
   private maxOthNum: number;
@@ -31,7 +31,7 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
   ngOnInit() {
   }
 
-  ngAfterViewInit() {
+  ngOnChanges() {
     this.maxSoftNum = 0;
     for (let soft of this.order.softwares) {
       let num: number = parseInt(soft.softid);
@@ -52,7 +52,7 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
       //console.log(this.softAddF.nativeElement.value);
       if (this.softAddF.nativeElement.value) {
         //console.log(this.order.softwaresText);
-        if (!Array.isArray(this.order.newSoftwares)) this.order.newSoftwares = [];
+        //if (!Array.isArray(this.order.newSoftwares)) this.order.newSoftwares = [];
         this.maxSoftNum = this.maxSoftNum + 1;
         this.order.newSoftwares.push(new SoftwareItem(this.maxSoftNum.toString(), this.softAddF.nativeElement.value));
         this.softAddF.nativeElement.value = "";
@@ -69,7 +69,7 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, Af
     //console.log(this.softAddF.nativeElement.value);
     if (this.otherAddF.nativeElement.value) {
       //console.log(this.order.softwaresText);
-      if (!Array.isArray(this.order.newOthers)) this.order.newOthers = [];
+      //if (!Array.isArray(this.order.newOthers)) this.order.newOthers = [];
       this.maxOthNum = this.maxOthNum + 1;
       this.order.newOthers.push(new OtherItem(this.maxOthNum.toString(), this.otherAddF.nativeElement.value));
       this.otherAddF.nativeElement.value = "";
