@@ -23,7 +23,7 @@ public class Order implements Serializable {
 	
 	private Long userid;
 	
-	private String status;
+	private Integer status;
 	
 	@Temporal(TemporalType.DATE)
 	private Date dateCreated;
@@ -114,7 +114,7 @@ public class Order implements Serializable {
 		}
 	}
 	
-	public Order(Long orderid, Long userid, String status, Date date_created, String processor, Integer memory, Integer harddisk, String os, String device_type, Date date_needed, String client_contact) {
+	public Order(Long orderid, Long userid, Integer status, Date date_created, String processor, Integer memory, Integer harddisk, String os, String device_type, Date date_needed, String client_contact) {
 		super();
 		this.orderid = orderid;
 		this.userid = userid;
@@ -129,7 +129,7 @@ public class Order implements Serializable {
 		this.clientContact = client_contact;
 	}
 	
-	public Order(Long orderid, Long userid, String status, Date dateCreated, String processor, Integer memory,
+	public Order(Long orderid, Long userid, Integer status, Date dateCreated, String processor, Integer memory,
 			Integer harddisk, String operatingSystem, String deviceType, Date dateNeeded, String clientContact,
 			Boolean supportApproved, String supportComments, String supplier, Float finalPrice, String acquisitionType,
 			String quoteComments, Date quotedDate, Boolean gmApproved, String gmComments, String purchaseComments,
@@ -211,11 +211,11 @@ public class Order implements Serializable {
 		this.userid = userid;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

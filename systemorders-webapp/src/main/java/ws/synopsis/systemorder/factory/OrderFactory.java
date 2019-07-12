@@ -40,7 +40,7 @@ public class OrderFactory {
 		fillOrderIterables(order, props);
 
 		order.setDateCreated(new Date());
-		order.setStatus("HCP");
+		order.setStatus(OrderStatus.HCP.number);
 
 		boolean success = false;
 		if (exists) success = OrderDB.mergeOrder(order);
@@ -54,8 +54,8 @@ public class OrderFactory {
 	}
 
 	public static boolean verify(Order order, OrderProperties props) {
-		if (props.get("supportApproved").equals("approve")) order.setStatus("HCA");
-		else order.setStatus("DPS");
+		if (props.get("supportApproved").equals("approve")) order.setStatus(OrderStatus.HCA.number);
+		else order.setStatus(OrderStatus.DS.number);
 		boolean boolVal = update(order, props);
 		if (boolVal) {
 			return true;
@@ -66,13 +66,13 @@ public class OrderFactory {
 	}
 
 	public static boolean quote(Order order, OrderProperties props) {
-		order.setStatus("SOP");
+		order.setStatus(OrderStatus.SOP.number);
 		return update(order, props);
 	}
 
 	public static boolean approve(Order order, OrderProperties props) {
-		if (props.get("gmApproved").equals("approve")) order.setStatus("SOA");
-		else order.setStatus("DPG");
+		if (props.get("gmApproved").equals("approve")) order.setStatus(OrderStatus.SOA.number);
+		else order.setStatus(OrderStatus.DGM.number);
 		boolean boolVal = update(order, props);
 		if (boolVal) {
 			return true;
@@ -83,12 +83,12 @@ public class OrderFactory {
 	}
 
 	public static boolean purchase(Order order, OrderProperties props) {
-		order.setStatus("EO");
+		order.setStatus(OrderStatus.EO.number);
 		return update(order, props);
 	}
 
 	public static boolean deliver(Order order, OrderProperties props) {
-		order.setStatus("EE");
+		order.setStatus(OrderStatus.EE.number);
 		return update(order, props);
 	}
 
