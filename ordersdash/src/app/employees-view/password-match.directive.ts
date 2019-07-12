@@ -29,7 +29,7 @@ class PasswordMatchValidatorFunctionFactory {
     }
   ]
 })
-export class PasswordMatchDirective implements Validator {
+export class PasswordMatchDirective implements Validator, OnChanges {
   @Input('appPasswordMatch') firstPass: string;
   private valFn = Validators.nullValidator;
 

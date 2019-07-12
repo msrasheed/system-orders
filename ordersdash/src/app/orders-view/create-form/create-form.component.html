@@ -6,7 +6,7 @@
   <h2>General</h2>
   <div class="form-controlgroup">
       <label>Client</label>
-      <input type="text" name="clientcontact" [(ngModel)]="order.clientContact" #clientContact="ngModel">
+      <input type="text" name="clientContact" [(ngModel)]="order.clientContact" #clientContact="ngModel">
   </div>
   <div class="form-controlgroup">
       <label>Type</label>
@@ -17,7 +17,7 @@
   </div>
   <div class="form-controlgroup">
       <label>Date Needed</label>
-      <input type="date" name="dateneeded" [(ngModel)]="order.dateNeeded" #dateNeeded="ngModel"><br/>
+      <input type="date" name="dateNeeded" [(ngModel)]="order.dateNeeded" #dateNeeded="ngModel"><br/>
   </div>
   <h2>Hardware Specs</h2>
   <div class="form-controlgroup">
@@ -47,26 +47,26 @@
   <h2>Software</h2>
   <div class="form-controlgroup variable-input" *ngFor="let soft of order.softwares; let i = index">
       <input type="text" [name]="'software' + soft.softid" [value]="soft.software" [disabled]="true">
-      <i class="material-icons delete" (click)="removeSoft(i)">delete</i>
+      <i class="material-icons delete" (click)="removeSoft(i)" *ngIf="fieldsEditable">delete</i>
   </div>
   <div class="form-controlgroup variable-input" *ngFor="let soft of order.newSoftwares; let i = index">
       <input type="text" [name]="'software' + soft.softid" [(ngModel)]="soft.software" (keyup.enter)="addSoft()">
       <i class="material-icons delete" (click)="removeSoft(i)">delete</i>
   </div>
-  <div class="form-controlgroup variable-input">
+  <div class="form-controlgroup variable-input" *ngIf="fieldsEditable">
       <input type="text" placeholder="Other..." #softAdd (keyup.enter)="addSoft()">
       <i class="material-icons add" (click)="addSoft()">add</i>
   </div>
   <h2>Other</h2>
   <div class="form-controlgroup variable-input" *ngFor="let oth of order.others; let i = index">
       <input type="text" [name]="'other' + oth.otherid" [value]="oth.otherspec" [disabled]="true">
-      <i class="material-icons delete" (click)="removeOther(i)">delete</i>
+      <i class="material-icons delete" (click)="removeOther(i)" *ngIf="fieldsEditable">delete</i>
   </div>
   <div class="form-controlgroup variable-input" *ngFor="let oth of order.newOthers; let i = index">
       <input type="text" [name]="'other' + oth.otherid" [(ngModel)]="oth.otherspec" (keyup.enter)="addOther()">
       <i class="material-icons delete" (click)="removeOther(i)">delete</i>
   </div>
-  <div class="form-controlgroup variable-input">
+  <div class="form-controlgroup variable-input" *ngIf="fieldsEditable">
       <input type="text" name="other2" placeholder="Other..." #otherAdd (keyup.enter)="addOther()">
       <i class="material-icons add" (click)="addOther()">add</i>
   </div>
@@ -74,9 +74,9 @@
   <div class="form-controlgroup">
     <label>Excel Sheet</label>
     <button type="button" (click)="downloadFile('cost_sheet')">Download Cost Sheet</button>
-    <input type="file" name="cost-sheet" ngModel (change)="onCostSheetChange($event)" #costSheetInput="ngModel"/>
+    <input type="file" name="costSheet" ngModel (change)="onCostSheetChange($event)" #costSheetInput="ngModel"/>
   </div>
-  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()"/>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()" [disabled]="form.invalid || form.disabled"/>
 </form>
 
 <pre>create {{form.value | json}}</pre>

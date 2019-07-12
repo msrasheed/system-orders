@@ -11,7 +11,7 @@
     <label>Comentarios</label>
     <textarea name="supportComments" rows="8" cols="80" [(ngModel)]="order.supportComments"></textarea>
   </div>
-  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()" [disabled]="form.invalid"/>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()" [disabled]="form.invalid || form.disabled"/>
 </form>
 
 <pre>{{form.value | json}}</pre>

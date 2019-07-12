@@ -26,7 +26,7 @@
     <label>Comentarios</label>
     <textarea name="quoteComments" rows="8" cols="80" [(ngModel)]="order.quoteComments"></textarea>
   </div>
-  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()"/>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()" [disabled]="form.invalid || form.disabled"/>
 </form>
 
 <pre>{{form.value | json}}</pre>
