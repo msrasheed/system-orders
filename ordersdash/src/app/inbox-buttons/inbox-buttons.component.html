@@ -1,26 +1,13 @@
-<ul>
-    <li class="button">
-        <a href="#">
-            <i class="material-icons">add</i>
-            <div>Nuevo solicitud</div>
-        </a>
-    </li>
-    <li class="button">
-        <a href="#">
-            <i class="material-icons">inbox</i>
-            <div>Main</div>
-        </a>
-    </li>
-    <li class="button">
-        <a href="#">
-            <i class="material-icons">forward</i>
-            <div>Pending</div>
-        </a>
-    </li>
-    <li class="button">
-        <a href="#">
-            <i class="material-icons">send</i>
-            <div>Completed</div>
-        </a>
-    </li>
-</ul>
+<app-inbox-butt [title]="'Empleadas'" [icon]="'account_circle'" [routerLinkActive]="['active']"
+                [routerLink]="['/employees']"></app-inbox-butt>
+
+<app-inbox-butt [title]="'Todos Solicitudes'" [icon]="'inbox'" [routerLinkActive]="['active']"
+                [routerLink]="['/orders']"></app-inbox-butt>
+
+<app-inbox-butt [title]="'Solicitudes'" [icon]="'send'" [routerLinkActive]="['active']"
+                [routerLink]="['/orders']"></app-inbox-butt>
+<app-inbox-butt [title]="'Suporte'" [icon]="'accessibility'" [routerLinkActive]="['active']"></app-inbox-butt>
+<app-inbox-butt [title]="'Para Ofrecer'" [icon]="'local_phone'" [routerLinkActive]="['active']"></app-inbox-butt>
+<app-inbox-butt [title]="'GM Decisión'" [icon]="'check_circle'" [routerLinkActive]="['active']"></app-inbox-butt>
+<app-inbox-butt [title]="'Para Comprar'" [icon]="'attach_money'" [routerLinkActive]="['active']"></app-inbox-butt>
+<app-inbox-butt [title]="'Entregado'" [icon]="'move_to_inbox'" [routerLinkActive]="['active']"></app-inbox-butt>
