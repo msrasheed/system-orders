@@ -1,4 +1,4 @@
-<app-orders-tray-list-item *ngFor="let order of this.orderhttp.orders" [order]="order"
+<app-orders-tray-list-item *ngFor="let order of this.orderhttp.orders | orderSearch:orderhttp.orderQuery" [order]="order"
   [routerLink]="['/orders', order.orderid]"
   [routerLinkActive]="['active']">
 </app-orders-tray-list-item>

@@ -8,6 +8,7 @@ import { Order } from './order';
 export class OrdersRestfulService {
 
   public orders: OrderBrief[];
+  public orderQuery: string;
   public downloadButt;
 
   constructor(public http: HttpClient) {

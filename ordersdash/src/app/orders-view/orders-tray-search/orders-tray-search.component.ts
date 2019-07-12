@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { OrdersRestfulService } from '../orders-restful.service';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
   selector: 'app-orders-tray-search',
@@ -15,6 +16,9 @@ export class OrdersTraySearchComponent implements OnInit {
 
   ngOnInit() {
     this.searchField = new FormControl();
+    this.searchField.valueChanges.pipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    ).subscribe(value => this.orderhttp.orderQuery = value);
   }
-
 }
