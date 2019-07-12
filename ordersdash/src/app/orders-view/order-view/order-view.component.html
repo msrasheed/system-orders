@@ -1,6 +1,29 @@
-<app-create-form [order]="order" [required]="false" [editable]="false"></app-create-form>
-<app-verify-form [order]="order" [required]="false" [editable]="true"></app-verify-form>
-<app-quote-form [order]="order" [required]="true" [editable]="true"></app-quote-form>
-<app-approve-form [order]="order" [required]="false" [editable]="true"></app-approve-form>
-<app-purchase-form [order]="order" [required]="false" [editable]="true"></app-purchase-form>
-<app-delivered-form [order]="order" [required]="false" [editable]="true"></app-delivered-form>
+<app-create-form [order]="order"
+                 [required]="false"
+                 [editable]="createPerm.edit">
+</app-create-form>
+<app-verify-form [order]="order"
+                 [required]="verifyPerm.reqs"
+                 [editable]="verifyPerm.edit"
+                 *ngIf="verifyPerm.view">
+</app-verify-form>
+<app-quote-form [order]="order"
+                [required]="quotePerm.reqs"
+                [editable]="quotePerm.edit"
+                *ngIf="quotePerm.view">
+</app-quote-form>
+<app-approve-form [order]="order"
+                  [required]="approvePerm.reqs"
+                  [editable]="approvePerm.edit"
+                  *ngIf="approvePerm.view">
+</app-approve-form>
+<app-purchase-form [order]="order"
+                   [required]="purchasePerm.reqs"
+                   [editable]="purchasePerm.edit"
+                   *ngIf="purchasePerm.view">
+</app-purchase-form>
+<app-delivered-form [order]="order"
+                    [required]="deliveredPerm.reqs" 
+                    [editable]="deliveredPerm.edit"
+                    *ngIf="deliveredPerm.view">
+</app-delivered-form>

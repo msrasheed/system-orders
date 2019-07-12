@@ -16,7 +16,7 @@ export class Order {
 
   public orderid: string;
   public userid: string;
-  public status: string;
+  public status: number;
   public dateCreated: string;
   public processor: string;
   public memory: string;

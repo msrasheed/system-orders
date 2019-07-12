@@ -2,7 +2,7 @@ export class OrderBrief {
   constructor(
   	public orderid: string,
   	public userid: string,
-  	public status: string,
+  	public status: number,
   	public dateNeeded: string,
   	public clientContact: string,
   	public supportApproval: boolean,

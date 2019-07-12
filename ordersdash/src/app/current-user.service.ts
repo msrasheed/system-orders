@@ -15,4 +15,8 @@ export class CurrentUserService {
       return this.user.username;
   }
 
+  getRole(): string {
+    return this.user.role;
+  }
+
 }

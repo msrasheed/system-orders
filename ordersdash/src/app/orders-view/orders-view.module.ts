@@ -22,11 +22,13 @@ import { QuoteFormComponent } from './quote-form/quote-form.component';
 import { ApproveFormComponent } from './approve-form/approve-form.component';
 import { PurchaseFormComponent } from './purchase-form/purchase-form.component';
 import { DeliveredFormComponent } from './delivered-form/delivered-form.component';
+import { StatusTransformPipe } from './status-transform.pipe';
+import { OrderSearchPipe } from './order-search.pipe';
 
 
 
 @NgModule({
-  declarations: [OrdersModuleViewComponent, OrdersTrayComponent, OrdersTrayListComponent, OrdersTrayListItemComponent, OrdersTraySearchComponent, PlaceholderComponent, OrderViewComponent, NewOrderComponent, CreateFormComponent, BaseFormComponent, NewButtonComponent, VerifyFormComponent, QuoteFormComponent, ApproveFormComponent, PurchaseFormComponent, DeliveredFormComponent],
+  declarations: [OrdersModuleViewComponent, OrdersTrayComponent, OrdersTrayListComponent, OrdersTrayListItemComponent, OrdersTraySearchComponent, PlaceholderComponent, OrderViewComponent, NewOrderComponent, CreateFormComponent, BaseFormComponent, NewButtonComponent, VerifyFormComponent, QuoteFormComponent, ApproveFormComponent, PurchaseFormComponent, DeliveredFormComponent, StatusTransformPipe, OrderSearchPipe],
   providers: [OrdersRestfulService],
   imports: [
     CommonModule,

@@ -1,7 +1,7 @@
 <div class="left">
     <div class="wrapper">
-        <div class="circle"></div>
-        <p>{{order.status}}</p>
+        <div class="circle" [style.background-color]="order.status | statusTransform:'color'"></div>
+        <p>{{order.status | statusTransform:'acronym'}}</p>
         <p>{{order.dateNeeded | date:'shortDate'}}</p>
     </div>
 </div>

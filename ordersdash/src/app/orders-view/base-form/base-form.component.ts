@@ -27,7 +27,7 @@ export class BaseFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log("view init");
+    //console.log("view init");
     let promise = new Promise((resolve, reject) => {
       setTimeout(() => {
         this.setFormRestrictions();
@@ -37,7 +37,7 @@ export class BaseFormComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log("OnChanges");
+    //console.log("OnChanges");
     //console.log(this.form.controls);
     this.setFormRestrictions();
   }
@@ -48,14 +48,14 @@ export class BaseFormComponent implements OnInit, OnChanges, AfterViewInit {
       //console.log("vor", this.form.controls["supplier"])
       for (let control in this.form.controls) {
         //console.log(this.form.controls[control]);
-        if (this.fieldsRequired && !control.includes("Comments")) {
+        if (!this.fieldsEditable) {
+          //console.log(control, "disabled");
+          this.form.controls[control].disable();
+        }
+        else if (this.fieldsRequired && !control.includes("Comments")) {
           //console.log(control, "required");
           this.form.controls[control].setValidators([Validators.required]);
           this.form.controls[control].updateValueAndValidity();
-        }
-        else if (!this.fieldsEditable) {
-          //console.log(control, "disabled");
-          this.form.controls[control].disable();
         }
       }
       //console.log(this.form.controls);
