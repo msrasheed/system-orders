@@ -259,7 +259,7 @@ public class OrderFactory {
 		return orderString;
 	}
 
-	public static String getOrdersWithStatJson(String stat) {
+	public static String getOrdersWithStatJson(Integer stat) {
 		List<Order> orders = (List<Order>) OrderDB.getOrdersByStatus(stat);
 		String orderString = JsonBuilder.getGson().toJson(orders);
 		return orderString;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Config } from '../config'
+import { RestfulConfigService } from '../restful-config.service';
 import { OrderBrief } from './order-brief';
 import { Order } from './order';
 
@@ -11,7 +12,8 @@ export class OrdersRestfulService {
   public orderQuery: string;
   public downloadButt;
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public configRest: RestfulConfigService) {
+    this.configRest.setOrdersRestfulService(this);
     this.refreshOrderList();
     this.downloadButt = document.createElement("a");
     document.body.appendChild(this.downloadButt);
@@ -19,7 +21,7 @@ export class OrdersRestfulService {
   }
 
   refreshOrderList() {
-    let apiURL = Config.baseURL + 'app/orders?allOrders';
+    let apiURL = this.configRest.apiURLQuery;
     this.http.get<OrderBrief[]>(apiURL)
         .toPromise()
         .then(

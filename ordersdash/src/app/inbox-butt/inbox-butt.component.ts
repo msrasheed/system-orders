@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-inbox-butt',
@@ -8,11 +8,21 @@ import { Component, OnInit, Input } from '@angular/core';
 export class InboxButtComponent implements OnInit {
 
   @Input("title") title: string;
-  @Input("icon") icon:string; 
+  @Input("icon") icon:string;
+  @HostBinding('class.active') private activated: boolean;
 
   constructor() { }
 
   ngOnInit() {
+    this.deactivate();
+  }
+
+  activate() {
+    this.activated = true;
+  }
+
+  deactivate() {
+    this.activated = false;
   }
 
 }

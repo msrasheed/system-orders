@@ -21,10 +21,12 @@ import javax.servlet.http.Part;
 import ws.synopsis.systemorder.model.TestPeople;
 import ws.synopsis.systemorder.factory.OrderFactory;
 import ws.synopsis.systemorder.factory.OrderProperties;
+import ws.synopsis.systemorder.factory.OrderStatus;
 import ws.synopsis.systemorder.model.Employee;
 import ws.synopsis.systemorder.model.Order;
 import ws.synopsis.systemorder.utils.EmployeeDB;
 import ws.synopsis.systemorder.utils.OrderDB;
+import ws.synopsis.systemorder.utils.StringUtil;
 
 /**
  * Servlet implementation class OrderSubmissionServlet
@@ -64,10 +66,37 @@ public class OrderServlet extends HttpServlet {
 			json = OrderFactory.getOrderJson(Long.parseLong(paramstr));
 		}
 		else if((paramstr = request.getParameter("status")) != null) {
-			json = OrderFactory.getOrdersWithStatJson(paramstr);
+			json = OrderFactory.getOrdersWithStatJson(Integer.parseInt(paramstr));
 		}
-		else if((paramstr = request.getParameter("allOrders")) != null) {
-			json = OrderFactory.getAllOrdersJson();
+		else if((paramstr = request.getParameter("view")) != null) {
+			if (paramstr.equals("all")) {
+				json = OrderFactory.getAllOrdersJson();
+			}
+			else if (paramstr.equals("own")) {
+				json = OrderFactory.getOrdersOfUser(employee.getUserid());
+			}
+			else if (paramstr.equals("verify")) {
+				json = OrderFactory.getOrdersWithStatJson(OrderStatus.HCP.number);
+			}
+			else if (paramstr.equals("quote")) {
+				json = OrderFactory.getOrdersWithStatJson(OrderStatus.HCA.number);
+			}
+			else if (paramstr.equals("approve")) {
+				json = OrderFactory.getOrdersWithStatJson(OrderStatus.SOP.number);
+			}
+			else if (paramstr.equals("purchase")) {
+				json = OrderFactory.getOrdersWithStatJson(OrderStatus.SOA.number);
+			}
+			else if (paramstr.equals("delivered")) {
+				json = OrderFactory.getOrdersWithStatJson(OrderStatus.EO.number);
+			}
+			else if (paramstr.equals("done")) {
+				String json1 = OrderFactory.getOrdersWithStatJson(OrderStatus.EE.number);
+				String json2 = OrderFactory.getOrdersWithStatJson(OrderStatus.DS.number);
+				String json3 = OrderFactory.getOrdersWithStatJson(OrderStatus.DGM.number);
+				json1 = StringUtil.combineJsonArrays(json1, json2);
+				json = StringUtil.combineJsonArrays(json1, json3);
+			}
 		}
 		else {
 			json = OrderFactory.getOrdersOfUser(employee.getUserid());

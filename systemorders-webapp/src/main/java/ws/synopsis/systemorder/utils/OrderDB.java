@@ -24,7 +24,7 @@ public class OrderDB {
 		return orders;
 	}
 
-	public static List<Order> getOrdersByStatus(String status) {
+	public static List<Order> getOrdersByStatus(Integer status) {
 		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
 		String qString =	"SELECT o " +
 							"FROM Order as o " +

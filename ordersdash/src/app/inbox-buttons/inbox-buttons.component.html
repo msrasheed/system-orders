@@ -1,13 +1,2 @@
-<app-inbox-butt [title]="'Empleadas'" [icon]="'account_circle'" [routerLinkActive]="['active']"
-                [routerLink]="['/employees']"></app-inbox-butt>
-
-<app-inbox-butt [title]="'Todos Solicitudes'" [icon]="'inbox'" [routerLinkActive]="['active']"
-                [routerLink]="['/orders']"></app-inbox-butt>
-
-<app-inbox-butt [title]="'Solicitudes'" [icon]="'send'" [routerLinkActive]="['active']"
-                [routerLink]="['/orders']"></app-inbox-butt>
-<app-inbox-butt [title]="'Suporte'" [icon]="'accessibility'" [routerLinkActive]="['active']"></app-inbox-butt>
-<app-inbox-butt [title]="'Para Ofrecer'" [icon]="'local_phone'" [routerLinkActive]="['active']"></app-inbox-butt>
-<app-inbox-butt [title]="'GM Decisión'" [icon]="'check_circle'" [routerLinkActive]="['active']"></app-inbox-butt>
-<app-inbox-butt [title]="'Para Comprar'" [icon]="'attach_money'" [routerLinkActive]="['active']"></app-inbox-butt>
-<app-inbox-butt [title]="'Entregado'" [icon]="'move_to_inbox'" [routerLinkActive]="['active']"></app-inbox-butt>
+<app-inbox-butt *ngFor="let butt of butts" [title]="butt.title" [icon]="butt.icon"
+                (click)="buttClicked(clickable, butt)" #clickable></app-inbox-butt>
