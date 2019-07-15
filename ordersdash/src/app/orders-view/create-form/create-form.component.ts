@@ -1,7 +1,14 @@
 import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { BaseFormComponent } from '../base-form/base-form.component'
-import { Order, OtherItem, SoftwareItem } from '../order';
+import { Order, OtherItem, SoftwareItem, HardwareItems } from '../order';
+
+class HardwareDisplay {
+  constructor(
+    public name: string,
+    public ref: any
+  ) {}
+}
 
 @Component({
   selector: 'app-create-form',
@@ -9,6 +16,8 @@ import { Order, OtherItem, SoftwareItem } from '../order';
   styleUrls: ['./create-form.component.css', '../base-form/base-form.component.css']
 })
 export class CreateFormComponent extends BaseFormComponent implements OnInit, OnChanges {
+
+  private hardwares: HardwareDisplay[];
 
   private maxSoftNum: number;
   private maxOthNum: number;
@@ -26,6 +35,11 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, On
     this.removeOtherNums = "";
     this.order.newSoftwares = [];
     this.order.newOthers = [];
+    this.hardwares = [];
+    let dummyHard = new HardwareItems(false, false, false);
+    for (let val in this.order.hardware) {
+      console.log(val);
+    }
   }
 
   ngOnInit() {

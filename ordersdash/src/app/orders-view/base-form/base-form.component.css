@@ -27,6 +27,21 @@ h2 {
   margin-top: 10px;
 }
 
+.row {
+  display:flex;
+  flex-flow: row nowrap;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.row > .column {
+  flex: 1 1 50%;
+}
+
+.row .column .form-controlgroup {
+  padding-left: 0;
+}
+
 .form-controlgroup.no-align-center {
   align-items: flex-start;
 }
@@ -38,6 +53,10 @@ h2 {
 .form-controlgroup label {
     box-sizing: border-box;
     width: 150px;
+}
+
+.form-controlgroup.checkbox label {
+  width: 75px;
 }
 
 .form-controlgroup textarea {

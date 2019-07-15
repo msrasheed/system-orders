@@ -15,23 +15,27 @@ public class HardwareOrderItems implements Serializable {
 
 	@Id
 	@Column(name = "orderid")
-	private long primKey;
+	private Long primKey;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderid")
 	@GsonExclude
 	private Order order;
 	
-	private boolean mouse;
-	private boolean monitor;
+	private Boolean mouse;
+	private Boolean keyboard;
+	private Boolean monitor;
 	
 	private static final long serialVersionUID = 1L;
 
 	public HardwareOrderItems() {
 		super();
+		this.mouse = false;
+		this.keyboard = false;
+		this.monitor = false;
 	}
 	
-	public HardwareOrderItems(long primKey, Order order) {
+	public HardwareOrderItems(Long primKey, Order order) {
 		super();
 		this.primKey = primKey;
 		this.order = order;
@@ -48,11 +52,11 @@ public class HardwareOrderItems implements Serializable {
 		}
 	}
 
-	public long getPrimKey() {
+	public Long getPrimKey() {
 		return primKey;
 	}
 
-	public void setPrimKey(long primKey) {
+	public void setPrimKey(Long primKey) {
 		this.primKey = primKey;
 	}
 
@@ -64,20 +68,28 @@ public class HardwareOrderItems implements Serializable {
 		this.order = order;
 	}
 
-	public boolean isMouse() {
+	public Boolean isMouse() {
 		return mouse;
 	}
 
-	public void setMouse(boolean mouse) {
+	public void setMouse(Boolean mouse) {
 		this.mouse = mouse;
 	}
 
-	public boolean isMonitor() {
+	public Boolean isMonitor() {
 		return monitor;
 	}
 
-	public void setMonitor(boolean monitor) {
+	public void setMonitor(Boolean monitor) {
 		this.monitor = monitor;
+	}
+
+	public Boolean getKeyboard() {
+		return keyboard;
+	}
+
+	public void setKeyboard(Boolean keyboard) {
+		this.keyboard = keyboard;
 	}
    
 }

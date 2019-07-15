@@ -111,6 +111,7 @@ public class Order implements Serializable {
 		if (programCreated) {
 			softwares = new HashSet<SoftwareOrderItem>();
 			others = new HashSet<OtherOrderItem>();
+			hardware = new HardwareOrderItems();
 		}
 	}
 	

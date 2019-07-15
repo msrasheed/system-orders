@@ -18,20 +18,38 @@
       <input type="date" name="dateNeeded" ngModel #dateNeeded="ngModel" required><br/>
   </div>
   <h2>Hardware Specs</h2>
-  <div class="form-controlgroup">
-      <label>Processor</label>
-      <select name="processor" ngModel #processor="ngModel" required>
-          <option>Intel</option>
-          <option>AMD</option>
-      </select>
-  </div>
-  <div class="form-controlgroup">
-      <label>Memory</label>
-      <input type="number" name="memory" ngModel #memory="ngModel" required><span>gb</span>
-  </div>
-  <div class="form-controlgroup">
-      <label>Hard disk</label>
-      <input type="number" name="harddisk" ngModel #harddisk="ngModel" required><span>gb</span>
+  <div class="row">
+    <div class="column">
+      <div class="form-controlgroup">
+          <label>Processor</label>
+          <select name="processor" ngModel #processor="ngModel" required>
+              <option>Intel</option>
+              <option>AMD</option>
+          </select>
+      </div>
+      <div class="form-controlgroup">
+          <label>Memory</label>
+          <input type="number" name="memory" ngModel #memory="ngModel" required><span>gb</span>
+      </div>
+      <div class="form-controlgroup">
+          <label>Hard disk</label>
+          <input type="number" name="harddisk" ngModel #harddisk="ngModel" required><span>gb</span>
+      </div>
+    </div>
+    <div class="column">
+      <div class="form-controlgroup checkbox">
+          <label>Mouse</label>
+          <input type="checkbox" name="mouseHardware" ngModel required><span></span>
+      </div>
+      <div class="form-controlgroup checkbox">
+          <label>Keyboard</label>
+          <input type="checkbox" name="keyboardHardware" ngModel required><span></span>
+      </div>
+      <div class="form-controlgroup checkbox">
+          <label>Monitor</label>
+          <input type="checkbox" name="monitor" ngModel required><span></span>
+      </div>
+    </div>
   </div>
   <h2>OS</h2>
   <div class="form-controlgroup">

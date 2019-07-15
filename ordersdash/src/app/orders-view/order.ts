@@ -12,6 +12,14 @@ export class OtherItem {
   ) {}
 }
 
+export class HardwareItems {
+  constructor(
+    public mouse: boolean,
+    public keyboard: boolean,
+    public monitor: boolean
+  ) {}
+}
+
 export class Order {
 
   public orderid: string;
@@ -38,7 +46,7 @@ export class Order {
   public finalid: string;
   public dateArrived: string;
   public deliverComments: string;
-  public hardwares: string[];
+  public hardware: HardwareItems[];
   public softwares: SoftwareItem[];
   public others: OtherItem[];
   public softwaresText: string[]
