@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CurrentUser } from './current-user';
-import { RestfulConfigService } from './restful-config.service';
+import { RestfulConfigService, Button } from './restful-config.service';
 
 declare var getJSPInjectedUserInformation;
 
@@ -10,18 +10,28 @@ export class CurrentUserService {
 
   constructor(public restConfig: RestfulConfigService) {
       this.user = new CurrentUser(getJSPInjectedUserInformation());
+      let button: Button;
       if (this.user.role == "admin") {
-        this.restConfig.changeOrderURL("view=all");
+        button = this.restConfig.getButtonWithTitle("Todos Solicitudes")
       }
       else if (this.user.role == "support") {
-        this.restConfig.changeOrderURL("view=verify");
+        button = this.restConfig.getButtonWithTitle("Suporte")
       }
       else if (this.user.role == "helpdesk") {
-        this.restConfig.changeOrderURL("view=quote");
+        button = this.restConfig.getButtonWithTitle("Para Ofrecer")
       }
       else if (this.user.role == "user") {
-        this.restConfig.changeOrderURL("view=own");
+        button = this.restConfig.getButtonWithTitle("Solicitudes")
       }
+
+      this.restConfig.changeOrderURL(button.urlQ);
+      this.restConfig.assignButtonVisibilities(this.user.role);
+      let buttonPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          button.element.activate();
+          resolve();
+        }, 500);
+      });
   }
 
   getUsername(): string {

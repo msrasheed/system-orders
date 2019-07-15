@@ -2,3 +2,6 @@
   [routerLink]="['/orders', order.orderid]"
   [routerLinkActive]="['active']">
 </app-orders-tray-list-item>
+<div class="" *ngIf="this.orderhttp.orders.length == 0">
+  <p>No Results</p>
+</div>

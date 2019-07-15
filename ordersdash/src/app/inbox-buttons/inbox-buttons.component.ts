@@ -1,15 +1,7 @@
 import { Component, OnInit, ViewChildren, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RestfulConfigService } from '../restful-config.service';
+import { RestfulConfigService, Button } from '../restful-config.service';
 import { InboxButtComponent } from '../inbox-butt/inbox-butt.component';
-
-class Button {
-  constructor(
-    public title: string,
-    public icon: string,
-    public urlQ: string
-  ) {}
-}
 
 @Component({
   selector: 'app-inbox-buttons',
@@ -18,29 +10,27 @@ class Button {
 })
 export class InboxButtonsComponent implements OnInit, AfterViewInit {
 
-  public butts = [
-    new Button("Empleadas", "account_circle", ""),
-    new Button("Todos Solicitudes", "inbox", "view=all"),
-    new Button("Solicitudes", "send", "view=own"),
-    new Button("Suporte", "accessibility", "view=verify"),
-    new Button("Para Ofrecer", "local_phone", "view=quote"),
-    new Button("GM Decisión", "check_circle", "view=approve"),
-    new Button("Para Comprar", "attach_money", "view=purchase"),
-    new Button("Entregado", "move_to_inbox", "view=delivered"),
-    new Button("Terminado", "assignment_turned_in", "view=done")
-  ];
+  public butts: Button[];
   @ViewChildren(InboxButtComponent) buttons;
 
-  constructor(public restConfig: RestfulConfigService, public router: Router) { }
+  constructor(public restConfig: RestfulConfigService, public router: Router) {
+    this.butts = this.restConfig.butts;
+  }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    console.log(this.buttons);
+    //console.log(this.buttons);
+    let array = this.buttons.toArray();
+    for (let i = 0; i < array.length; i++) {
+      //console.log(array[i]);
+      this.butts[i].element = array[i];
+    }
+    //console.log(this.butts);
   }
 
-  buttClicked(buttComp, butt: Button) {
+  buttClicked(butt: Button) {
     for (let buttI of this.buttons) {
       buttI.deactivate();
     }
@@ -52,7 +42,6 @@ export class InboxButtonsComponent implements OnInit, AfterViewInit {
     else {
       this.router.navigate(['/employees'])
     }
-
-    buttComp.activate();
+    butt.element.activate();
   }
 }
