@@ -13,11 +13,10 @@ export class OtherItem {
 }
 
 export class HardwareItems {
-  constructor(
-    public mouse: boolean,
-    public keyboard: boolean,
-    public monitor: boolean
-  ) {}
+  public mouse: boolean = false;
+  public keyboard: boolean = false;
+  public monitor: boolean = false;
+  constructor() {}
 }
 
 export class Order {

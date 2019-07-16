@@ -20,20 +20,30 @@
       <input type="date" name="dateNeeded" [(ngModel)]="order.dateNeeded" #dateNeeded="ngModel"><br/>
   </div>
   <h2>Hardware Specs</h2>
-  <div class="form-controlgroup">
-      <label>Processor</label>
-      <select name="processor" [(ngModel)]="order.processor" #processor="ngModel">
-          <option>Intel</option>
-          <option>AMD</option>
-      </select>
-  </div>
-  <div class="form-controlgroup">
-      <label>Memory</label>
-      <input type="number" name="memory" [(ngModel)]="order.memory" #memory="ngModel"><span>gb</span>
-  </div>
-  <div class="form-controlgroup">
-      <label>Hard disk</label>
-      <input type="number" name="harddisk" [(ngModel)]="order.harddisk" #harddisk="ngModel"><span>gb</span>
+  <div class="row">
+    <div class="column">
+      <div class="form-controlgroup">
+          <label>Processor</label>
+          <select name="processor" [(ngModel)]="order.processor" #processor="ngModel">
+              <option>Intel</option>
+              <option>AMD</option>
+          </select>
+      </div>
+      <div class="form-controlgroup">
+          <label>Memory</label>
+          <input type="number" name="memory" [(ngModel)]="order.memory" #memory="ngModel"><span>gb</span>
+      </div>
+      <div class="form-controlgroup">
+          <label>Hard disk</label>
+          <input type="number" name="harddisk" [(ngModel)]="order.harddisk" #harddisk="ngModel"><span>gb</span>
+      </div>
+    </div>
+    <div class="column">
+      <div class="form-controlgroup checkbox" *ngFor="let hard of hardwares">
+          <label>{{capitalize(hard.label)}}</label>
+          <input type="checkbox" name="{{hard.name}}" [(ngModel)]="hard.ref"><span></span>
+      </div>
+    </div>
   </div>
   <h2>OS</h2>
   <div class="form-controlgroup">

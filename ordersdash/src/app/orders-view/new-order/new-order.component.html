@@ -37,17 +37,9 @@
       </div>
     </div>
     <div class="column">
-      <div class="form-controlgroup checkbox">
-          <label>Mouse</label>
-          <input type="checkbox" name="mouseHardware" ngModel required><span></span>
-      </div>
-      <div class="form-controlgroup checkbox">
-          <label>Keyboard</label>
-          <input type="checkbox" name="keyboardHardware" ngModel required><span></span>
-      </div>
-      <div class="form-controlgroup checkbox">
-          <label>Monitor</label>
-          <input type="checkbox" name="monitor" ngModel required><span></span>
+      <div class="form-controlgroup checkbox" *ngFor="let hard of hardwares">
+          <label>{{capitalize(hard.label)}}</label>
+          <input type="checkbox" name="{{hard.name}}" [ngModel]="false"><span></span>
       </div>
     </div>
   </div>

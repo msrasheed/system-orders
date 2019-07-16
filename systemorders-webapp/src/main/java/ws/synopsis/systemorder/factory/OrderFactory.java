@@ -38,6 +38,7 @@ public class OrderFactory {
 	public static boolean create(Order order, OrderProperties props, boolean exists) {
 		fillOrder(order, props);
 		fillOrderIterables(order, props);
+		fillOrderHardware(order, props);
 
 		order.setDateCreated(new Date());
 		order.setStatus(OrderStatus.HCP.number);
@@ -109,6 +110,7 @@ public class OrderFactory {
 		while (enums.hasMoreElements()) {
 			String param = enums.nextElement();
 			Method meth;
+			System.out.println(param + " " + props.getProperty(param));
 			try {
 				String methName;
 				methName = "set" + StringUtil.capitalizeFirstLetter(param);
@@ -187,6 +189,30 @@ public class OrderFactory {
 			}
 		}
 		
+		return order;
+	}
+	
+	public static Order fillOrderHardware(Order order, OrderProperties props) {
+		Enumeration<String> enums = (Enumeration<String>) props.propertyNames();
+		Class cs = HardwareOrderItems.class;
+		HardwareOrderItems hards = order.getHardware();
+
+		while (enums.hasMoreElements()) {
+			String param = enums.nextElement();
+			Method meth;
+			int index; 
+			if ((index = param.indexOf("Hardware")) != -1) {
+				Boolean val = false;
+				if (props.getProperty(param).equals("true")) val = true;
+				String methName = "set" + StringUtil.capitalizeFirstLetter(param.substring(0, index));
+				try {
+					meth = cs.getDeclaredMethod(methName, Boolean.class);
+					meth.invoke(hards, val);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		return order;
 	}
 

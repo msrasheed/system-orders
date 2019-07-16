@@ -1,12 +1,13 @@
-import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { BaseFormComponent } from '../base-form/base-form.component'
 import { Order, OtherItem, SoftwareItem, HardwareItems } from '../order';
 
 class HardwareDisplay {
+  public ref: any;
   constructor(
     public name: string,
-    public ref: any
+    public label: string
   ) {}
 }
 
@@ -19,8 +20,8 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, On
 
   private hardwares: HardwareDisplay[];
 
-  private maxSoftNum: number;
-  private maxOthNum: number;
+  public maxSoftNum: number;
+  public maxOthNum: number;
   private removeSoftNums: string;
   private removeOtherNums: string;
   @ViewChild('softAdd', {static: false}) softAddF;
@@ -36,21 +37,24 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, On
     this.order.newSoftwares = [];
     this.order.newOthers = [];
     this.hardwares = [];
-    let dummyHard = new HardwareItems(false, false, false);
-    for (let val in this.order.hardware) {
-      console.log(val);
+    let dummyHard = new HardwareItems();
+    //console.log(dummyHard);
+    for (let val in dummyHard) {
+      //console.log(val);
+      this.hardwares.push(new HardwareDisplay(val + "Hardware", val));
     }
   }
 
   ngOnInit() {
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     this.maxSoftNum = 0;
     for (let soft of this.order.softwares) {
       let num: number = parseInt(soft.softid);
       if (this.maxSoftNum < num) this.maxSoftNum = num;
     }
+    //console.log("max soft", this.maxSoftNum);
 
     this.maxOthNum = 0;
     for (let oth of this.order.others) {
@@ -58,8 +62,18 @@ export class CreateFormComponent extends BaseFormComponent implements OnInit, On
       if (this.maxOthNum < num) this.maxOthNum = num;
     }
 
+    if (this.order.hardware) {
+      for (let hard of this.hardwares) {
+        hard.ref = this.order.hardware[hard.name.split("Hardware")[0]];
+      }
+    }
+
     this.order.newSoftwares = [];
     this.order.newOthers = [];
+  }
+
+  capitalize(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1)
   }
 
   addSoft() {

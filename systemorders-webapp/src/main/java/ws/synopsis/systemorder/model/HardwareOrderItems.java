@@ -12,11 +12,8 @@ import ws.synopsis.systemorder.Gson.GsonExclude;
 @Entity
 @Table(name = "hardware")
 public class HardwareOrderItems implements Serializable {
-
-	@Id
-	@Column(name = "orderid")
-	private Long primKey;
 	
+	@Id
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderid")
 	@GsonExclude
@@ -35,9 +32,8 @@ public class HardwareOrderItems implements Serializable {
 		this.monitor = false;
 	}
 	
-	public HardwareOrderItems(Long primKey, Order order) {
+	public HardwareOrderItems(Order order) {
 		super();
-		this.primKey = primKey;
 		this.order = order;
 	}
 	
@@ -50,14 +46,6 @@ public class HardwareOrderItems implements Serializable {
 				setMonitor(true);
 				break;
 		}
-	}
-
-	public Long getPrimKey() {
-		return primKey;
-	}
-
-	public void setPrimKey(Long primKey) {
-		this.primKey = primKey;
 	}
 
 	public Order getOrder() {

@@ -109,9 +109,10 @@ public class Order implements Serializable {
 	public Order(boolean programCreated) {
 		super();
 		if (programCreated) {
-			softwares = new HashSet<SoftwareOrderItem>();
-			others = new HashSet<OtherOrderItem>();
-			hardware = new HardwareOrderItems();
+			this.softwares = new HashSet<SoftwareOrderItem>();
+			this.others = new HashSet<OtherOrderItem>();
+			this.hardware = new HardwareOrderItems();
+			this.hardware.setOrder(this);
 		}
 	}
 	

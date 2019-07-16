@@ -177,8 +177,9 @@ public class OrderServlet extends HttpServlet {
 			}
 
 			//if order was created successfully save attached spreadsheet file
+			System.out.println("create file?");
 			if ((!exists && isSuccessful) || (exists && filepart != null)) {
-				OrderFactory.saveCreateSpreadsheet(order, filepart);
+				if (filepart.getSize() > 0) OrderFactory.saveCreateSpreadsheet(order, filepart);
 			}
 		}
 

@@ -18,5 +18,8 @@ export class NewOrderComponent extends CreateFormComponent implements OnInit {
   ngOnInit() {
     this.fieldsRequired = true;
     this.fieldsEditable = true;
+    this.maxSoftNum = 0;
+    this.maxOthNum = 0;
+    //console.log("hi");
   }
 }

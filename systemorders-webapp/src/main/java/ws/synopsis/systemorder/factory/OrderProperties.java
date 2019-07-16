@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import ws.synopsis.systemorder.model.Order;
 import ws.synopsis.systemorder.model.Employee;
+import ws.synopsis.systemorder.model.HardwareOrderItems;
 
 public class OrderProperties extends Properties {
 	
@@ -35,6 +36,8 @@ public class OrderProperties extends Properties {
 		}
 		
 		Class empCls = Order.class;
+		Class hardCls = HardwareOrderItems.class;
+		Field[] hardFields = hardCls.getDeclaredFields();
 		for (String param : paramList) {
 			//String param = params.nextElement();
 			//System.out.println(param + " " + req.getParameter(param));
@@ -46,9 +49,22 @@ public class OrderProperties extends Properties {
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
-				for (String r : roots) {
-					if (param.contains(r)) {
-						put(param, req.getParameter(param));
+				int index;
+				//System.out.println(param + " "  + req.getParameter(param));
+				if ((index = param.indexOf("Hardware")) != -1) {
+					String tparam = param.substring(0, index);
+					for (Field f : hardFields) {
+						if (f.getName().equals(tparam)) {
+							put(param, req.getParameter(param));
+						}
+					}
+					
+				}
+				else {
+					for (String r : roots) {
+						if (param.contains(r)) {
+							put(param, req.getParameter(param));
+						}
 					}
 				}
 			}
