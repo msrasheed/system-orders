@@ -218,5 +218,9 @@ public class OrderServlet extends HttpServlet {
 		else if (operation.equals("deliver")) {
 			if (exists) OrderFactory.deliver(order, orderProps);
 		}
+		
+		else if (operation.equals("delete")) {
+			if (exists) OrderDB.dropOrder(order);
+		}
 	}
 }

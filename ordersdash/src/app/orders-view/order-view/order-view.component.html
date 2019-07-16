@@ -23,7 +23,12 @@
                    *ngIf="purchasePerm.view">
 </app-purchase-form>
 <app-delivered-form [order]="order"
-                    [required]="deliveredPerm.reqs" 
+                    [required]="deliveredPerm.reqs"
                     [editable]="deliveredPerm.edit"
                     *ngIf="deliveredPerm.view">
 </app-delivered-form>
+<app-delete-form [order]="order"
+                    [required]="deletePerm.reqs"
+                    [editable]="deletePerm.edit"
+                    *ngIf="deletePerm.view">
+</app-delete-form>

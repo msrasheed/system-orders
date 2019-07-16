@@ -30,6 +30,7 @@ export class OrderViewComponent implements OnInit {
   private approvePerm: FormPerms;
   private purchasePerm: FormPerms;
   private deliveredPerm: FormPerms;
+  private deletePerm: FormPerms;
 
   constructor(
     public route: ActivatedRoute,
@@ -85,6 +86,7 @@ export class OrderViewComponent implements OnInit {
     this.approvePerm = this.evaluateFormPerms("approve", this.order.status);
     this.purchasePerm = this.evaluateFormPerms("purchase", this.order.status);
     this.deliveredPerm = this.evaluateFormPerms("delivered", this.order.status);
+    this.deletePerm = this.evaluateFormPerms("delete", this.order.status);
   }
 
   evaluateFormPerms(form: string, status: number) {
@@ -123,6 +125,9 @@ export class OrderViewComponent implements OnInit {
         visible = status >= 500 && status < 700;
         editable = role == "helpdesk";
         required = status == 500;
+        break;
+      case 'delete':
+        visible = role == "user" || role == "admin";
         break;
       default:
         visible = false;

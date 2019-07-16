@@ -1,0 +1,5 @@
+<form (ngSubmit)="updateForm()" enctype="multipart/form-data" #form="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'delete'">
+  <input class="submit-button delete" type="button" value="Eliminar" (click)="submitForm()"
+         [disabled]="form.invalid || form.disabled"/>
+</form>

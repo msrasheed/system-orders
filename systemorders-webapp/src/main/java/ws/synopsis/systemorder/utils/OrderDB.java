@@ -131,7 +131,7 @@ public class OrderDB {
 		EntityTransaction trans = em.getTransaction();
 		try {
 			trans.begin();
-			em.remove(order);
+			em.remove(em.merge(order));
 			trans.commit();
 			isSuccessful = true;
 		} catch (Exception e) {

@@ -91,7 +91,7 @@ public class Order implements Serializable {
 	private Date dateArrived;
 	
 	@Operation("create")
-	@OneToOne(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	HardwareOrderItems hardware;
 	
 	@Operation("create")
