@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnChanges, SimpleChanges, ViewChild, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { OrdersRestfulService } from '../orders-restful.service';
 import { OrderModuleInjector } from '../order-module-injector';
 import { Order, SoftwareItem, OtherItem } from '../order';
@@ -12,6 +13,7 @@ import { Order, SoftwareItem, OtherItem } from '../order';
 export class BaseFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   private orderhttp: OrdersRestfulService;
+  private router: Router;
   @Input('order') order: Order;
   @ViewChild('form', {static: false}) form: FormGroup;
 
@@ -20,6 +22,7 @@ export class BaseFormComponent implements OnInit, OnChanges, AfterViewInit {
 
   constructor() {
     this.orderhttp = OrderModuleInjector.getInjector().get(OrdersRestfulService);
+    this.router = OrderModuleInjector.getInjector().get(Router);
     this.order = new Order();
   }
 
@@ -91,7 +94,12 @@ export class BaseFormComponent implements OnInit, OnChanges, AfterViewInit {
     // }
     this.orderhttp.submitForm(formData).then(
       res => {
-        this.orderhttp.refreshOrderList();
+        this.orderhttp.refreshOrderList().then(
+          res => {
+            //console.log("trying to reroute")
+            this.router.navigate(['/orders', this.order.orderid]);
+          },
+          msg => {});
       },
       msg => { console.log(msg); }
     );

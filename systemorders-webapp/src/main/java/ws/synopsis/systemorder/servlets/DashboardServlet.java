@@ -51,7 +51,8 @@ public class DashboardServlet extends HttpServlet {
 				session.setAttribute("employee", employee);
 				request.setAttribute("employee", employee);
 				System.out.println("Dashboard serving dashboard");
-				getServletContext().getRequestDispatcher("/app/dashboard/dashboard.jsp").forward(request, response);
+				//getServletContext().getRequestDispatcher("/app/dashboard/dashboard.jsp").forward(request, response);
+				response.sendRedirect("/systemorders-webapp/app/dashboard/index.html");
 			}
 			else {
 				System.out.println("Dashboard Rediricting to login");

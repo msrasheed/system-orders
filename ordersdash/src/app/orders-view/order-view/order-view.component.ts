@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { DatePipe } from '@angular/common'
 import { FormGroup, FormControl } from '@angular/forms';
 import { OrdersRestfulService } from '../orders-restful.service';
 import { CurrentUserService } from '../../current-user.service';
 import { Order, SoftwareItem, OtherItem } from '../order';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 class FormPerms {
   constructor(
@@ -20,9 +22,13 @@ class FormPerms {
   styleUrls: ['./order-view.component.css'],
   providers: [DatePipe]
 })
-export class OrderViewComponent implements OnInit {
+export class OrderViewComponent implements OnInit, OnDestroy {
 
   private order: Order;
+
+  private orderid: string;
+  public destroyed = new Subject<any>();
+  public loading: boolean = false;
 
   private createPerm: FormPerms;
   private verifyPerm: FormPerms;
@@ -33,36 +39,59 @@ export class OrderViewComponent implements OnInit {
   private deletePerm: FormPerms;
 
   constructor(
-    public route: ActivatedRoute,
+    public router: Router,
+    public activeRoute: ActivatedRoute,
     public orderhttp: OrdersRestfulService,
     public currUser: CurrentUserService,
     public datepipe: DatePipe) {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.orderhttp.getOrder(params['id'])
-          .then(
-            res => {
-              //console.log(res);
-              this.order = Object.assign({}, res);
-
-              this.order.dateNeeded = this.convertDateFormat(this.order.dateNeeded);
-              this.order.dateCreated = this.convertDateFormat(this.order.dateCreated);
-              if (this.order.quotedDate) this.order.quotedDate = this.convertDateFormat(this.order.quotedDate);
-              if (this.order.dateArrived) this.order.dateArrived = this.convertDateFormat(this.order.dateArrived);
-
-              this.order.supportApproval = this.convertApprovals(this.order.supportApproved);
-              this.order.gmApproval = this.convertApprovals(this.order.gmApproved);
-              //console.log(this.maxSoftNum);
-              console.log(this.order);
-              this.updateFormPermissions();
-            },
-            msg => {
-              console.log(msg);
-            }
-          );
+    this.router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationEnd),
+      takeUntil(this.destroyed)
+    ).subscribe(() => {
+        //console.log("loaded again");
+        this.loadOrder();
     });
+    this.activeRoute.params.subscribe(params => {
+      //console.log("active route");
+      this.orderid = params['id'];
+      this.loadOrder();
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroyed.next();
+    this.destroyed.complete();
+  }
+
+  loadOrder() {
+    if (this.loading) return;
+    this.loading = true;
+    //console.log("loading", this.orderid);
+    this.orderhttp.getOrder(this.orderid)
+        .then(
+          res => {
+            //console.log(res);
+            this.order = Object.assign({}, res);
+
+            this.order.dateNeeded = this.convertDateFormat(this.order.dateNeeded);
+            this.order.dateCreated = this.convertDateFormat(this.order.dateCreated);
+            if (this.order.quotedDate) this.order.quotedDate = this.convertDateFormat(this.order.quotedDate);
+            if (this.order.dateArrived) this.order.dateArrived = this.convertDateFormat(this.order.dateArrived);
+
+            this.order.supportApproval = this.convertApprovals(this.order.supportApproved);
+            this.order.gmApproval = this.convertApprovals(this.order.gmApproved);
+            //console.log(this.maxSoftNum);
+            console.log(this.order);
+            this.updateFormPermissions();
+            this.loading = false;
+          },
+          msg => {
+            console.log(msg);
+          }
+        );
   }
 
   convertDateFormat(date: string) {

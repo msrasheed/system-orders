@@ -1,7 +1,12 @@
-<app-orders-tray-list-item *ngFor="let order of this.orderhttp.orders | orderSearch:orderhttp.orderQuery" [order]="order"
-  [routerLink]="['/orders', order.orderid]"
-  [routerLinkActive]="['active']">
-</app-orders-tray-list-item>
+<div *ngIf="!this.orderhttp.loadingList">
+  <app-orders-tray-list-item *ngFor="let order of this.orderhttp.orders | orderSearch:orderhttp.orderQuery" [order]="order"
+    [routerLink]="['/orders', order.orderid]"
+    [routerLinkActive]="['active']">
+  </app-orders-tray-list-item>
+</div>
+<div class="" *ngIf="this.orderhttp.loadingList">
+  <p>Loading...</p>
+</div>
 <div class="" *ngIf="this.orderhttp.orders.length == 0">
   <p>No Results</p>
 </div>

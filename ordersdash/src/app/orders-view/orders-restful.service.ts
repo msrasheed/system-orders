@@ -12,6 +12,8 @@ export class OrdersRestfulService {
   public orderQuery: string;
   public downloadButt;
 
+  public loadingList: boolean = false;
+
   constructor(public http: HttpClient, public configRest: RestfulConfigService) {
     this.configRest.setOrdersRestfulService(this);
     this.refreshOrderList();
@@ -21,8 +23,9 @@ export class OrdersRestfulService {
   }
 
   refreshOrderList() {
+    this.loadingList = true;
     let apiURL = this.configRest.apiURLQuery;
-    this.http.get<OrderBrief[]>(apiURL)
+    return this.http.get<OrderBrief[]>(apiURL)
         .toPromise()
         .then(
           res => {
@@ -40,9 +43,11 @@ export class OrdersRestfulService {
               	item.arrived,
               );
             });
+            this.loadingList = false;
           },
           msg => {
             console.log(msg);
+            this.loadingList = false;
           }
         );
   }
