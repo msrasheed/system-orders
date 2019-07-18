@@ -118,6 +118,20 @@ public class EmployeeDB {
 		}
 	}
 	
+	public static List<String> getEmailsOfRole(String role) {
+		EntityManager em = PostgresDBUtil.getEmFactory().createEntityManager();
+		String qString = "SELECT e.email " +
+						 "FROM Employee e " +
+						 "Where e.role = :role";
+		TypedQuery<String> q = em.createQuery(qString, String.class);
+		q.setParameter("role", role);
+		try {
+			return q.getResultList();
+		} finally {
+			em.close();
+		}
+	}
+	
 	public static boolean insertEmployee(Employee employee) {
 		boolean isSuccessful = false;
 		

@@ -20,6 +20,7 @@ import ws.synopsis.systemorder.model.HardwareOrderItems;
 import ws.synopsis.systemorder.model.Order;
 import ws.synopsis.systemorder.model.OtherOrderItem;
 import ws.synopsis.systemorder.model.SoftwareOrderItem;
+import ws.synopsis.systemorder.utils.Configuration;
 import ws.synopsis.systemorder.utils.OrderDB;
 import ws.synopsis.systemorder.utils.StringUtil;
 
@@ -47,6 +48,8 @@ public class OrderFactory {
 		if (exists) success = OrderDB.mergeOrder(order);
 		else success = OrderDB.insertOrder(order);
 		if(success) {
+			//String emailBody = EmailBodyGenerator.supportEmail(order);
+			//System.out.println(emailBody);
 			return true;
 		}
 		else {
@@ -231,7 +234,7 @@ public class OrderFactory {
 		//System.out.println(fileSegs.length);
 		String fileExt = fileSegs[fileSegs.length - 1];
 		String orderid = Long.toString(order.getOrderid());
-		File uploads = new File("/home/synopsis/systemorders_uploads/" + orderid);
+		File uploads = new File(Configuration.saveFilePath + orderid);
 		uploads.mkdirs();
 		
 		deleteExistingFile(uploads, name);

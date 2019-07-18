@@ -5,6 +5,7 @@ import java.util.HashMap;
 /*Different from Authorization permissions
  * this is authorizing operations to change certain parts of the
  * form. Used within the update function in OrderFactory*/
+//NO USA MÁS
 public class OrderFactoryPermissions {
 	private boolean create = false;
 	private boolean verify = false;
