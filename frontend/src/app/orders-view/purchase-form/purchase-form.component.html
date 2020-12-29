@@ -1,0 +1,16 @@
+<form (ngSubmit)="submitForm()" enctype="multipart/form-data" #form="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'purchase'">
+  <h1>Puchase</h1>
+  <div class="form-controlgroup">
+    <label>Purchase Receipt</label>
+    <button type="button" (click)="downloadFile('purchase_receipt')">Download Receipt</button>
+    <input type="file" name="receipt" ngModel (change)="onFileChange($event)">
+  </div>
+  <div class="form-controlgroup no-align-center">
+    <label>Comentarios</label>
+    <textarea name="purchaseComments" rows="8" cols="80" [(ngModel)]="order.purchaseComments"></textarea>
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()" [disabled]="form.invalid || form.disabled"/>
+</form>
+
+<pre>{{form.value | json}}</pre>

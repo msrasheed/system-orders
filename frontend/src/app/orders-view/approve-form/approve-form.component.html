@@ -1,0 +1,17 @@
+<form (ngSubmit)="submitForm()" enctype="multipart/form-data" #form="ngForm">
+  <input type="hidden" name="operation" [ngModel]="'approve'">
+  <h1>GM Approval</h1>
+  <div class="form-controlgroup approval">
+    <label>Approved</label>
+    <input type="radio" name="gmApproved" value="approve" [(ngModel)]="order.gmApproval"><span> Sí</span>
+    <span class="inline-spacer"></span>
+    <input type="radio" name="gmApproved" value="deny" [(ngModel)]="order.gmApproval"><span>No</span>
+  </div>
+  <div class="form-controlgroup no-align-center">
+    <label>Comentarios</label>
+    <textarea name="gmComments" rows="8" cols="80" [(ngModel)]="order.gmComments"></textarea>
+  </div>
+  <input class="submit-button" type="button" value="Enviar" (click)="submitForm()" [disabled]="form.invalid || form.disabled"/>
+</form>
+
+<pre>{{form.value | json}}</pre>

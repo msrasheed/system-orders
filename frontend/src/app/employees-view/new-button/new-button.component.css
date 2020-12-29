@@ -1,0 +1,27 @@
+:host {
+  flex: 0 0 auto;
+  display: block;
+  border-top: solid black 1px;
+  border-bottom: solid black 1px;
+}
+
+.button {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 44px;
+  width: 200px;
+  margin: 10px auto;
+  border: solid #bbbbbb 1px;
+}
+
+.button:hover {
+  background-color: #dddddd;
+  cursor: pointer;
+}
+
+.button:active {
+  background-color: #cccccc;
+}
